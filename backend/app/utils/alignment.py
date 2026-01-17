@@ -46,6 +46,50 @@ def mock_word_alignment(full_text: str) -> str:
         separators=(",", ":"),  # minify JSON
     )
 
+def stt_response_to_character_alignment(stt_response) -> str:
+    """
+    Convert a SpeechToText-style response with word-level timestamps
+    into a CharacterAlignmentResponseModel suitable for
+    character_alignment_to_word_alignment().
+    """
+
+    characters = []
+    start_times = []
+    end_times = []
+
+    for token in stt_response.words:
+        text = token.text
+        start = token.start
+        end = token.end
+
+        if not text:
+            continue
+
+        duration = max(end - start, 0.0)
+        char_count = len(text)
+
+        # Avoid division by zero
+        if char_count == 0:
+            continue
+
+        char_duration = duration / char_count
+
+        for i, char in enumerate(text):
+            char_start = start + i * char_duration
+            char_end = start + (i + 1) * char_duration
+
+            characters.append(char)
+            start_times.append(char_start)
+            end_times.append(char_end)
+
+    char =  CharacterAlignmentResponseModel(
+        characters=characters,
+        character_start_times_seconds=start_times,
+        character_end_times_seconds=end_times,
+    )
+    return character_alignment_to_word_alignment(char)
+
+
 
 def character_alignment_to_word_alignment(
     character_alignment: CharacterAlignmentResponseModel,
