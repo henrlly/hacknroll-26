@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { type StreamResponseType } from "./types/apiTypes";
+import { type VideoPlan } from "./types/planTypes";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
