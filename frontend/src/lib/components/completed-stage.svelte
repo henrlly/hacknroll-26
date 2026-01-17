@@ -52,6 +52,8 @@
 
         if (!videoElement) return;
 
+		const frameTime = 1 / 24;
+
         switch (e.code) {
 			case 'KeyK':
             case 'Space':
@@ -72,6 +74,17 @@
                 e.preventDefault();
                 videoElement.currentTime -= 4;
                 break;
+			case 'Period':
+				e.preventDefault();
+				videoElement.pause();
+				videoElement.currentTime += frameTime;
+				break;
+
+			case 'Comma':
+				e.preventDefault();
+				videoElement.pause();
+				videoElement.currentTime -= frameTime;
+				break;
         }
 	}
 </script>
