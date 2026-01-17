@@ -7,7 +7,7 @@ client = Client("selfit-camera/Trump-Ai-Voice")
 import shutil
 import os
 
-def generate_trump_voice(text: str, output_filename: str = "output.mp3"):
+def generate_trump_voice(text: str, output_filename: str):
     result = client.predict(
         text=text,
         language_display="🇺🇸 English",
