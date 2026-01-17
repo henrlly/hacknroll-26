@@ -7,7 +7,6 @@ export const socketState = $state({
 });
 
 export function connectWebSocket() {
-    console.log("websocket connecting")
     if (!browser || socketState.socket) return;
 
     const socket = new WebSocket('ws://localhost:8000/api/ws');
