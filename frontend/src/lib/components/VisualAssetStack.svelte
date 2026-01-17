@@ -12,12 +12,12 @@
 
 	interface Props {
 		scene: SceneLoadingType;
+		setTouched: () => void;
 	}
 
-	const { scene }: Props = $props();
+	let { scene, setTouched }: Props = $props();
 
 	let dialogOpen = $state(false);
-	let selectedAssetId = $state('');
 	let playingVideos = $state(new Set<string>());
 	let loadingVideos = $state(new Set<string>());
 	let errorVideos = $state(new Set<string>());
@@ -73,11 +73,11 @@
 	function handleAssetSelection(assetId: string, candidateId: string) {
 		selectVisual({ assetId, selectedCandidateId: candidateId });
 		dialogOpen = false;
+		setTouched();
 	}
 
 	// Open dialog with selected asset
 	function openAssetDialog(assetId: string) {
-		selectedAssetId = assetId;
 		dialogOpen = true;
 	}
 
@@ -96,46 +96,65 @@
 <!-- Main Stack Display -->
 <div class="relative">
 	{#if visualAssets.length > 0}
-		<div class="relative cursor-pointer" onclick={() => openAssetDialog(visualAssets[0].assetId)}>
-			{#each visualAssets.slice(0, 4) as asset, index}
-				{@const finalCandidate = getFinalSelectedCandidate(asset)}
-				{#if finalCandidate}
-					<div
-						class="absolute inset-0 rounded-lg border-2 border-gray-200 bg-white shadow-md transition-transform hover:scale-105"
-						style="transform: translate({getStackOffset(
-							index,
-							visualAssets.length
-						)}px, -{getStackOffset(index, visualAssets.length)}px); z-index: {visualAssets.length -
-							index};"
-					>
-						<div class="aspect-video w-full overflow-hidden rounded-lg">
-							<video
-								class="h-full w-full object-cover"
-								src={getVideoUrl(asset.assetId, finalCandidate.candidateId)}
-								muted
-								loop
-								autoplay
-								onerror={() => {
-									console.warn(
-										`Failed to load video: ${asset.assetId}/${finalCandidate.candidateId}`
-									);
-								}}
-							>
-								<track kind="captions" />
-							</video>
+		<!-- Container with proper padding to accommodate stack offset -->
+		<div
+			class="relative cursor-pointer"
+			onclick={() => openAssetDialog(visualAssets[0].assetId)}
+			style="padding-right: {Math.min(visualAssets.length - 1, 3) * 4}px; padding-bottom: {Math.min(
+				visualAssets.length - 1,
+				3
+			) * 4}px;"
+		>
+			<!-- Base container to establish proper height -->
+			<div class="aspect-video w-full">
+				{#each visualAssets.slice(0, 4) as asset, index}
+					{@const finalCandidate = getFinalSelectedCandidate(asset)}
+					{#if finalCandidate}
+						<div
+							class="rounded-lg border-2 border-gray-200 bg-white shadow-md transition-transform hover:scale-105 {index ===
+							0
+								? 'relative'
+								: 'absolute top-0 left-0'}"
+							style="transform: translate({getStackOffset(
+								index,
+								visualAssets.length
+							)}px, -{getStackOffset(
+								index,
+								visualAssets.length
+							)}px); z-index: {visualAssets.length - index}; width: calc(100% - {Math.min(
+								visualAssets.length - 1,
+								3
+							) * 4}px);"
+						>
+							<div class="aspect-video w-full overflow-hidden rounded-lg">
+								<video
+									class="h-full w-full object-cover"
+									src={getVideoUrl(asset.assetId, finalCandidate.candidateId)}
+									muted
+									loop
+									autoplay
+									onerror={() => {
+										console.warn(
+											`Failed to load video: ${asset.assetId}/${finalCandidate.candidateId}`
+										);
+									}}
+								>
+									<track kind="captions" />
+								</video>
+							</div>
 						</div>
+					{/if}
+				{/each}
+
+				{#if visualAssets.length > 4}
+					<div
+						class="absolute right-2 bottom-2 rounded-full bg-black/70 px-2 py-1 text-xs text-white"
+						style="z-index: {visualAssets.length + 1};"
+					>
+						+{visualAssets.length - 4}
 					</div>
 				{/if}
-			{/each}
-
-			{#if visualAssets.length > 4}
-				<div
-					class="absolute right-2 bottom-2 rounded-full bg-black/70 px-2 py-1 text-xs text-white"
-					style="z-index: {visualAssets.length + 1};"
-				>
-					+{visualAssets.length - 4}
-				</div>
-			{/if}
+			</div>
 		</div>
 	{:else}
 		<div

@@ -17,7 +17,7 @@
 	import SceneDisplay from './SceneDisplay.svelte';
 	import VisualAssetStack from './VisualAssetStack.svelte';
 
-	let editingMode = $state(false);
+	let editingMode = $state(true);
 	let currentIndex = $state(0);
 	$effect(() => {
 		if (editingMode && videoState.visual_asset_gen.length > 1) {
@@ -30,13 +30,13 @@
 	});
 
 	let editPrompt = $state('');
-	let openEditPhotos = $state(false);
 	let currentScene = $state(0);
 	let currentTime = $state(0);
 	let paused = $state(false);
 	let planRegened = $state(false);
-	let activeAsset: string = $derived(videoState.visual_asset_gen[currentIndex].mp4Url);
 	let src = $state(`${STATIC_API_BASE}/${videoState.session_id}/final_video.mp4`);
+
+	let sceneEnableRending = $state<Record<number, boolean>>({});
 
 	function handleSubmitPrompt(e: SubmitEvent) {
 		e.preventDefault();
@@ -47,18 +47,18 @@
 			sendEditPrompt(editPrompt, currentScene);
 			editPrompt = ''; // Clear input after success
 			planRegened = true;
+			sceneEnableRending[currentScene] = true;
 		} catch (err) {
 			console.error('Failed to send edit:', err);
 		}
 	}
-	function handleSubmitRender(e: SubmitEvent) {
-		e.preventDefault();
+	function handleSubmitRender() {
 		try {
 			if (planRegened) {
 				sendMakeScene(currentScene);
 			}
 			sendRenderAndStitch(currentScene);
-
+			sceneEnableRending[currentScene] = false;
 			// refresh video src
 			src = '';
 			src = `${STATIC_API_BASE}/${videoState.session_id}/final_video.mp4`;
@@ -67,36 +67,38 @@
 		}
 	}
 
+	const setTouched = () => (sceneEnableRending[currentScene] = true);
+
 	let videoElement: HTMLVideoElement | null = $state(null);
 	function handleKeyDown(e: KeyboardEvent) {
 		if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) {
-            return;
-        }
+			return;
+		}
 
-        if (!videoElement) return;
+		if (!videoElement) return;
 
 		const frameTime = 1 / 24;
 
-        switch (e.code) {
+		switch (e.code) {
 			case 'KeyK':
-            case 'Space':
-                e.preventDefault(); // Stop page from scrolling down
-                if (videoElement.paused) {
-                    videoElement.play();
-                } else {
-                    videoElement.pause();
-                }
-                break;
+			case 'Space':
+				e.preventDefault(); // Stop page from scrolling down
+				if (videoElement.paused) {
+					videoElement.play();
+				} else {
+					videoElement.pause();
+				}
+				break;
 			case 'KeyL':
-            case 'ArrowRight':
-                e.preventDefault();
-                videoElement.currentTime += 4;
-                break;
+			case 'ArrowRight':
+				e.preventDefault();
+				videoElement.currentTime += 4;
+				break;
 			case 'KeyJ':
-            case 'ArrowLeft':
-                e.preventDefault();
-                videoElement.currentTime -= 4;
-                break;
+			case 'ArrowLeft':
+				e.preventDefault();
+				videoElement.currentTime -= 4;
+				break;
 			case 'Period':
 				e.preventDefault();
 				videoElement.pause();
@@ -108,7 +110,7 @@
 				videoElement.pause();
 				videoElement.currentTime -= frameTime;
 				break;
-        }
+		}
 	}
 </script>
 
@@ -122,7 +124,7 @@
 			bind:this={videoElement}
 			onclick={() => (paused = !paused)}
 			class="h-full w-full rounded-xl"
-			src={src}
+			{src}
 			autoplay
 		>
 			<track kind="captions" />
@@ -186,12 +188,19 @@
 				</div>
 
 				<div class="flex flex-grow flex-col gap-1.5">
-					<VisualAssetStack scene={videoState.scenes[currentScene]} />
+					<div>
+						<VisualAssetStack scene={videoState.scenes[currentScene]} {setTouched} />
+					</div>
+
+					<Button
+						class="mt-2"
+						onclick={handleSubmitRender}
+						disabled={!sceneEnableRending[currentScene]}
+					>
+						<Edit2 class="mr-2 size-4" />
+						Rerender Video
+					</Button>
 				</div>
-				<Button class="mt-2" onclick={handleSubmitRender}>
-					<Edit2 class="mr-2 size-4" />
-					Rerender Video
-				</Button>
 			</div>
 		</div>
 	{/if}
