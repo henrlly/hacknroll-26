@@ -16,7 +16,7 @@
 	let { children } = $props();
 </script>
 
-<div class="flex h-screen w-full flex-col overflow-hidden">
+<div class="flex h-screen w-full flex-col">
 	<ModeWatcher />
 	<header class="flex w-full justify-between items-center p-2 pt-4 px-6 mb-4">
 		<div class="flex gap-4 items-center text-sm">
@@ -35,8 +35,8 @@
 			<ModeSwitcher />
 		</div>
 	</header>
-	
-    <main class="flex-grow overflow-hidden">
+
+    <main class="flex-grow overflow-auto">
 		{@render children()}
     </main>
 </div>
@@ -44,6 +44,6 @@
 	<link rel="icon" href={favicon} />
 	<style>
 		/* Kill default browser margins that cause small scrolls */
-		body { margin: 0; padding: 0; overflow: hidden; }
+		body { margin: 0; padding: 0; }
 	</style>
 </svelte:head>
