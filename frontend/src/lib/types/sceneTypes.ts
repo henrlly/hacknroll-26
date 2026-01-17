@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const CandidateLoading = z
 	.object({
 		state: z.enum(['done']).default('done'),
-		candidateId: z.string(),
+		candidateId: z.string().default(''),
 		selected: z.boolean().default(false),
 		finalSelected: z.boolean().default(false)
 	})
@@ -13,9 +13,9 @@ export const VisualAssetLoading = z
 	.object({
 		type: z.literal('visual').default('visual'),
 		state: z.enum(['not_started', 'generating', 'selecting', 'done']).default('not_started'),
-		assetId: z.string(),
-		assetShortDesc: z.string(),
-		assetLongDesc: z.string(),
+		assetId: z.string().default(''),
+		assetShortDesc: z.string().default(''),
+		assetLongDesc: z.string().default(''),
 		candidates: z.array(CandidateLoading).default([])
 	})
 	.strict();
@@ -52,7 +52,7 @@ export const CodeRenderLoading = z
 	.object({
 		type: z.literal('code_render').default('code_render'),
 		state: z.enum(['not_started', 'rendering', 'done']).default('not_started'),
-		version_number: z.number(),
+		version_number: z.number().default(0),
 		retry_number: z.number().default(0),
 		success: z.boolean().nullish().default(null),
 		aborted: z.boolean().default(false),
@@ -62,18 +62,18 @@ export const CodeRenderLoading = z
 
 export const SceneLoading = z
 	.object({
-		scene_number: z.number(),
+		scene_number: z.number().default(0),
 		narration: NarrationLoading.default(NarrationLoading.parse({})),
-		assets: z.array(AssetLoading),
-		code: z.array(CodeGenLoading),
-		render: z.array(CodeRenderLoading),
+		assets: z.array(AssetLoading).default([]),
+		code: z.array(CodeGenLoading).default([]),
+		render: z.array(CodeRenderLoading).default([]),
 
-		duration_seconds: z.number(),
-		visuals_description: z.string(),
-		narration_script: z.string(),
-		sound_description: z.string(),
-		edit_notes: z.string(),
-		scene_structure: z.string()
+		duration_seconds: z.number().default(0),
+		visuals_description: z.string().default(''),
+		narration_script: z.string().default(''),
+		sound_description: z.string().default(''),
+		edit_notes: z.string().default(''),
+		scene_structure: z.string().default('')
 	})
 	.strict();
 
@@ -86,16 +86,16 @@ export const NarrationGenObj = z
 
 export const VisualAssetGenObj = z
 	.object({
-		url: z.string(),
-		mp4Url: z.string(),
-		desc: z.string(),
+		url: z.string().default(''),
+		mp4Url: z.string().default(''),
+		desc: z.string().default(''),
 		liked: z.boolean().default(false)
 	})
 	.strict();
 
 export const SfxAssetGenObj = z
 	.object({
-		desc: z.string(),
+		desc: z.string().default(''),
 		done: z.boolean().default(false)
 	})
 	.strict();
