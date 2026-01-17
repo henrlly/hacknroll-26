@@ -16,7 +16,7 @@
 	let { children } = $props();
 </script>
 
-<div class="flex h-screen w-full flex-col">
+<div class="flex h-screen w-full flex-col overflow-auto">
 	<ModeWatcher />
 	<header class="flex w-full justify-between items-center p-2 pt-4 px-6 mb-4">
 		<div class="flex gap-4 items-center text-sm">

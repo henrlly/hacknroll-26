@@ -6,7 +6,7 @@ export function sendEditPrompt(prompt: string, scene_number: number) {
 		custom_edit_prompt: prompt,
 		scene_number,
 	});
-	console.log("hi from edit prompt")
+
 	socketState.socket?.send(JSON.stringify(request));
 }
 

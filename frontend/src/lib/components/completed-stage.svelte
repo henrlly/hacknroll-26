@@ -26,10 +26,20 @@
 
 	let editPrompt = $state('');
 	let openEditPhotos = $state(false);
-	let activeAsset: string = $derived(videoState.visual_asset_gen[currentIndex].mp4Url);
-	let currentTime = $state(0);
-	let currentScene = $state(0);
-	let paused = $state(false);
+	let activeAsset: string = $derived(videoState.visual_asset_gen[currentIndex].mp4Url)
+
+	function handleSubmitPrompt(e: SubmitEvent) {
+		e.preventDefault();
+		if (!editPrompt.trim()) return;
+
+		try {
+			// Ensure sendEditPrompt is awaited if it's an async function
+			sendEditPrompt(editPrompt);
+			editPrompt = ''; // Clear input after success
+		} catch (err) {
+			console.error('Failed to send edit:', err);
+		}
+	}
 </script>
 
 <div class="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 py-4">
@@ -75,27 +85,26 @@
 		</Button>
 	</div>
 
-	{#if editingMode}
-		<div class="w-full backdrop-blur-sm">
-			<div class="flex h-full w-full gap-6 p-6">
-				<div class="flex w-[60%] shrink-0 flex-col gap-4">
-					<div class="flex flex-col gap-1.5">
-						<Label class="text-xs text-muted-foreground uppercase">Video Script</Label>
-						<div class="rounded-md">
-							<SceneDisplay scene={videoState.scenes[currentScene]} />
-						</div>
-					</div>
-
-					<div class="flex h-1/2 flex-col gap-1.5">
-						<Label class="text-xs text-muted-foreground uppercase">Adjust Prompt</Label>
-						<form
-							onsubmit={(e) => {
-								e.preventDefault();
-								sendEditPrompt(editPrompt, currentScene);
-							}}
-							class="relative z-10"
-						>
-							<Input type="text" placeholder="e.g. Make the tone more exciting..." />
+    {#if editingMode}
+        <div class="w-full backdrop-blur-sm">
+            <div class="flex w-full h-full gap-6 p-6">
+                
+                <div class="flex flex-col w-[60%] gap-4 shrink-0">
+                    <div class="flex flex-col gap-1.5">
+                        <Label class="text-xs uppercase text-muted-foreground">Video Script</Label>
+                        <div class="rounded-md ">
+                            <ScriptDisplay />
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col gap-1.5 h-1/2">
+                        <Label class="text-xs uppercase text-muted-foreground">Adjust Prompt</Label>
+						<form onsubmit={handleSubmitPrompt} class="relative z-10">
+							<Input 
+								type="text" 
+								placeholder="e.g. Make the tone more exciting..." 
+								bind:value={editPrompt}
+							/>
 						</form>
 					</div>
 				</div>

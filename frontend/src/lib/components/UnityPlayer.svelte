@@ -127,6 +127,7 @@
         height: 100%;
         overflow: hidden;
         background: #231F20;
+        outline: none;
     }
 
     #unity-canvas {
