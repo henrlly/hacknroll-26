@@ -1,5 +1,5 @@
 import type { SceneResponseType } from '$lib/types/apiTypes';
-import type { VideoPlan } from '$lib/types/planTypes';
+import type { Scene, VideoPlan } from '$lib/types/planTypes';
 import {
 	CandidateLoading,
 	type SceneLoadingType,
@@ -11,13 +11,17 @@ import { processNarrationGen, processSfxAssetGen, processVisualAssetGen } from '
 export function sceneFromPlan(plan: VideoPlan, videoObj: VideoLoadingType) {
 	console.log('processing plan');
 	console.log(plan);
-  if (plan?.scenes === undefined) return;
-  videoObj.scenes = []
+	if (plan?.scenes === undefined) return;
+	videoObj.scenes = [];
 	for (let scene of plan.scenes) {
 		videoObj.scenes.push(convertSceneToLoading(scene));
 		// assetIdToSceneNumber = updateAssetIdToSceneNumber(scene, assetIdToSceneNumber);
 	}
 	console.log(videoObj.scenes);
+}
+
+export function sceneFromScenePlan(scene: Scene, videoObj: VideoLoadingType) {
+	videoObj.scenes[scene.scene_number ?? 0] = convertSceneToLoading(scene);
 }
 
 function assetIdToSceneNumber(assetId: string, scenes: SceneLoadingType[]) {
@@ -30,8 +34,8 @@ export function processSceneEvent(event: SceneResponseType, videoObj: VideoLoadi
 	if (event.type === 'narration') {
 		videoObj.scenes[event.scene_number].narration.state =
 			event.event_type === 'narration_generation_start' ? 'generating' : 'done';
-    processNarrationGen(videoObj);
-  } else if (event.type === 'asset') {
+		processNarrationGen(videoObj);
+	} else if (event.type === 'asset') {
 		const scene_number = assetIdToSceneNumber(event.asset_id, videoObj.scenes);
 		const assetIdx = videoObj.scenes[scene_number].assets.findIndex(
 			(a) => a.assetId === event.asset_id
