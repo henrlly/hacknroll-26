@@ -35,13 +35,13 @@ export function connectWebSocket() {
 		}
 		if (result.data.type === 'start') {
 			videoState.session_id = result.data.session_id;
-			videoState.generation_step = 'pre_plan';
+			videoState.generationStep = 'WRITING SCRIPT';
+			videoState.generationStepView = 'WRITING SCRIPT';
 		} else if (result.data.type === 'plan') {
 			// TODO: add plan loading before stream
 			if (result.data.event_type === 'plan_start') {
 				// isLoadingPlan = true;
 			} else if (result.data.event_type === 'plan_stream') {
-				videoState.generation_step = 'plan_generation';
 				plan_string += result.data.delta;
 				plan = VideoPlanSchema.parse(parse(plan_string, ALL));
 				sceneFromPlan(plan, videoState);
@@ -51,13 +51,13 @@ export function connectWebSocket() {
         processNarrationGen(videoState);
         processVisualAssetGen(videoState);
         processSfxAssetGen(videoState);
-				videoState.generation_step = 'scene_generation';
+				videoState.generationStep = 'DOING TASKS';
 			}
 		} else if (result.data.type !== 'final_video') {
 			processSceneEvent(result.data, videoState);
 		} else {
 			if (result.data.event_type === 'stitching_end') {
-				videoState.generation_step = 'final_video';
+				videoState.generationStep = 'COMPLETED';
 			}
 		}
 	};
