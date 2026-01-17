@@ -94,7 +94,7 @@
 					<div class="flex flex-col gap-1.5">
 						<Label class="text-xs text-muted-foreground uppercase">Video Script</Label>
 						<div class="rounded-md">
-							<ScriptDisplay />
+							<SceneDisplay scene={videoState.scenes[currentScene]} />
 						</div>
 					</div>
 
