@@ -27,6 +27,7 @@
 			unityPlayer?.startNarration(videoState.full_script);
 		} else {
 			unityPlayerHidden = false;
+			// unityPlayer.stopEverything
 		}
 		
 		if (character) {
