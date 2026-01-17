@@ -58,7 +58,7 @@
 <div class="w-full max-w-4xl mx-auto p-4">
 	<div class="mb-4">
 		<h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">
-			Scene {scene.scene_number}
+			Scene {scene.scene_number+1}
 		</h2>
 		{#if scene.duration_seconds > 0}
 			<p class="text-sm text-gray-600 dark:text-gray-400">
