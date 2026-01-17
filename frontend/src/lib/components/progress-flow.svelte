@@ -1,4 +1,6 @@
 <script lang="ts">
+    import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
+    
     let { generationStep = $bindable() } = $props();
     let allGenerationSteps = ["INPUT", "WRITING SCRIPT", "DOING TASKS", "COMPLETED"]
 </script>
