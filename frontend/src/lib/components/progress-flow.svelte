@@ -1,10 +1,10 @@
 <script lang="ts">
     import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
-    import { generationData } from "$lib/stores/generation-data.svelte";
+    import { videoState } from "$lib/stores/generation-data.svelte";
 
     let { generationStep = $bindable() } = $props();
     let allGenerationSteps = ["INPUT", "WRITING SCRIPT", "DOING TASKS", "COMPLETED"]
-    let maxStepIndex = $derived(allGenerationSteps.indexOf(generationData.generationStep));
+    let maxStepIndex = $derived(allGenerationSteps.indexOf(videoState.generationStep));
 </script>
 
 <Breadcrumb.Root>

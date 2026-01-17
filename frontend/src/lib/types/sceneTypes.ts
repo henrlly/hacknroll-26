@@ -102,7 +102,7 @@ export const SfxAssetGenObj = z
 export const VideoLoading = z
   .object({
     session_id: z.string().default(''),
-		scenes: z.array(SceneLoading),
+		scenes: z.array(SceneLoading).default([]),
 		topic: z.string().default(''),
 		main_font: z.string().default(''),
 		secondary_font: z.string().default(''),
@@ -110,7 +110,8 @@ export const VideoLoading = z
 		narration_gen: z.array(NarrationGenObj).default([]),
 		visual_asset_gen: z.array(VisualAssetGenObj).default([]),
 		sfx_asset_gen: z.array(SfxAssetGenObj).default([]),
-		generation_step: z.enum(["initial_input", "pre_plan", "plan_generation", "scene_generation", "final_video"])
+		generationStep: z.enum(["INPUT", "WRITING SCRIPT", "DOING TASKS", "COMPLETED"]).default("INPUT"),
+		generationStepView: z.enum(["INPUT", "WRITING SCRIPT", "DOING TASKS", "COMPLETED"]).default("INPUT")
 	})
 	.strict();
 
