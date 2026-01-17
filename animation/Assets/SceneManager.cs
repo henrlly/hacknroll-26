@@ -20,6 +20,9 @@ public class SceneManager : MonoBehaviour
     public GameObject trumpCharacter;
     public GameObject obamaCharacter;
 
+    public GameObject trumpSfxCharacter;
+    public GameObject obamaSfxCharacter;
+
     GameObject character;
     Animator characterAnimator;
 
@@ -47,6 +50,8 @@ public class SceneManager : MonoBehaviour
 
     private Queue<string> narrationQueue = new();
     private bool _isNarrating = false;
+    private string characterName;
+
     public bool IsNarrating
     {
         get => _isNarrating;
@@ -74,6 +79,7 @@ public class SceneManager : MonoBehaviour
 
     public void ChangeCharacter(string characterName)
     {
+        this.characterName = characterName;
         if (character != null)
         {
             Destroy(character);
@@ -130,6 +136,20 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void StartSfx(string sfxDescription)
+    {
+        switch (characterName)
+        {
+            case "trump":
+                trumpSfxCharacter.SetActive(true);
+                break;
+            case "obama":
+                obamaSfxCharacter.SetActive(true);
+                break;
+        }
+        // Start sound
+    }
+
     IEnumerator narrateText(string text)
     {
         const float delay = 0.1f;
@@ -168,7 +188,12 @@ public class SceneManager : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    {        
+        // Check if running on the WebGL platform
+#if !UNITY_EDITOR && UNITY_WEBGL
+        // Set to false to allow other HTML elements (like text fields) to receive input
+        WebGLInput.captureAllKeyboardInput = false;
+#endif
         // Character selection
         // ChangeCharacter("obama");
         // StartTyping("Hello, my name is .\n I am the President of the United States.");
