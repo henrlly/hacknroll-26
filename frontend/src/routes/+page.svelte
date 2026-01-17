@@ -3,7 +3,7 @@
 	import PromptInput from '$lib/components/prompt-input.svelte';
 	import ScriptWritingData from '$lib/components/script-writing-display.svelte';
 	import DoingTasksDisplay from '$lib/components/doing-tasks-display.svelte';
-	import FinalVideo from '$lib/components/final-video.svelte';
+	import FinalVideo from '$lib/components/completed-stage.svelte';
 	import { videoState } from '$lib/stores/generation-data.svelte';
 </script>
 
