@@ -60,7 +60,13 @@ async def websocket_input(websocket: WebSocket):
                 select_image_request(
                     session_id=session_id, select_image_request=request
                 )
-                await callback(SelectImageResponse(success=True))
+                await callback(
+                    SelectImageResponse(
+                        success=True,
+                        asset_id=request.asset_id,
+                        selected_candidate_id=request.selected_candidate_id,
+                    )
+                )
 
             elif data["type"] == "make_scene_request":
                 request = MakeSceneRequest.model_validate(data)

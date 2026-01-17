@@ -90,6 +90,8 @@ export const SceneStreamedResponse = z.object({
 
 export const SelectImageResponse = z.object({
   type: z.literal('select_image'),
+  asset_id: z.string(),
+	selected_candidate_id: z.string(),
   success: z.boolean(),
 })
 

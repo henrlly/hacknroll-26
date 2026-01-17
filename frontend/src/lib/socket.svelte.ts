@@ -7,6 +7,7 @@ import { SceneSchema, VideoPlanSchema } from './types/planTypes';
 import {
 	processFullScript,
 	processNarrationGen,
+	processSelectImage,
 	processSfxAssetGen,
 	processVisualAssetGen
 } from './utils/scenes';
@@ -92,11 +93,7 @@ export function connectWebSocket() {
 			}
 		} else if (result.data.type === 'select_image') {
 			// well image is selected
-			// export const SelectImageResponse = z.object({
-			//      type: z.literal('select_image'),
-			//      success: z.boolean(),
-			//    })
-			//
+			processSelectImage(result.data.asset_id, result.data.selected_candidate_id, videoState);	//
 		}
 		console.log(videoState);
 	};

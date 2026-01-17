@@ -55,34 +55,39 @@ async def generate_visual_asset(
     if mock:
         # copy a sample video to selected_asset_path
         mock_video_path = "mock/asset.mp4"
-        uuids = [uuid.uuid4().hex]
-        file_path = get_asset_file_path(
-            session_id=session_id,
-            asset_id=asset.asset_id,
-            ext="mp4",
-            id=uuids[0],
-        )
-        shutil.copyfile(mock_video_path, file_path)
-
-        mock_image_path = "mock/asset.jpg"
-        file_path_jpg = get_asset_file_path(
-            session_id=session_id,
-            asset_id=asset.asset_id,
-            ext="jpg",
-            id=uuids[0],
-        )
-        shutil.copyfile(mock_image_path, file_path_jpg)
-
-        base64_urls = [""]
-
-        await callback(
-            AssetResponse(
-                event_type="generation_end",
+        uuids = [
+            uuid.uuid4().hex
+            for _ in range(num_stock_clips + num_stock_images + num_meme_clips)
+        ]
+        for i in range(num_stock_clips + num_stock_images + num_meme_clips):
+            file_path = get_asset_file_path(
+                session_id=session_id,
                 asset_id=asset.asset_id,
-                asset_type="visual",
-                candidate_id=uuids[0],
+                ext="mp4",
+                id=uuids[i],
             )
-        )
+            shutil.copyfile(mock_video_path, file_path)
+
+            mock_image_path = "mock/asset.jpg"
+            file_path_jpg = get_asset_file_path(
+                session_id=session_id,
+                asset_id=asset.asset_id,
+                ext="jpg",
+                id=uuids[i],
+            )
+            shutil.copyfile(mock_image_path, file_path_jpg)
+            await callback(
+                AssetResponse(
+                    event_type="generation_end",
+                    asset_id=asset.asset_id,
+                    asset_type="visual",
+                    candidate_id=uuids[i],
+                )
+            )
+
+        base64_urls = [
+            "" for _ in range(num_stock_clips + num_stock_images + num_meme_clips)
+        ]
 
 
     else:

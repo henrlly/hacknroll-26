@@ -26,6 +26,12 @@
           "asset_type": "visual",
           "asset_short_desc": "Anakin Padme meme format",
           "asset_long_desc": "Four panel Anakin and Padme meme template showing Anakin saying something and Padme looking concerned, used to show the binary tree constraint of maximum two children"
+        },
+        {
+          "asset_id": "anakin_padme_meme_2",
+          "asset_type": "visual",
+          "asset_short_desc": "Anakin Padme meme format 2",
+          "asset_long_desc": "Four panel Anakin and Padme meme template showing Anakin saying something and Padme looking concerned, used to show the binary tree constraint of maximum two children 2"
         }
       ],
       "scene_structure": "1. Start scene voiceover immediately at t=0\n2. Show chaotic family tree with many children per parent\n3. Transition to clean binary tree with max 2 children\n4. Display Anakin Padme meme with text about the two-child limit\n5. Emphasize the 'max 2 children' rule with highlight effect"
