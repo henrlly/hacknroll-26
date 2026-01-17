@@ -19,7 +19,7 @@
 <div class="flex h-screen w-full flex-col overflow-auto">
 	<ModeWatcher />
 	<header class="flex w-full justify-between items-center p-2 pt-4 px-6 mb-4">
-		<div class="flex gap-4 items-center text-sm">
+		<div class="flex gap-4 items-center text-lg">
 			<a href="/">
 				<Film />
 			</a>
@@ -29,7 +29,7 @@
 		</div>
 		<div class="flex gap-2 h-4 items-center">
 			<Button target="_blank" href="https://github.com/henrlly/hacknroll-26" variant="ghost">
-				<GithubIcon class="size-5" />
+				<GithubIcon class="size-8" />
 			</Button>
 			<Separator class="h-1/2" orientation="vertical" />
 			<ModeSwitcher />

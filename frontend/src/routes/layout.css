@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 
 @import "tw-animate-css";
 
@@ -117,5 +118,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  :root {
+    --font-anthropic: "Instrument Serif", serif;
+  }
+}
+
+@layer utilities {
+  /* 2. Create the Tailwind alias */
+  .font-anthropic {
+    font-family: var(--font-anthropic);
+    /* Anthropic's style is usually very tight and elegant */
+    letter-spacing: -0.02em; 
+    font-weight: 400;
   }
 }

@@ -35,7 +35,7 @@
 				unityPlayer?.startSfx(videoState.sfx_asset_gen[i].desc);
 				i++;
 				i %= videoState.sfx_asset_gen.length;
-			}, 1000);
+			}, 2000);
 		} else {
 			unityPlayerHidden = false;
 			// unityPlayer.stopEverything
@@ -51,8 +51,10 @@
 <div class="flex h-screen w-full flex-col items-center ">
 	<div class="flex h-screen w-full max-w-8xl flex-col items-center gap-4">
 		<ProgressFlow bind:generationStep={videoState.generationStepView} />
-		<div class={["aspect-video w-4/5 rounded-3xl", unityPlayerHidden ? "hidden" : ""]}>
-			<UnityPlayer bind:this={unityPlayer} bind:isUnityLoaded={isUnityLoaded}/>
+		<div class="aspect-video w-3/5 rounded-3xl overflow-hidden relative">
+			<div class="w-full h-full scale-125">
+				<UnityPlayer bind:this={unityPlayer} bind:isUnityLoaded={isUnityLoaded} />
+			</div>
 		</div>
 			{#if videoState.generationStepView === 'INPUT'}
 			<PromptInput class={loading ? "cursor-wait" : ""} bind:voice={character} />

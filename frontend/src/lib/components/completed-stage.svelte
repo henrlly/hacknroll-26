@@ -116,7 +116,7 @@
 <svelte:window onkeydown={handleKeyDown} />
 
 <div class="mx-auto flex w-full flex-col items-center gap-6 py-4">
-	<div class="relative aspect-video w-4/5 rounded-xl border-1 border-dashed border-primary">
+	<div class="relative aspect-video w-3/5 rounded-xl border-1 border-dashed border-primary">
 		<video
 			bind:currentTime
 			bind:paused
