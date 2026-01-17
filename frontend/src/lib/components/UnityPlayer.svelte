@@ -32,6 +32,12 @@
         }
     }
 
+    export function startSfx(sfxDescription: string) {
+        if (unityInstance) {
+            unityInstance.SendMessage('SceneManager', 'StartSfx', sfxDescription);
+        }
+    }
+
     onMount(() => {
         // Load Profiler
         if (!profilerScript) {

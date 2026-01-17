@@ -117,7 +117,8 @@ export const VideoLoading = z
 		generationStepView: z
 			.enum(['INPUT', 'WRITING SCRIPT', 'DOING TASKS', 'COMPLETED'])
 			.default('INPUT'),
-		completed: z.boolean().default(false)
+		completed: z.boolean().default(false),
+		sceneDurations: z.array(z.number()).default([])
 	})
 	.strict();
 
