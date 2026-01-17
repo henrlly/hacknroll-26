@@ -5,7 +5,7 @@
     import { Badge } from "$lib/components/ui/badge/index.js";
     import { socketState } from "$lib/socket.svelte";
 
-    let { character=$bindable() } = $props();
+    let { character=$bindable(), class: className } = $props();
     let voice = $state("trump");
     let prompt = $state("");
 
@@ -27,7 +27,7 @@
         </Card.Header>
         <Card.Content>
             <form class="flex flex-col items-start" onsubmit={handleSubmit}>
-            <Textarea class="mb-4 hover:shadow-primary hover:shadow-md focus:shadow-primary focus:shadow-md" name="prompt" placeholder="Enter video idea" bind:value={prompt}/>
+            <Textarea class="mb-4 hover:shadow-primary hover:shadow-md focus:shadow-primary focus:shadow-md + {className}" name="prompt" placeholder="Enter video idea" bind:value={prompt}/>
     
                 <input type="hidden" name="voice" bind:value={voice}>
     

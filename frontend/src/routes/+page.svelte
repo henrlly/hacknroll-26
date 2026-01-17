@@ -10,10 +10,14 @@
 	let unityPlayer: UnityPlayer | undefined = $state();
 	let unityPlayerHidden = $state(true);
 	let character = $state("trump" as "trump" | "obama");
+	let loading = $state(true);
+	$inspect(loading)
 	$effect(() => {
 		setTimeout(() => {
 			unityPlayer?.changeBackgroundColor("#FFFFFF");
-		}, 5000)
+			loading = false;
+		}, 4000)
+
 	})
 
 	$effect(() => {
@@ -42,7 +46,7 @@
 			<UnityPlayer bind:this={unityPlayer}/>
 		</div>
 			{#if videoState.generationStepView === 'INPUT'}
-			<PromptInput bind:character={character} />
+			<PromptInput class={loading ? "cursor-wait" : ""} bind:character={character} />
 			{:else if videoState.generationStepView === 'WRITING SCRIPT'}
 			<ScriptWritingData />
 			{:else if videoState.generationStepView === 'DOING TASKS'}
