@@ -20,6 +20,8 @@ class SelectImageRequest(BaseModel):
 
 class SelectImageResponse(BaseModel):
     type: Literal["select_image"] = "select_image"
+    asset_id: str
+    selected_candidate_id: str
     success: bool
 
 

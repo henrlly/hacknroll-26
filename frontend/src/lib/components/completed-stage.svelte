@@ -10,6 +10,7 @@
 	import { sendEditPrompt, selectVisual } from '$lib/utils/editing';
 	import Timeline from './timeline.svelte';
 	import SceneDisplay from './SceneDisplay.svelte';
+	import VisualAssetStack from './VisualAssetStack.svelte';
 
 	let editingMode = $state(false);
 	let currentIndex = $state(0);
@@ -141,77 +142,15 @@
 								bind:value={editPrompt}
 							/>
 						</form>
+						<Button type="submit" class="mt-2">
+							<Edit2 class="size-4 mr-2" />
+							Regenerate Plan
+						</Button>
 					</div>
 				</div>
 
 				<div class="flex flex-grow flex-col gap-1.5">
-					<Label class="text-xs text-muted-foreground uppercase">Active Clip</Label>
-					<div class="relative flex-grow overflow-hidden rounded-xl border bg-black shadow-inner">
-						{#key activeAsset}
-							<video
-								class="h-full w-full object-cover opacity-80"
-								src={activeAsset}
-								autoplay
-								loop
-								muted
-							>
-								<track kind="captions" />
-							</video>
-						{/key}
-						<div class="absolute top-3 right-3">
-							<Dialog.Root bind:open={openEditPhotos}>
-								<Dialog.Trigger>
-									<Button
-										variant="secondary"
-										size="icon"
-										class="h-8 w-8 rounded-full opacity-50 shadow-lg hover:opacity-100"
-									>
-										<Edit2 class="size-4" />
-									</Button>
-								</Dialog.Trigger>
-
-								<Dialog.Content class="sm:max-w-[600px]">
-									<Dialog.Header>
-										<Dialog.Title>Select Visual Asset</Dialog.Title>
-										<Dialog.Description>
-											Choose which image or clip to use for this segment of the video.
-										</Dialog.Description>
-									</Dialog.Header>
-
-									<div class="grid grid-cols-3 gap-4 py-4">
-										{#each videoState.visual_asset_gen as asset}
-											<button
-												onclick={() => {
-													selectVisual({ assetId: 'idk', selectedCandidateId: 'idk' });
-												}}
-												class="relative aspect-video overflow-hidden rounded-md border-2 transition-all hover:ring-2 hover:ring-primary"
-											>
-												<video src={asset.mp4Url} class="h-full w-full object-cover">
-													<track kind="captions" />
-												</video>
-
-												{#if activeAsset === asset.mp4Url}
-													<div
-														class="absolute inset-0 flex items-center justify-center bg-primary/20"
-													>
-														<Badge class="rounded-full p-1">
-															<Check class="size-3" />
-														</Badge>
-													</div>
-												{/if}
-											</button>
-										{/each}
-									</div>
-
-									<Dialog.Footer>
-										<Button onclick={() => (openEditPhotos = false)} type="submit"
-											>Confirm Selection</Button
-										>
-									</Dialog.Footer>
-								</Dialog.Content>
-							</Dialog.Root>
-						</div>
-					</div>
+					<VisualAssetStack scene={videoState.scenes[currentScene]} />
 				</div>
 			</div>
 		</div>

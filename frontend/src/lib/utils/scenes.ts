@@ -63,3 +63,25 @@ export function processSfxAssetGen(video: VideoLoadingType) {
 	}
 	video.sfx_asset_gen = sfx_asset_gen;
 }
+
+export function processSelectImage(asset_id: string, selected_candidate_id: string, video: VideoLoadingType) {
+	// Find the asset by asset_id across all scenes
+	for (let scene of video.scenes!) {
+		for (let asset of scene.assets) {
+			if (asset.type === 'visual' && asset.assetId === asset_id) {
+				// Clear all previous finalSelected flags for this asset
+				for (let candidate of asset.candidates) {
+					candidate.finalSelected = false;
+				}
+
+				// Set finalSelected to true for the selected candidate
+				const selectedCandidate = asset.candidates.find(c => c.candidateId === selected_candidate_id);
+				if (selectedCandidate) {
+					selectedCandidate.finalSelected = true;
+				}
+
+				return; // Exit early once we find and update the asset
+			}
+		}
+	}
+}
