@@ -236,6 +236,14 @@ Your task is to generate Manim code for a specific scene of the video, following
 # and not (never? unless there is a good reason)
 # only partial words/certain characters in a word
 #
+# compare width and height
+# if we want to fit the unit in a 5 unit square
+# if frame_img.width < frame_img.height:
+#     frame_img = frame_img.scale_to_fit_height(5)
+# else:
+#     frame_img = frame_img.scale_to_fit_width(5)
+# does this really work??
+#
 MANIM_PROMPT_TEMPLATE = """
 # OBJECTIVE
 Generate **Manim Community v0.19.1** Python code for **Scene {{ scene_number }}** of a "Fireship-style" explainer video about **{{ topic }}**.
@@ -283,7 +291,7 @@ Use `self.add_sound("path/to/file.mp3")` for both the voiceover and sound effect
 ## 3. Visual Implementation (Custom CV2 Logic)
 All visual assets are `.mp4` files. Some are single-frame loops (images), others are video clips.
 *   **Scaling:** Resize frames to fit the scene using `frame_img.scale_to_fit_height()` or `.scale_to_fit_width()`. (Manim default: 14.22w x 8h).
-*   **Aspect Ratio:** Assume roughly square aspect ratios.
+*   **Aspect Ratio:** Compare `frame_img.width` with `frame_img.height` to decide whether to scale to fit height or width.
 *   **Minimum Duration**: Any external .mp4 asset **must** remain visible for a MINIMUM of 1 second. Do not cut them shorter than this, even if the voiceover is fast.
 *   **Logic:** If there are visual assets, you **must** adapt the following `cv2` pattern to display these assets, ensuring you loop or cut them to fit the scene duration:
 
@@ -306,7 +314,13 @@ while elapsed < visual_asset_duration:
             self.remove(current_frame)
 
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame_img = ImageMobject(frame).scale_to_fit_height(5)
+        frame_img = ImageMobject(frame)
+        # compare width and height
+        # if we want to fit the unit in a 5 unit square
+        if frame_img.width < frame_img.height:
+            frame_img = frame_img.scale_to_fit_height(5)
+        else:
+            frame_img = frame_img.scale_to_fit_width(5)
         frame_img.move_to(UP * 0.5)
         current_frame = frame_img
         self.add(frame_img)

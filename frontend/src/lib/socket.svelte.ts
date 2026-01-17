@@ -70,6 +70,7 @@ export function connectWebSocket() {
 			if (result.data.event_type === 'stitching_end') {
 				videoState.generationStep = 'COMPLETED';
 				videoState.generationStepView = 'COMPLETED';
+				videoState.completed = true;
 			}
 		} else if (result.data.type === 'scene') {
 			// TODO: add plan loading before stream
@@ -92,9 +93,9 @@ export function connectWebSocket() {
 		} else if (result.data.type === 'select_image') {
 			// well image is selected
 			// export const SelectImageResponse = z.object({
-   //      type: z.literal('select_image'),
-   //      success: z.boolean(),
-   //    })
+			//      type: z.literal('select_image'),
+			//      success: z.boolean(),
+			//    })
 			//
 		}
 		console.log(videoState);
