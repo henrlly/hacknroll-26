@@ -42,6 +42,12 @@ export function convertSceneToLoading(scene: Scene): SceneLoadingType {
 		scene_number: scene.scene_number,
 		assets,
 		code,
-		render
+		render,
+		duration_seconds: scene.duration_seconds,
+		visuals_description: scene.visuals_description,
+		narration_script: scene.narration_script,
+		sound_description: scene.sound_description,
+		edit_notes: scene.edit_notes,
+		scene_structure: scene.scene_structure
 	});
 }
