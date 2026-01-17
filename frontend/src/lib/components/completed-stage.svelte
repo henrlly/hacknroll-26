@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { STATIC_API_BASE } from '$lib/utils/constants';
 	import { videoState } from '$lib/stores/generation-data.svelte';
-	import ScriptDisplay from './script-display.svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import { Label } from '$lib/components/ui/label';
@@ -26,7 +25,10 @@
 
 	let editPrompt = $state('');
 	let openEditPhotos = $state(false);
-	let activeAsset: string = $derived(videoState.visual_asset_gen[currentIndex].mp4Url)
+	let currentScene = $state(0);
+	let currentTime = $state(0);
+	let paused = $state(false);
+	let activeAsset: string = $derived(videoState.visual_asset_gen[currentIndex].mp4Url);
 
 	function handleSubmitPrompt(e: SubmitEvent) {
 		e.preventDefault();
@@ -34,7 +36,7 @@
 
 		try {
 			// Ensure sendEditPrompt is awaited if it's an async function
-			sendEditPrompt(editPrompt);
+			sendEditPrompt(editPrompt, currentScene);
 			editPrompt = ''; // Clear input after success
 		} catch (err) {
 			console.error('Failed to send edit:', err);
@@ -47,7 +49,7 @@
 		<video
 			bind:currentTime
 			bind:paused
-			onclick={() => paused = !paused}
+			onclick={() => (paused = !paused)}
 			class="h-full w-full rounded-xl"
 			src={`${STATIC_API_BASE}/${videoState.session_id}/final_video.mp4`}
 			autoplay
@@ -85,24 +87,23 @@
 		</Button>
 	</div>
 
-    {#if editingMode}
-        <div class="w-full backdrop-blur-sm">
-            <div class="flex w-full h-full gap-6 p-6">
-                
-                <div class="flex flex-col w-[60%] gap-4 shrink-0">
-                    <div class="flex flex-col gap-1.5">
-                        <Label class="text-xs uppercase text-muted-foreground">Video Script</Label>
-                        <div class="rounded-md ">
-                            <ScriptDisplay />
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col gap-1.5 h-1/2">
-                        <Label class="text-xs uppercase text-muted-foreground">Adjust Prompt</Label>
+	{#if editingMode}
+		<div class="w-full backdrop-blur-sm">
+			<div class="flex h-full w-full gap-6 p-6">
+				<div class="flex w-[60%] shrink-0 flex-col gap-4">
+					<div class="flex flex-col gap-1.5">
+						<Label class="text-xs text-muted-foreground uppercase">Video Script</Label>
+						<div class="rounded-md">
+							<ScriptDisplay />
+						</div>
+					</div>
+
+					<div class="flex h-1/2 flex-col gap-1.5">
+						<Label class="text-xs text-muted-foreground uppercase">Adjust Prompt</Label>
 						<form onsubmit={handleSubmitPrompt} class="relative z-10">
-							<Input 
-								type="text" 
-								placeholder="e.g. Make the tone more exciting..." 
+							<Input
+								type="text"
+								placeholder="e.g. Make the tone more exciting..."
 								bind:value={editPrompt}
 							/>
 						</form>
