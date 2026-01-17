@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # Override by setting environment variables or directly modifying here for dev/testing
 # e.g. to change MOCK_PLAN, export APP_MOCK_PLAN=False
 class Config(BaseSettings):
-    MOCK_PLAN: bool = True
+    MOCK_PLAN: bool = False
     MOCK_VISUAL_ASSET: bool = True
     MOCK_SFX: bool = True
     MOCK_NARRATION: bool = True
@@ -13,11 +13,11 @@ class Config(BaseSettings):
     MOCK_CODE_FIX: bool = True
     MOCK_CODE_RENDER: bool = True  # rendering 4 scenes in parallel takes 5s
     MOCK_EDIT_SCENE: bool = True  # rendering 4 scenes in parallel takes 5s
-    USE_LOCAL_TTS: bool = False
+    USE_LOCAL_TTS: bool = True
     # if we mock everything it takes 7s on my computer
 
-    CALLBACK_DELAY: float = 0.5  # seconds
-    STREAMING_DELAY: float = 0.1  # seconds
+    CALLBACK_DELAY: float = 0.1  # seconds
+    STREAMING_DELAY: float = 0  # seconds
     CHARS_PER_STREAM_MESSAGE: int = 200
 
     # Visual generation
@@ -25,9 +25,9 @@ class Config(BaseSettings):
     ENABLE_IMAGE_SELECTION: bool = False
 
     # Number of candidates to fetch from database per asset
-    NUM_STOCK_IMAGES: int = 1  # dont set this below 1, will error
-    NUM_STOCK_CLIPS: int = 1  # dont set this below 1, will error
-    NUM_MEME_CLIPS: int = 1  # dont set this below 1, will error
+    NUM_STOCK_IMAGES: int = 2  # dont set this below 1, will error
+    NUM_STOCK_CLIPS: int = 2  # dont set this below 1, will error
+    NUM_MEME_CLIPS: int = 2  # dont set this below 1, will error
 
     NUM_CODE_VERSIONS_PER_SCENE: int = 2  # the most important setting!
     MANIM_SCENE_MAX_RETRIES: int = 5

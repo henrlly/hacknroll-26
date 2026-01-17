@@ -89,7 +89,6 @@ async def generate_visual_asset(
             "" for _ in range(num_stock_clips + num_stock_images + num_meme_clips)
         ]
 
-
     else:
         [
             (stock_base64_urls, stock_uuids),
@@ -159,7 +158,10 @@ async def generate_visual_asset(
     else:
         idxs = [0]
 
-    idx = 0 if idxs is None or idxs[0] < 0 or idxs[0] >= len(uuids) else idxs[0]
+    if idxs is None:
+        idxs = [0]
+
+    idxs = [0 if i < 0 or i >= len(uuids) else i for i in idxs]
 
     await callback(
         AssetSelectionResponse(
@@ -167,7 +169,7 @@ async def generate_visual_asset(
             asset_id=asset.asset_id,
             asset_type="visual",
             selected_candidate_ids=[uuids[i] for i in idxs],
-            selected_candidate_id=uuids[idx],
+            selected_candidate_id=uuids[idxs[0]],
         )
     )
 
@@ -179,7 +181,7 @@ async def generate_visual_asset(
             session_id=session_id,
             asset_id=asset.asset_id,
             ext="mp4",
-            id=uuids[idx],
+            id=uuids[idxs[0]],
         ),
         selected_asset_path,
     )

@@ -5,29 +5,28 @@
 	import DoingTasksDisplay from '$lib/components/doing-tasks-display.svelte';
 	import FinalVideo from '$lib/components/completed-stage.svelte';
 	import { videoState } from '$lib/stores/generation-data.svelte';
-	import UnityPlayer from "$lib/components/UnityPlayer.svelte";
-	
+	import UnityPlayer from '$lib/components/UnityPlayer.svelte';
+
 	let unityPlayer: UnityPlayer | undefined = $state();
 	let unityPlayerHidden = $state(true);
-	let character : "trump" | "obama" | undefined = $state("trump");
+	let character: 'trump' | 'obama' | undefined = $state('trump');
 	let loading = $state(true);
 	let isUnityLoaded = $state(false);
-	$inspect(loading)
+	$inspect(loading);
 	$effect(() => {
 		setTimeout(() => {
-			unityPlayer?.changeBackgroundColor("#FFFFFF");
+			unityPlayer?.changeBackgroundColor('#FFFFFF');
 			loading = false;
-		}, 4000)
-
-	})
+		}, 4000);
+	});
 
 	$effect(() => {
-		if (videoState.generationStepView === "COMPLETED") {
+		if (videoState.generationStepView === 'COMPLETED') {
 			unityPlayerHidden = true;
-		} else if (videoState.generationStepView === "WRITING SCRIPT") {
+		} else if (videoState.generationStepView === 'WRITING SCRIPT') {
 			unityPlayerHidden = false;
-			unityPlayer?.startTyping(videoState.full_script);
-		} else if (videoState.generationStepView === "DOING TASKS") {
+			if (videoState.full_script !== '') unityPlayer?.startTyping(videoState.full_script);
+		} else if (videoState.generationStepView === 'DOING TASKS') {
 			unityPlayerHidden = false;
 			unityPlayer?.startNarration(videoState.full_script);
 			let i = 0;
@@ -46,23 +45,24 @@
 		if (character && isUnityLoaded) {
 			unityPlayer?.changeCharacter(character);
 		}
-	})
+	});
 </script>
-<div class="flex h-screen w-full flex-col items-center ">
-	<div class="flex h-screen w-full max-w-8xl flex-col items-center gap-4">
+
+<div class="flex h-screen w-full flex-col items-center">
+	<div class="max-w-8xl flex h-screen w-full flex-col items-center gap-4">
 		<ProgressFlow bind:generationStep={videoState.generationStepView} />
 		<div class="aspect-video w-3/5 rounded-3xl overflow-hidden relative">
 			<div class="w-full h-full scale-125">
 				<UnityPlayer bind:this={unityPlayer} bind:isUnityLoaded={isUnityLoaded} />
 			</div>
 		</div>
-			{#if videoState.generationStepView === 'INPUT'}
-			<PromptInput class={loading ? "cursor-wait" : ""} bind:voice={character} />
-			{:else if videoState.generationStepView === 'WRITING SCRIPT'}
+		{#if videoState.generationStepView === 'INPUT'}
+			<PromptInput class={loading ? 'cursor-wait' : ''} bind:voice={character} />
+		{:else if videoState.generationStepView === 'WRITING SCRIPT'}
 			<ScriptWritingData />
-			{:else if videoState.generationStepView === 'DOING TASKS'}
+		{:else if videoState.generationStepView === 'DOING TASKS'}
 			<DoingTasksDisplay />
-			{:else if videoState.generationStepView === 'COMPLETED'}
+		{:else if videoState.generationStepView === 'COMPLETED'}
 			<FinalVideo />
 		{/if}
 	</div>

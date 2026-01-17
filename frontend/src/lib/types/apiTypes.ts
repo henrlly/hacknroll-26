@@ -55,7 +55,7 @@ export const ManimCodeGenerationResponse = z.object({
 	event_type: z.enum(['code_generation_start', 'code_generation_end']),
 	scene_number: z.number(),
 	version_number: z.number(),
-	retry_number: z.number().default(0),
+	retry_number: z.number().catch(0),
 	success: z.boolean().nullish()
 });
 
@@ -64,7 +64,7 @@ export const ManimCodeRendingResponse = z.object({
 	event_type: z.enum(['rendering_start', 'rendering_end']),
 	scene_number: z.number(),
 	version_number: z.number(),
-	retry_number: z.number().default(0),
+	retry_number: z.number().catch(0),
 	success: z.boolean(),
 	error_message: z.literal('cancelled').nullish()
 });
@@ -125,29 +125,29 @@ export type PlanStreamedResponseType = z.infer<typeof PlanStreamedResponse>;
 export type StreamResponseType = z.infer<typeof StreamResponse>;
 
 export const EditSceneRequest = z.object({
-	type: z.literal('edit_scene_request').default('edit_scene_request'),
+	type: z.literal('edit_scene_request').catch('edit_scene_request'),
 	edit_prompt_type: z.enum(['funny', 'detailed', 'pictures']).optional(),
 	custom_edit_prompt: z.string().optional(),
 	scene_number: z.number()
-}).strict();
+});
 
 export const SelectImageRequest = z.object({
-	type: z.literal('select_image_request').default('select_image_request'),
+	type: z.literal('select_image_request').catch('select_image_request'),
 	asset_id: z.string(),
 	selected_candidate_id: z.string()
 });
 
 export const MakeSceneRequest = z.object({
-  type: z.literal("make_scene_request").default("make_scene_request"),
+  type: z.literal("make_scene_request").catch("make_scene_request"),
   scene_number: z.number()
 })
 
 export const RenderRequest = z.object({
-  type: z.literal('render_code_request').default('render_code_request'),
+  type: z.literal('render_code_request').catch('render_code_request'),
   scene_number: z.number(),
   version_number: z.number(),
 })
 
 export const StitchRequest = z.object({
-  type: z.literal('stitch_request').default('stitch_request'),
+  type: z.literal('stitch_request').catch('stitch_request'),
 })
