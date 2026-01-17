@@ -108,3 +108,16 @@ export type SceneResponseType = z.infer<typeof SceneResponse>;
 export type PlanStreamedResponseType = z.infer<typeof PlanStreamedResponse>;
 
 export type StreamResponseType = z.infer<typeof StreamResponse>;
+
+export const EditSceneRequest = z.object({
+	type: z.literal('edit_scene_request').default('edit_scene_request'),
+	edit_prompt_type: z.enum(['funny', 'detailed', 'pictures']).optional(),
+	custom_edit_prompt: z.string().optional(),
+	scene_number: z.number()
+});
+
+export const SelectImageRequest = z.object({
+	type: z.literal('select_image_request').default('select_image_request'),
+	asset_id: z.string(),
+	selected_candidate_id: z.string()
+});
