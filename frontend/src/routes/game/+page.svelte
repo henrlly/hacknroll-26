@@ -11,6 +11,9 @@
                 unityPlayer?.startTyping("Hello, this is a test of the Unity Svelte integration!");
                 setTimeout(() => {
                     unityPlayer?.startNarration("Hello, this is a test of the Unity Svelte integration!");
+                    setTimeout(() => {
+                        unityPlayer?.startSfx("dog bark")
+                    }, 1000)
                 }, 1000);
             }, 1000);
 
