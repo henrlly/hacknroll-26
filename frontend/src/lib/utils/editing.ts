@@ -5,6 +5,7 @@ export function sendEditPrompt(prompt: string) {
 	const request = EditSceneRequest.parse({
 		custom_edit_prompt: prompt
 	});
+	console.log("hi from edit prompt")
 	socketState.socket?.send(JSON.stringify(request));
 }
 

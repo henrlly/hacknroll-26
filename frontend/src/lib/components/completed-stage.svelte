@@ -8,6 +8,7 @@
     import { Badge } from "$lib/components/ui/badge";
 	import { Input } from "$lib/components/ui/input/index.js";
 	import { ChevronDown, ChevronUp, Sparkles, Wand2, Edit2, Check } from '@lucide/svelte';
+	import { sendEditPrompt } from '$lib/utils/editing';
 
 	let editingMode = $state(false);
 	let currentIndex = $state(0);
@@ -21,6 +22,7 @@
         }
 	})
 
+	let editPrompt = $state("");
 	let openEditPhotos = $state(false);
 	let activeAsset: string = $derived(videoState.visual_asset_gen[currentIndex].mp4Url)
 </script>
@@ -77,7 +79,9 @@
                     
                     <div class="flex flex-col gap-1.5 h-1/2">
                         <Label class="text-xs uppercase text-muted-foreground">Adjust Prompt</Label>
-                        <Input type="text" placeholder="e.g. Make the tone more exciting..." class="bg-background" />
+						<form >
+							<Input type="text" name="editPrompt" placeholder="e.g. Make the tone more exciting..." bind:value={editPrompt} />
+						</form>
                     </div>
                 </div>
 
@@ -92,7 +96,7 @@
                             loop
                             muted
                         >
-						<track kind="captions"> 
+							<track kind="captions"> 
                         </video>
 						{/key}
                         <div class="absolute top-3 right-3">
