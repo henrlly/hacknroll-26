@@ -35,7 +35,8 @@ export function processVisualAssetGen(video: VideoLoadingType) {
 			for (let c of asset.candidates) {
 				visual_asset_gen.push(
 					VisualAssetGenObj.parse({
-						url: `${STATIC_API_BASE}/${video.session_id}/${asset.assetId}/${c.candidateId}.mp4`,
+						url: `${STATIC_API_BASE}/${video.session_id}/${asset.assetId}/${c.candidateId}.jpg`,
+						mp4Url: `${STATIC_API_BASE}/${video.session_id}/${asset.assetId}/${c.candidateId}.mp4`,
 						desc: asset.assetShortDesc,
 						liked: c.selected
 					})
