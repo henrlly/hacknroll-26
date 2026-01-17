@@ -82,6 +82,17 @@ export const FinalVideoResponse = z.object({
 	error_message: z.string().nullish()
 });
 
+export const SceneStreamedResponse = z.object({
+  type: z.literal('scene'),
+  event_type: z.enum(["scene_start", "scene_stream", "scene_end"]),
+  delta: z.string()
+})
+
+export const SelectImageResponse = z.object({
+  type: z.literal('select_image'),
+  success: z.boolean(),
+})
+
 export const StreamResponse = z.union([
 	StartPipelineResponse,
 	PlanStreamedResponse,
@@ -91,7 +102,9 @@ export const StreamResponse = z.union([
 	ManimCodeGenerationResponse,
 	ManimCodeRendingResponse,
 	ManimCodeRendingSelectionResponse,
-	FinalVideoResponse
+  FinalVideoResponse,
+  SceneStreamedResponse,
+  SelectImageResponse
 ]);
 
 export const SceneResponse = z.union([
@@ -108,3 +121,16 @@ export type SceneResponseType = z.infer<typeof SceneResponse>;
 export type PlanStreamedResponseType = z.infer<typeof PlanStreamedResponse>;
 
 export type StreamResponseType = z.infer<typeof StreamResponse>;
+
+export const EditSceneRequest = z.object({
+	type: z.literal('edit_scene_request').default('edit_scene_request'),
+	edit_prompt_type: z.enum(['funny', 'detailed', 'pictures']).optional(),
+	custom_edit_prompt: z.string().optional(),
+	scene_number: z.number()
+});
+
+export const SelectImageRequest = z.object({
+	type: z.literal('select_image_request').default('select_image_request'),
+	asset_id: z.string(),
+	selected_candidate_id: z.string()
+});
