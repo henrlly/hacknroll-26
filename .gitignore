@@ -1,0 +1,10 @@
+**/.DS_Store
+**/__pycache__/
+**/.env
+**/.env.local
+
+# for diskcache in backend
+**/.local_cache
+**/.venv
+
+**/node_modules
