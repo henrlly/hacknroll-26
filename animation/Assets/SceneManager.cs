@@ -186,6 +186,7 @@ public class SceneManager : MonoBehaviour
 
     IEnumerator narrateText(string text)
     {
+        text = text.Replace(".", ".\n").Replace("\n\n", "\n");
         const float delay = 0.1f;
         const float longerDelay = 1.9f;
         IsNarrating = true;
@@ -212,6 +213,7 @@ public class SceneManager : MonoBehaviour
 
     public void StartNarration(string narration)
     {
+        typeTextQueue.Clear();
         if (IsNarrating)
         {
             narrationQueue.Enqueue(narration);

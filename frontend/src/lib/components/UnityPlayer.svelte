@@ -7,6 +7,7 @@
     let unityInstance: any = null;
     let script: HTMLScriptElement | undefined = $state();
     let profilerScript: HTMLScriptElement | undefined = $state();
+    let {isUnityLoaded = $bindable(false)}: { isUnityLoaded: boolean } = $props();
 
     export function changeBackgroundColor(color: string) {
         if (unityInstance) {
@@ -70,6 +71,7 @@
                 // if (progressBarFull) progressBarFull.style.width = 100 * progress + "%"; TODO: Listen to progress
             }).then((instance: any) => {
                 unityInstance = instance;
+                isUnityLoaded = true;
 
                 // @ts-ignore
                 // if (typeof unityProfiler !== 'undefined' && buildTitle) {

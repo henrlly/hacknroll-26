@@ -9,8 +9,9 @@
 	
 	let unityPlayer: UnityPlayer | undefined = $state();
 	let unityPlayerHidden = $state(true);
-	let character = $state("trump" as "trump" | "obama");
+	let character : "trump" | "obama" | undefined = $state("trump");
 	let loading = $state(true);
+	let isUnityLoaded = $state(false);
 	$inspect(loading)
 	$effect(() => {
 		setTimeout(() => {
@@ -33,8 +34,10 @@
 			unityPlayerHidden = false;
 			// unityPlayer.stopEverything
 		}
-		
-		if (character) {
+	});
+
+	$effect(() => {
+		if (character && isUnityLoaded) {
 			unityPlayer?.changeCharacter(character);
 		}
 	})
@@ -42,11 +45,11 @@
 <div class="flex h-screen w-full flex-col items-center ">
 	<div class="flex h-screen w-full max-w-8xl flex-col items-center gap-4">
 		<ProgressFlow bind:generationStep={videoState.generationStepView} />
-		<div class="aspect-video w-4/5 rounded-3xl {unityPlayerHidden ? "hidden" : "" }">
-			<UnityPlayer bind:this={unityPlayer}/>
+		<div class={["aspect-video w-4/5 rounded-3xl", unityPlayerHidden ? "hidden" : ""]}>
+			<UnityPlayer bind:this={unityPlayer} bind:isUnityLoaded={isUnityLoaded}/>
 		</div>
 			{#if videoState.generationStepView === 'INPUT'}
-			<PromptInput class={loading ? "cursor-wait" : ""} bind:character={character} />
+			<PromptInput class={loading ? "cursor-wait" : ""} bind:voice={character} />
 			{:else if videoState.generationStepView === 'WRITING SCRIPT'}
 			<ScriptWritingData />
 			{:else if videoState.generationStepView === 'DOING TASKS'}
