@@ -14,15 +14,21 @@
         }
     }
 
+    export function changeCharacter(character: 'trump' | 'obama') {
+        if (unityInstance) {
+            unityInstance.SendMessage('SceneManager', 'ChangeCharacter', character);
+        }
+    }
+
     export function startTyping(script: string) {
         if (unityInstance) {
             unityInstance.SendMessage('SceneManager', 'StartTyping', script);
         }
     }
 
-    export function changeCharacter(character: 'trump' | 'obama') {
+    export function startNarration(narration: string) {
         if (unityInstance) {
-            unityInstance.SendMessage('SceneManager', 'ChangeCharacter', character);
+            unityInstance.SendMessage('SceneManager', 'StartNarration', narration);
         }
     }
 
