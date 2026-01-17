@@ -3,9 +3,10 @@ import { EditSceneRequest, SelectImageRequest } from '$lib/types/apiTypes';
 
 export function sendEditPrompt(prompt: string) {
 	const request = EditSceneRequest.parse({
-		custom_edit_prompt: prompt
+		custom_edit_prompt: prompt,
+		scene_number: 1,
 	});
-	console.log("hi from edit prompt")
+
 	socketState.socket?.send(JSON.stringify(request));
 }
 
