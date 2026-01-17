@@ -17,8 +17,8 @@ export const SceneSchema = z.object({
   narration_script: z.string(),
   sound_description: z.string(),
   edit_notes: z.string(),
-  assets_needed: z.array(AssetSchema),
   scene_structure: z.string(),
+  assets_needed: z.array(AssetSchema),
 }).partial();
 export type Scene = z.infer<typeof SceneSchema>;
 
@@ -30,15 +30,3 @@ export const VideoPlanSchema = z.object({
   scenes: z.array(SceneSchema),
 }).partial();
 export type VideoPlan = z.infer<typeof VideoPlanSchema>;
-
-// ManimCodeResponse schema
-export const ManimCodeResponseSchema = z.object({
-  code: z.string(),
-});
-export type ManimCodeResponse = z.infer<typeof ManimCodeResponseSchema>;
-
-// VisualChoiceResponse schema
-export const VisualChoiceResponseSchema = z.object({
-  selected_image_indexes: z.array(z.number()),
-});
-export type VisualChoiceResponse = z.infer<typeof VisualChoiceResponseSchema>;
