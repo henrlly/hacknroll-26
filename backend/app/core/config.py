@@ -13,6 +13,7 @@ class Config(BaseSettings):
     MOCK_CODE_FIX: bool = True
     MOCK_CODE_RENDER: bool = True  # rendering 4 scenes in parallel takes 5s
     MOCK_EDIT_SCENE: bool = True  # rendering 4 scenes in parallel takes 5s
+    USE_LOCAL_TTS: bool = False
     # if we mock everything it takes 7s on my computer
 
     CALLBACK_DELAY: float = 0.5  # seconds
@@ -80,6 +81,7 @@ class Settings(BaseSettings):
     PEXELS_API_KEY: str
     OPENROUTER_API_KEY: str
     PIXABAY_API_KEY: str
+    FISH_API_KEY: str
 
     # Load from .env file
     model_config = SettingsConfigDict(env_file=".env")
