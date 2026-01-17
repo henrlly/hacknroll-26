@@ -13,7 +13,7 @@
             {@const isDisabled = i > maxStepIndex}
             <Breadcrumb.Item class={
                 generationStep === step ? 'text-primary' : 'brightness-80'}>
-                <label class={isDisabled ? "cursor-not-allowed" : ""}>
+                <label class="text-lg {isDisabled ? "cursor-not-allowed" : ""}">
                     <input
                         disabled={isDisabled}
                         class="sr-only"
