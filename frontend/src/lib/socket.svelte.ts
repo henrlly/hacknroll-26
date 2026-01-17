@@ -52,12 +52,14 @@ export function connectWebSocket() {
         processVisualAssetGen(videoState);
         processSfxAssetGen(videoState);
 				videoState.generationStep = 'DOING TASKS';
+				videoState.generationStepView = 'DOING TASKS';
 			}
 		} else if (result.data.type !== 'final_video') {
 			processSceneEvent(result.data, videoState);
 		} else {
 			if (result.data.event_type === 'stitching_end') {
 				videoState.generationStep = 'COMPLETED';
+				videoState.generationStepView = 'COMPLETED';
 			}
 		}
 	};
