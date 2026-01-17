@@ -6,7 +6,8 @@ using UnityEngine;
 public class SceneManager : MonoBehaviour
 {
     private static readonly int Typing = Animator.StringToHash("typing");
-    
+    private static readonly int Narrating = Animator.StringToHash("narrating");
+
     public TextMeshProUGUI typewriterText;
     public Camera mainCamera;
 
@@ -18,6 +19,8 @@ public class SceneManager : MonoBehaviour
 
     private Queue<string> textQueue = new();
     private bool isTyping = false;
+    private Queue<string> narrationQueue = new();
+    private bool isNarrating = false;
 
     IEnumerator typeText(string text)
     {
@@ -62,18 +65,6 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        // Character selection
-        ChangeCharacter("obama");
-    }
-
-    private void DelayedTyping()
-    {
-        StartTyping("This is delayed text");
-    }
-
     public void ChangeCharacter(string characterName)
     {
         if (character != null)
@@ -90,6 +81,28 @@ public class SceneManager : MonoBehaviour
                 break;
         }
         characterAnimator = character.GetComponent<Animator>();
+    }
+
+    IEnumerator narrateText(string text)
+    {
+        const float delay = 0.05f;
+        isNarrating = true;
+        characterAnimator.SetBool(Narrating, true);
+        yield return new WaitForSeconds(4f);
+        characterAnimator.SetBool(Narrating, false);
+        isNarrating = false;
+    }
+
+    public void StartNarration(string narration)
+    {
+        
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        // Character selection
+        ChangeCharacter("obama");
     }
 
     // Update is called once per frame
