@@ -82,6 +82,17 @@ export const FinalVideoResponse = z.object({
 	error_message: z.string().nullish()
 });
 
+export const SceneStreamedResponse = z.object({
+  type: z.literal('scene'),
+  event_type: z.enum(["scene_start", "scene_stream", "scene_end"]),
+  delta: z.string()
+})
+
+export const SelectImageResponse = z.object({
+  type: z.literal('select_image'),
+  success: z.boolean(),
+})
+
 export const StreamResponse = z.union([
 	StartPipelineResponse,
 	PlanStreamedResponse,
@@ -91,7 +102,9 @@ export const StreamResponse = z.union([
 	ManimCodeGenerationResponse,
 	ManimCodeRendingResponse,
 	ManimCodeRendingSelectionResponse,
-	FinalVideoResponse
+  FinalVideoResponse,
+  SceneStreamedResponse,
+  SelectImageResponse
 ]);
 
 export const SceneResponse = z.union([
