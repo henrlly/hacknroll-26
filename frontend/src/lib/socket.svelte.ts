@@ -4,7 +4,12 @@ import { videoState } from './stores/generation-data.svelte';
 import { processSceneEvent, sceneFromPlan } from './utils/process-scene';
 import { ALL, parse } from 'partial-json';
 import { VideoPlanSchema } from './types/planTypes';
-import { processFullScript, processNarrationGen, processSfxAssetGen, processVisualAssetGen } from './utils/scenes';
+import {
+	processFullScript,
+	processNarrationGen,
+	processSfxAssetGen,
+	processVisualAssetGen
+} from './utils/scenes';
 
 // Global access to websocket
 export const socketState = $state({
@@ -41,16 +46,17 @@ export function connectWebSocket() {
 				// isLoadingPlan = true;
 			} else if (result.data.event_type === 'plan_stream') {
 				plan_string += result.data.delta;
-				plan = VideoPlanSchema.parse(parse(plan_string, ALL));
-                videoState.generationStep = 'WRITING SCRIPT';
-			    videoState.generationStepView = 'WRITING SCRIPT';
+        plan = VideoPlanSchema.parse(parse(plan_string, ALL));
+				// console.log("PLANSTRING", plan_string)
+				videoState.generationStep = 'WRITING SCRIPT';
+				videoState.generationStepView = 'WRITING SCRIPT';
 				sceneFromPlan(plan, videoState);
-        processFullScript(videoState);
+				processFullScript(videoState);
 			} else {
-        sceneFromPlan(plan, videoState);
-        processNarrationGen(videoState);
-        processVisualAssetGen(videoState);
-        processSfxAssetGen(videoState);
+				sceneFromPlan(plan, videoState);
+				processNarrationGen(videoState);
+				processVisualAssetGen(videoState);
+				processSfxAssetGen(videoState);
 				videoState.generationStep = 'DOING TASKS';
 				videoState.generationStepView = 'DOING TASKS';
 			}
@@ -62,6 +68,7 @@ export function connectWebSocket() {
 				videoState.generationStepView = 'COMPLETED';
 			}
 		}
+		console.log(videoState);
 	};
 
 	socket.onclose = () => {
