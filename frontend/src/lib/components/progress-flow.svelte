@@ -1,16 +1,21 @@
 <script lang="ts">
     import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
+    import { generationData } from "$lib/stores/generation-data.svelte";
 
     let { generationStep = $bindable() } = $props();
     let allGenerationSteps = ["INPUT", "WRITING SCRIPT", "DOING TASKS", "COMPLETED"]
+    let maxStepIndex = $derived(allGenerationSteps.indexOf(generationData.generationStep));
 </script>
 
 <Breadcrumb.Root>
     <Breadcrumb.List>
-        {#each allGenerationSteps as step}
-            <Breadcrumb.Item class={generationStep === step ? 'text-primary' : 'brightness-80'}>
-                <label>
+        {#each allGenerationSteps as step, i}
+            {@const isDisabled = i > maxStepIndex}
+            <Breadcrumb.Item class={
+                generationStep === step ? 'text-primary' : 'brightness-80'}>
+                <label class={isDisabled ? "cursor-not-allowed" : ""}>
                     <input
+                        disabled={isDisabled}
                         class="sr-only"
                         type="radio"
                         name="scoops"
