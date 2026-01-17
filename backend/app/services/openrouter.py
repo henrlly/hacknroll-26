@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from app.api.types import AssetResponse
 from app.core.config import app_config, settings
 from app.core.models import VisualChoiceResponse
-from app.utils.download_file import save_as_mp4
+from app.utils.download_file import save_as_jpg, save_as_mp4
 from app.utils.get_file_path import get_asset_file_path
 
 oai_client = AsyncOpenAI(
@@ -64,6 +64,17 @@ async def generate_image(
                     url=base64_url,
                     file_name=file_path,
                 )
+                file_path_jpg = get_asset_file_path(
+                    session_id=session_id,
+                    asset_id=asset_id,
+                    ext="jpg",
+                    id=candidate_id,
+                )
+                await save_as_jpg(
+                    url=base64_url,
+                    file_name=file_path_jpg,
+                )
+
                 await callback(
                     AssetResponse(
                         event_type="generation_end",
