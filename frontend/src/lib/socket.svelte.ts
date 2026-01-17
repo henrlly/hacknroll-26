@@ -50,7 +50,7 @@ export function connectWebSocket() {
 				const plan = VideoPlanSchema.parse(parse(plan_string, ALL));
 				// console.log("PLANSTRING", plan_string)
 				videoState.generationStep = 'WRITING SCRIPT';
-				videoState.generationStepView = 'WRITING SCRIPT';
+			if (!videoState.completed) 	videoState.generationStepView = 'WRITING SCRIPT';
 				sceneFromPlan(plan, videoState);
 				processFullScript(videoState);
 			} else if (result.data.event_type === 'plan_end') {
@@ -59,7 +59,7 @@ export function connectWebSocket() {
 				processVisualAssetGen(videoState);
 				processSfxAssetGen(videoState);
 				videoState.generationStep = 'DOING TASKS';
-				videoState.generationStepView = 'DOING TASKS';
+			if (!videoState.completed) 	videoState.generationStepView = 'DOING TASKS';
 			}
 		} else if (
 			result.data.type !== 'final_video' &&
@@ -70,26 +70,33 @@ export function connectWebSocket() {
 		} else if (result.data.type === 'final_video') {
 			if (result.data.event_type === 'stitching_end') {
 				videoState.generationStep = 'COMPLETED';
-				videoState.generationStepView = 'COMPLETED';
+				if (!videoState.completed) videoState.generationStepView = 'COMPLETED';
 				videoState.completed = true;
 			}
-		} else if (result.data.type === 'scene') {
+    } else if (result.data.type === 'scene') {
 			// TODO: add plan loading before stream
 			if (result.data.event_type === 'scene_start') {
 				// isLoadingPlan = true;
+				scene_string = '';
+
 			} else if (result.data.event_type === 'scene_stream') {
 				scene_string += result.data.delta;
-				const scene = SceneSchema.parse(parse(scene_string, ALL));
-				// console.log("PLANSTRING", plan_string)
-				sceneFromScenePlan(scene, videoState);
+        const scene = SceneSchema.parse(parse(scene_string, ALL));
+				console.log(scene.narration_script)
+				console.log("PLANSTRING", scene_string)
+        sceneFromScenePlan(scene, videoState);
+				console.log(scene, videoState)
 				processFullScript(videoState);
-			} else if (result.data.event_type === 'scene_end') {
+
+				// cant specify scene_end
+      } else {
 				scene_string = '';
+				console.log("SCENE_END", scene_string)
 				processNarrationGen(videoState);
 				processVisualAssetGen(videoState);
 				processSfxAssetGen(videoState);
-				videoState.generationStep = 'DOING TASKS';
-				videoState.generationStepView = 'DOING TASKS';
+				// videoState.generationStep = 'DOING TASKS';
+				// videoState.generationStepView = 'DOING TASKS';
 			}
 		} else if (result.data.type === 'select_image') {
 			// well image is selected

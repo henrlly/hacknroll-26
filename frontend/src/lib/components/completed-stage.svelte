@@ -7,7 +7,12 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { ChevronDown, ChevronUp, Sparkles, Wand2, Edit2, Check } from '@lucide/svelte';
-	import { sendEditPrompt, selectVisual } from '$lib/utils/editing';
+	import {
+		sendEditPrompt,
+		selectVisual,
+		sendRenderAndStitch,
+		sendMakeScene
+	} from '$lib/utils/editing';
 	import Timeline from './timeline.svelte';
 	import SceneDisplay from './SceneDisplay.svelte';
 	import VisualAssetStack from './VisualAssetStack.svelte';
@@ -29,7 +34,9 @@
 	let currentScene = $state(0);
 	let currentTime = $state(0);
 	let paused = $state(false);
+	let planRegened = $state(false);
 	let activeAsset: string = $derived(videoState.visual_asset_gen[currentIndex].mp4Url);
+	let src = $state(`${STATIC_API_BASE}/${videoState.session_id}/final_video.mp4`);
 
 	function handleSubmitPrompt(e: SubmitEvent) {
 		e.preventDefault();
@@ -39,6 +46,22 @@
 			// Ensure sendEditPrompt is awaited if it's an async function
 			sendEditPrompt(editPrompt, currentScene);
 			editPrompt = ''; // Clear input after success
+			planRegened = true;
+		} catch (err) {
+			console.error('Failed to send edit:', err);
+		}
+	}
+	function handleSubmitRender(e: SubmitEvent) {
+		e.preventDefault();
+		try {
+			if (planRegened) {
+				sendMakeScene(currentScene);
+			}
+			sendRenderAndStitch(currentScene);
+
+			// refresh video src
+			src = '';
+			src = `${STATIC_API_BASE}/${videoState.session_id}/final_video.mp4`;
 		} catch (err) {
 			console.error('Failed to send edit:', err);
 		}
@@ -99,7 +122,7 @@
 			bind:this={videoElement}
 			onclick={() => (paused = !paused)}
 			class="h-full w-full rounded-xl"
-			src={`${STATIC_API_BASE}/${videoState.session_id}/final_video.mp4`}
+			src={src}
 			autoplay
 		>
 			<track kind="captions" />
@@ -136,7 +159,7 @@
 	</div>
 
 	{#if editingMode}
-		<div class="w-full backdrop-blur-sm">
+		<div class="w-full backdrop-blur-sm" onclick={() => (paused = true)}>
 			<div class="flex h-full w-full gap-6 p-6">
 				<div class="flex w-[60%] shrink-0 flex-col gap-4">
 					<div class="flex flex-col gap-1.5">
@@ -155,8 +178,8 @@
 								bind:value={editPrompt}
 							/>
 						</form>
-						<Button type="submit" class="mt-2">
-							<Edit2 class="size-4 mr-2" />
+						<Button type="submit" class="mt-2" onclick={handleSubmitPrompt}>
+							<Edit2 class="mr-2 size-4" />
 							Regenerate Plan
 						</Button>
 					</div>
@@ -165,6 +188,10 @@
 				<div class="flex flex-grow flex-col gap-1.5">
 					<VisualAssetStack scene={videoState.scenes[currentScene]} />
 				</div>
+				<Button class="mt-2" onclick={handleSubmitRender}>
+					<Edit2 class="mr-2 size-4" />
+					Rerender Video
+				</Button>
 			</div>
 		</div>
 	{/if}

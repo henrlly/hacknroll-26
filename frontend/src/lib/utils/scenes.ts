@@ -8,7 +8,7 @@ import { STATIC_API_BASE } from './constants';
 
 export function processFullScript(video: VideoLoadingType) {
 	let full_script = '';
-	for (let scene of video.scenes!) {
+	for (let scene of video.scenes) {
 		full_script += scene.narration_script + ' ';
 	}
 	video.full_script = full_script.trim();

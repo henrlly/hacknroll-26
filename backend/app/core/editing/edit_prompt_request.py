@@ -21,6 +21,7 @@ async def edit_scene(
     scene_edit_prompt_template: str = SCENE_EDIT_PROMPT_TEMPLATE,
     scene_edit_prompt_instructions: str = SCENE_EDIT_PROMPT_INSTRUCTIONS,
 ) -> VideoPlan:
+    print("editing")
     await callback(
         SceneStreamedResponse(event_type="scene_start"),
         delay=streaming_delay,
@@ -33,6 +34,7 @@ async def edit_scene(
         )
 
     if mock:
+        plan.scenes[scene_number].narration_script += "."
         scene = plan.scenes[scene_number]
         scene_json = scene.model_dump_json()
 
@@ -40,9 +42,12 @@ async def edit_scene(
             chunk = scene_json[i : min(i + chars_per_stream_message, len(scene_json))]
             await scene_stream_callback(chunk)
 
+        print(scene_json)
+
         await callback(
-            SceneStreamedResponse(event_type="scene_start"),
+            SceneStreamedResponse(event_type="scene_end"),
         )
+        print("end!")
         return plan
 
     else:

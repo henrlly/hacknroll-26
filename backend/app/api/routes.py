@@ -54,6 +54,7 @@ async def websocket_input(websocket: WebSocket):
                     edit_prompt_type=request.edit_prompt_type,
                     custom_edit_prompt=request.custom_edit_prompt,
                 )
+                print(plan.scenes[request.scene_number].narration_script)
 
             elif data["type"] == "select_image_request":
                 request = SelectImageRequest.model_validate(data)

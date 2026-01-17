@@ -7,8 +7,8 @@ from app.core.models import VoiceType
 
 class EditSceneRequest(BaseModel):
     type: Literal["edit_scene_request"] = "edit_scene_request"
-    edit_prompt_type: Optional[Literal["funny", "detailed", "pictures"]]
-    custom_edit_prompt: Optional[str]
+    edit_prompt_type: Optional[Literal["funny", "detailed", "pictures"]] = None
+    custom_edit_prompt: Optional[str] = None
     scene_number: int
 
 

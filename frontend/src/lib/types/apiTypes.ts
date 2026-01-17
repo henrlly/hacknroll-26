@@ -85,7 +85,7 @@ export const FinalVideoResponse = z.object({
 export const SceneStreamedResponse = z.object({
   type: z.literal('scene'),
   event_type: z.enum(["scene_start", "scene_stream", "scene_end"]),
-  delta: z.string()
+  delta: z.string().nullish(),
 })
 
 export const SelectImageResponse = z.object({
@@ -136,3 +136,18 @@ export const SelectImageRequest = z.object({
 	asset_id: z.string(),
 	selected_candidate_id: z.string()
 });
+
+export const MakeSceneRequest = z.object({
+  type: z.literal("make_scene_request").default("make_scene_request"),
+  scene_number: z.number()
+})
+
+export const RenderRequest = z.object({
+  type: z.literal('render_code_request').default('render_code_request'),
+  scene_number: z.number(),
+  version_number: z.number(),
+})
+
+export const StitchRequest = z.object({
+  type: z.literal('stitch_request').default('stitch_request'),
+})
