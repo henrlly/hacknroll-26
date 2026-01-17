@@ -30,6 +30,12 @@
 		} else if (videoState.generationStepView === "DOING TASKS") {
 			unityPlayerHidden = false;
 			unityPlayer?.startNarration(videoState.full_script);
+			let i = 0;
+			setInterval(() => {
+				unityPlayer?.startSfx(videoState.sfx_asset_gen[i].desc);
+				i++;
+				i %= videoState.sfx_asset_gen.length;
+			}, 1000);
 		} else {
 			unityPlayerHidden = false;
 			// unityPlayer.stopEverything

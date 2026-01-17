@@ -1,131 +1,117 @@
 <script lang="ts">
-	import * as Card from "$lib/components/ui/card";
-	import { Separator } from "$lib/components/ui/separator";
-	import { Badge } from "$lib/components/ui/badge";
-
-	let teamName = "[Team Name]";
+    import * as Alert from "$lib/components/ui/alert";
+    import * as Card from "$lib/components/ui/card";
+    import { Separator } from "$lib/components/ui/separator";
+    import { Badge } from "$lib/components/ui/badge";
+    import { Terminal, Cpu, Zap, Rocket, ChevronRight } from "@lucide/svelte";
 </script>
 
-<div class="min-h-screen bg-[#fdfdfc] text-[#1a1a1a] selection:bg-[#fff2cc]">
-	<div class="h-1.5 w-full bg-[#1a1a1a]"></div>
+<div class="container max-w-4xl px-4 py-10">
+    <div class="space-y-4 mb-10">
+        <div class="flex items-center gap-2 text-primary">
+            <Rocket class="size-5" />
+            <span class="text-sm font-bold uppercase tracking-widest">Developer Documentation</span>
+        </div>
+        <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+            The AI Video Engine
+        </h1>
+        <p class="text-xl text-muted-foreground">
+            A high-concurrency pipeline marrying LLMs with Manim for deterministic, educational video generation.
+        </p>
+    </div>
 
-	<article class="mx-auto max-w-4xl px-6 py-12 lg:py-24">
-		<header class="mb-16 text-center">
-			<div class="mb-4 flex items-center justify-center gap-4">
-				<span class="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500">Vol. MMXXVI — No. 01</span>
-			</div>
-			
-			<h1 class="mb-8 font-serif text-6xl font-black leading-tight tracking-tighter md:text-8xl">
-				The Narrative Engine.
-			</h1>
+    <Separator class="my-8" />
 
-			<div class="flex flex-col items-center justify-center gap-4 border-y border-neutral-200 py-4 md:flex-row md:gap-8">
-				<p class="font-mono text-[11px] uppercase tracking-widest underline decoration-1 underline-offset-4">
-					Dispatch from {teamName}
-				</p>
-				<p class="font-mono text-[11px] uppercase tracking-widest text-neutral-400">
-					Jan 13, 2026
-				</p>
-				<p class="font-mono text-[11px] uppercase tracking-widest text-neutral-400">
-					NUS Hackathon '26
-				</p>
-			</div>
-		</header>
+    <section class="space-y-6">
+        <div class="flex items-center gap-2">
+            <Badge variant="outline">Architecture</Badge>
+            <h2 class="text-2xl font-semibold tracking-tight">The Parallel Pipeline</h2>
+        </div>
+        
+        <p class="leading-7 text-muted-foreground">
+            Traditional video editors are linear. Our engine is <strong>asynchronous</strong>. We utilize 
+            FastAPI WebSockets to stream state updates, allowing the frontend to render the UI 
+            while the backend orchestrates heavy computation in parallel.
+        </p>
 
-		<section class="mb-20 grid grid-cols-1 gap-8 md:grid-cols-12">
-			<div class="md:col-span-4">
-				<h2 class="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-					The Crisis of Attention
-				</h2>
-			</div>
-			<div class="md:col-span-8">
-				<p class="font-serif text-2xl leading-relaxed first-letter:float-left first-letter:mr-3 first-letter:text-8xl first-letter:font-black first-letter:leading-[0.7]">
-					Modern learning is failing the "fried brain." In an era of infinite scroll and algorithmic dopamine, the standard academic explainer has become a relic. We are too distracted to read, but too curious to ignore the truth. 
-				</p>
-				<p class="mt-6 font-serif text-xl leading-relaxed text-neutral-700 italic">
-					Our tool bridges this gap. We take the "boring" out of education by using high-octane personas—Donald Trump, Peter Griffin, or your own voice—to teach complex concepts via programmatic motion graphics and agentic transparency.
-				</p>
-			</div>
-		</section>
+        
 
-		<section class="mb-24">
-			<div class="mb-8 border-l-4 border-black pl-4">
-				<h3 class="font-serif text-3xl font-bold italic">The Transparent Pipeline</h3>
-				<p class="font-mono text-xs uppercase tracking-widest text-neutral-400 mt-1">From Prompt to Render</p>
-			</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card.Root class="p-6 bg-muted/20">
+                <Cpu class="size-6 mb-2 text-primary" />
+                <h3 class="font-bold">Distributed Workers</h3>
+                <p class="text-sm text-muted-foreground">Script generation, asset fetching, and Manim rendering occur in isolated threads, preventing bottlenecking.</p>
+            </Card.Root>
+            <Card.Root class="p-6 bg-muted/20">
+                <Zap class="size-6 mb-2 text-primary" />
+                <h3 class="font-bold">Real-time Sync</h3>
+                <p class="text-sm text-muted-foreground">Using Svelte 5 Runes, the global <code>videoState</code> reacts instantly to WebSocket packets, ensuring 0ms UI lag.</p>
+            </Card.Root>
+        </div>
+    </section>
 
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-				{#each [
-					{ title: "I. Semantic Analysis", desc: "Agent parses prompt using TipTap, identifying verbs for Manim animations and nouns for asset fetching." },
-					{ title: "II. Synthesis", desc: "Parallel generation of ElevenLabs narration, Suno Bark backgrounds, and Python-based Manim code blocks." },
-					{ title: "III. Composition", desc: "User-steered editor allows for one-click swaps of candidate clips while the agent 'thinks' out loud." }
-				] as stage}
-					<Card.Root class="rounded-none border-neutral-200 bg-transparent shadow-none">
-						<Card.Header class="pb-2">
-							<Card.Title class="font-serif text-lg italic">{stage.title}</Card.Title>
-						</Card.Header>
-						<Card.Content>
-							<p class="font-serif text-sm leading-relaxed text-neutral-600">{stage.desc}</p>
-						</Card.Content>
-					</Card.Root>
-				{/each}
-			</div>
-		</section>
+    <section class="space-y-6 mt-16">
+        <div class="flex items-center gap-2">
+            <Badge variant="outline">Rendering</Badge>
+            <h2 class="text-2xl font-semibold tracking-tight">Why Code (Manim) Beats Pixels</h2>
+        </div>
 
-		<section class="mb-20 space-y-16">
-			<Separator class="bg-neutral-200" />
-			
-			<div class="flex flex-col gap-12 md:flex-row">
-				<div class="flex-1 space-y-4">
-					<Badge variant="outline" class="rounded-none font-mono text-[10px]">VISUALS</Badge>
-					<h4 class="font-serif text-3xl font-bold">The Manim Bridge</h4>
-					<p class="font-serif text-lg leading-relaxed text-neutral-700">
-						Most AI video is a hallucination. {teamName} uses **Manim** to write and execute programmatic Python scripts, ensuring that graphs and technical concepts are mathematically perfect every time.
-					</p>
-				</div>
-				<div class="flex-1 space-y-4">
-					<Badge variant="outline" class="rounded-none font-mono text-[10px]">AGENCY</Badge>
-					<h4 class="font-serif text-3xl font-bold">User Steering</h4>
-					<p class="font-serif text-lg leading-relaxed text-neutral-700">
-						We prioritize the "Quality of Result." At any point, users can pause the generation, steer the agent's "Thought Process," and select alternative visual candidates from the right-hand editor.
-					</p>
-				</div>
-			</div>
-		</section>
+        <Alert.Root>
+            <Terminal class="size-4" />
+            <Alert.Title>Deterministic Rendering</Alert.Title>
+            <Alert.Description>
+                By generating Python code (Manim) instead of raw video, we eliminate AI "hallucinations" in text and geometry.
+            </Alert.Description>
+        </Alert.Root>
 
-		<footer class="mt-32 border-t-2 border-black pt-12">
-			<div class="flex flex-wrap gap-x-12 gap-y-8">
-				<div class="space-y-1">
-					<p class="font-mono text-[10px] uppercase text-neutral-400">Frontend</p>
-					<p class="font-serif font-bold italic">Svelte 5 + Shadcn</p>
-				</div>
-				<div class="space-y-1">
-					<p class="font-mono text-[10px] uppercase text-neutral-400">Backend</p>
-					<p class="font-serif font-bold italic">FastAPI + WebSockets</p>
-				</div>
-				<div class="space-y-1">
-					<p class="font-mono text-[10px] uppercase text-neutral-400">Audio</p>
-					<p class="font-serif font-bold italic">ElevenLabs / Suno</p>
-				</div>
-				<div class="space-y-1">
-					<p class="font-mono text-[10px] uppercase text-neutral-400">Intelligence</p>
-					<p class="font-serif font-bold italic">GPT-4o Agentic Model</p>
-				</div>
-			</div>
-			
-			<div class="mt-20 text-center">
-				<span class="font-serif text-sm italic text-neutral-400">
-					© 2026 {teamName} — Built for the NUS Hackathon
-				</span>
-			</div>
-		</footer>
-	</article>
+        <p class="leading-7 text-muted-foreground">
+            For educational content, accuracy is non-negotiable. Manim allows our AI to describe 
+            mathematical relationships as code. The result is perfectly anti-aliased vectors, 
+            precise timing, and the ability to re-render segments instantly without data loss.
+        </p>
+        
+        
+    </section>
+
+    <section class="space-y-6 mt-16">
+        <h2 class="text-2xl font-semibold tracking-tight">Pro-Grade Shortcuts</h2>
+        <div class="rounded-lg border">
+            <div class="grid grid-cols-3 bg-muted/50 p-3 text-sm font-bold">
+                <div>Key</div>
+                <div>Action</div>
+                <div>Purpose</div>
+            </div>
+            <div class="divide-y">
+                <div class="grid grid-cols-3 p-3 text-sm">
+                    <div><kbd class="border px-1 rounded bg-muted">J / L</kbd></div>
+                    <div>Seek 4s</div>
+                    <div class="text-muted-foreground">Rapid scrubbing</div>
+                </div>
+                <div class="grid grid-cols-3 p-3 text-sm">
+                    <div><kbd class="border px-1 rounded bg-muted">, / .</kbd></div>
+                    <div>Frame Step</div>
+                    <div class="text-muted-foreground">Precision alignment</div>
+                </div>
+                <div class="grid grid-cols-3 p-3 text-sm">
+                    <div><kbd class="border px-1 rounded bg-muted">F</kbd></div>
+                    <div>Fullscreen</div>
+                    <div class="text-muted-foreground">Review mode</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="space-y-6 mt-16 p-8 bg-primary/5 rounded-3xl border border-primary/20 relative overflow-hidden">
+        <div class="relative z-10">
+            <h2 class="text-3xl font-bold tracking-tight mb-4">Pure Creative Play</h2>
+            <p class="text-muted-foreground max-w-2xl">
+                We believe video editing should feel like <strong>directing</strong>, not data entry. 
+                The integration of a Unity-based 3D preview environment creates a "spatial" 
+                editing experience, making the AI feedback loop tactile, fun, and incredibly fast.
+            </p>
+        </div>
+        <div class="absolute -right-10 -bottom-10 opacity-10">
+            <Rocket class="size-64" />
+        </div>
+    </section>
 </div>
-
-<style>
-	/* Standard New York Times style typography targets */
-	:global(body) {
-		-webkit-font-smoothing: antialiased;
-		text-rendering: optimizeLegibility;
-	}
-</style>
