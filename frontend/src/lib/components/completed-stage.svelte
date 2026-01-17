@@ -98,7 +98,6 @@
 								placeholder="e.g. Make the tone more exciting..." 
 								bind:value={editPrompt}
 							/>
-							<button>1</button>
 						</form>
                     </div>
                 </div>
