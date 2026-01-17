@@ -87,6 +87,7 @@ export const NarrationGenObj = z
 export const VisualAssetGenObj = z
 	.object({
 		url: z.string(),
+		mp4Url: z.string(),
 		desc: z.string(),
 		liked: z.boolean().default(false)
 	})

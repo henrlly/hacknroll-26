@@ -63,6 +63,16 @@ async def generate_visual_asset(
             id=uuids[0],
         )
         shutil.copyfile(mock_video_path, file_path)
+
+        mock_image_path = "mock/asset.jpg"
+        file_path_jpg = get_asset_file_path(
+            session_id=session_id,
+            asset_id=asset.asset_id,
+            ext="jpg",
+            id=uuids[0],
+        )
+        shutil.copyfile(mock_image_path, file_path_jpg)
+
         base64_urls = [""]
 
         await callback(
