@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
 	import { STATIC_API_BASE } from '$lib/utils/constants';
     import { videoState } from '$lib/stores/generation-data.svelte';
 	import ScriptDisplay from './script-display.svelte';
-	import * as Card from "$lib/components/ui/card";
+	import * as Dialog from "$lib/components/ui/dialog";
     import { Button } from "$lib/components/ui/button";
     import { Label } from "$lib/components/ui/label";
     import { Badge } from "$lib/components/ui/badge";
 	import { Input } from "$lib/components/ui/input/index.js";
-	import { ChevronDown, ChevronUp, Sparkles, Wand2 } from '@lucide/svelte';
+	import { ChevronDown, ChevronUp, Sparkles, Wand2, Edit2, Check } from '@lucide/svelte';
 
 	let editingMode = $state(false);
 	let currentIndex = $state(0);
@@ -15,14 +15,14 @@
 		if (editingMode && videoState.visual_asset_gen.length > 1) {
             const interval = setInterval(() => {
                 currentIndex = (currentIndex + 1) % videoState.visual_asset_gen.length;
-            }, 2000); // 2 seconds
+            }, 2000);
 
-            // Cleanup function: runs when editingMode is false or component is destroyed
             return () => clearInterval(interval);
         }
 	})
 
-	let activeAsset = $derived(videoState.visual_asset_gen[currentIndex].mp4Url)
+	let openEditPhotos = $state(false);
+	let activeAsset: string = $derived(videoState.visual_asset_gen[currentIndex].mp4Url)
 </script>
 
 <div class="flex flex-col items-center gap-6 w-full max-w-5xl mx-auto py-4">
@@ -50,8 +50,10 @@
             size="sm" 
             class={"gap-2 transition-all"}
             onclick={() => editingMode = !editingMode}
-        >
+        >	
+			{#if !editingMode}
             <Wand2 class="size-4" />
+			{/if}
             {editingMode ? "Close Editor" : "Refine Script"}
             {#if editingMode}
                 <ChevronUp class="size-4" />
@@ -82,6 +84,7 @@
                 <div class="flex-grow flex flex-col gap-1.5">
                     <Label class="text-xs uppercase text-muted-foreground">Active Clip</Label>
                     <div class="relative flex-grow overflow-hidden rounded-xl border bg-black shadow-inner">
+						{#key activeAsset}
                         <video 
                             class="w-full h-full object-cover opacity-80" 
                             src={activeAsset}
@@ -89,12 +92,59 @@
                             loop
                             muted
                         >
-                            <track kind="captions"> 
+						<track kind="captions"> 
                         </video>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+						{/key}
+                        <div class="absolute top-3 right-3">
+        <Dialog.Root bind:open={openEditPhotos}>
+            <Dialog.Trigger>
+                    <Button 
+                        variant="secondary" 
+                        size="icon" 
+                        class="h-8 w-8 rounded-full shadow-lg opacity-50 hover:opacity-100"
+                    >
+                        <Edit2 class="size-4" />
+                    </Button>
+            </Dialog.Trigger>
+            
+            <Dialog.Content class="sm:max-w-[600px]">
+                <Dialog.Header>
+                    <Dialog.Title>Select Visual Asset</Dialog.Title>
+                    <Dialog.Description>
+                        Choose which image or clip to use for this segment of the video.
+                    </Dialog.Description>
+                </Dialog.Header>
+
+                <div class="grid grid-cols-3 gap-4 py-4">
+                    {#each videoState.visual_asset_gen as asset}
+                        <button 
+                            onclick={() => {/* Logic to update activeAsset */}}
+                            class="relative aspect-video rounded-md overflow-hidden border-2 transition-all hover:ring-2 hover:ring-primary"
+                        >
+                            <video src={asset.mp4Url} class="object-cover w-full h-full">
+								<track kind="captions" />
+							</video>
+                            
+                            {#if activeAsset === asset.mp4Url}
+                                <div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                                    <Badge class="rounded-full p-1">
+                                        <Check class="size-3" />
+                                    </Badge>
+                                </div>
+                            {/if}
+                        </button>
+                    {/each}
+                </div>
+
+                <Dialog.Footer>
+                    <Button onclick={() => openEditPhotos = false} type="submit">Confirm Selection</Button>
+                </Dialog.Footer>
+            </Dialog.Content>
+        </Dialog.Root>
                     </div>
                 </div>
             </div>
         </div>
-    {/if}
+	</div>
+	{/if}
 </div>
