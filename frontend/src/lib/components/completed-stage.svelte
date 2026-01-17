@@ -38,14 +38,13 @@
 
 	let sceneEnableRending = $state<Record<number, boolean>>({});
 
-	function handleSubmitPrompt(e: SubmitEvent) {
+	function handleSubmitPrompt(e: Event) {
 		e.preventDefault();
 		if (!editPrompt.trim()) return;
 
 		try {
-			// Ensure sendEditPrompt is awaited if it's an async function
 			sendEditPrompt(editPrompt, currentScene);
-			editPrompt = ''; // Clear input after success
+			editPrompt = ''; 
 			planRegened = true;
 			sceneEnableRending[currentScene] = true;
 		} catch (err) {
@@ -161,6 +160,8 @@
 	</div>
 
 	{#if editingMode}
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div class="w-full backdrop-blur-sm" onclick={() => (paused = true)}>
 			<div class="flex h-full w-full gap-6 p-6">
 				<div class="flex w-[60%] shrink-0 flex-col gap-4">
