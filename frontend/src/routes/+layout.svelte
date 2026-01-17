@@ -7,8 +7,12 @@
 	import { Button } from '$lib/components/ui/button';
 	import Separator from "$lib/components/ui/separator/separator.svelte";
 	import ModeSwitcher from '$lib/components/mode-swticher.svelte';
+	import { onMount } from 'svelte';
+	import { connectWebSocket } from '$lib/socket.svelte';
 
-
+	onMount(() => {
+		connectWebSocket();
+	})
 	let { children } = $props();
 </script>
 
