@@ -50,7 +50,7 @@ def get_selected_asset_file_path(
 
 
 def get_asset_file_path(
-    session_id: str, asset_id: str, ext: Literal["mp3", "mp4"], id: str
+    session_id: str, asset_id: str, ext: Literal["mp3", "mp4", "jpg"], id: str
 ) -> str:
     return f"static/{session_id}/{asset_id}/{id}.{ext}"
 

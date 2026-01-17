@@ -1,10 +1,15 @@
 import { browser } from '$app/environment';
 import { StreamResponse } from './types/apiTypes';
 import { videoState } from './stores/generation-data.svelte';
-import { processSceneEvent, sceneFromPlan } from './utils/process-scene';
+import { processSceneEvent, sceneFromPlan, sceneFromScenePlan } from './utils/process-scene';
 import { ALL, parse } from 'partial-json';
-import { VideoPlanSchema } from './types/planTypes';
-import { processFullScript, processNarrationGen, processSfxAssetGen, processVisualAssetGen } from './utils/scenes';
+import { SceneSchema, VideoPlanSchema } from './types/planTypes';
+import {
+	processFullScript,
+	processNarrationGen,
+	processSfxAssetGen,
+	processVisualAssetGen
+} from './utils/scenes';
 
 // Global access to websocket
 export const socketState = $state({
@@ -24,7 +29,7 @@ export function connectWebSocket() {
 	};
 
 	let plan_string = '';
-	let plan = VideoPlanSchema.parse({});
+	let scene_string = '';
 
 	socket.onmessage = async (event) => {
 		// console.log(event);
@@ -35,31 +40,64 @@ export function connectWebSocket() {
 		}
 		if (result.data.type === 'start') {
 			videoState.session_id = result.data.session_id;
-			videoState.generation_step = 'pre_plan';
 		} else if (result.data.type === 'plan') {
 			// TODO: add plan loading before stream
 			if (result.data.event_type === 'plan_start') {
 				// isLoadingPlan = true;
 			} else if (result.data.event_type === 'plan_stream') {
-				videoState.generation_step = 'plan_generation';
 				plan_string += result.data.delta;
-				plan = VideoPlanSchema.parse(parse(plan_string, ALL));
+				const plan = VideoPlanSchema.parse(parse(plan_string, ALL));
+				// console.log("PLANSTRING", plan_string)
+				videoState.generationStep = 'WRITING SCRIPT';
+				videoState.generationStepView = 'WRITING SCRIPT';
 				sceneFromPlan(plan, videoState);
-        processFullScript(videoState);
-			} else {
-        sceneFromPlan(plan, videoState);
-        processNarrationGen(videoState);
-        processVisualAssetGen(videoState);
-        processSfxAssetGen(videoState);
-				videoState.generation_step = 'scene_generation';
+				processFullScript(videoState);
+			} else if (result.data.event_type === 'plan_end') {
+				plan_string = '';
+				processNarrationGen(videoState);
+				processVisualAssetGen(videoState);
+				processSfxAssetGen(videoState);
+				videoState.generationStep = 'DOING TASKS';
+				videoState.generationStepView = 'DOING TASKS';
 			}
-		} else if (result.data.type !== 'final_video') {
+		} else if (
+			result.data.type !== 'final_video' &&
+			result.data.type !== 'scene' &&
+			result.data.type !== 'select_image'
+		) {
 			processSceneEvent(result.data, videoState);
-		} else {
+		} else if (result.data.type === 'final_video') {
 			if (result.data.event_type === 'stitching_end') {
-				videoState.generation_step = 'final_video';
+				videoState.generationStep = 'COMPLETED';
+				videoState.generationStepView = 'COMPLETED';
 			}
+		} else if (result.data.type === 'scene') {
+			// TODO: add plan loading before stream
+			if (result.data.event_type === 'scene_start') {
+				// isLoadingPlan = true;
+			} else if (result.data.event_type === 'scene_stream') {
+				scene_string += result.data.delta;
+				const scene = SceneSchema.parse(parse(scene_string, ALL));
+				// console.log("PLANSTRING", plan_string)
+				sceneFromScenePlan(scene, videoState);
+				processFullScript(videoState);
+			} else if (result.data.event_type === 'scene_end') {
+				scene_string = '';
+				processNarrationGen(videoState);
+				processVisualAssetGen(videoState);
+				processSfxAssetGen(videoState);
+				videoState.generationStep = 'DOING TASKS';
+				videoState.generationStepView = 'DOING TASKS';
+			}
+		} else if (result.data.type === 'select_image') {
+			// well image is selected
+			// export const SelectImageResponse = z.object({
+   //      type: z.literal('select_image'),
+   //      success: z.boolean(),
+   //    })
+			//
 		}
+		console.log(videoState);
 	};
 
 	socket.onclose = () => {
