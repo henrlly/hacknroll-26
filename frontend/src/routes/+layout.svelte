@@ -28,7 +28,7 @@
 			<a href="/docs">Docs</a>
 		</div>
 		<div class="flex gap-2 h-4 items-center">
-			<Button target="_blank" href="https://github.com/henrlly/DO-NOT-SUBMIT-2026" variant="ghost">
+			<Button target="_blank" href="https://github.com/henrlly/hacknroll-26" variant="ghost">
 				<GithubIcon class="size-5" />
 			</Button>
 			<Separator class="h-1/2" orientation="vertical" />
