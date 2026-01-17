@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { STATIC_API_BASE } from '$lib/utils/constants';
     import { videoState } from '$lib/stores/generation-data.svelte';
-	import ScriptDisplay from './script-display.svelte';
+	import ScriptDisplay from './editing-script-display.svelte';
 	import * as Dialog from "$lib/components/ui/dialog";
     import { Button } from "$lib/components/ui/button";
     import { Label } from "$lib/components/ui/label";

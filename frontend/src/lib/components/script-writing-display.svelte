@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { videoState } from "$lib/stores/generation-data.svelte";
+
+	let taskDone = $derived(videoState.generationStep === "COMPLETED" || videoState.generationStep === "DOING TASKS");
+
 </script>
 
-<div class="flex flex-col justify-center items-center w-full h-[90vh] gap-6">
-	<div class="h-full w-[90%] rounded-3xl">
-		 <!-- <UnityPlayer bind:this={unityPlayer}/> -->
-	</div>
+<div class="flex flex-col justify-center items-center w-full gap-6">
+	{#if taskDone}
+	<p>Script done!</p>
+	{:else}
+	<p>Writing script...</p>
+	{/if}
 </div>
