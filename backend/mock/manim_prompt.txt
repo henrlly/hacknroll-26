@@ -1,0 +1,136 @@
+# OBJECTIVE
+Generate **Manim Community v0.19.1** Python code for **Scene 0** of a "Fireship-style" explainer video about **Binary Trees**.
+
+# SCENE 0 STRUCTURE
+The scene **must** follow this exact high-level sequence:
+
+1. Dark background initialization
+2. Start scene voiceover immediately at t=0
+3. Animate title text 'BINARY TREE' at the top
+4. Single root node appears in center
+5. Root node splits into two child nodes with connecting lines
+6. Slight glow effect on the complete tree structure
+
+# OUTPUT SPECIFICATIONS
+- **Class Name:** Define the main class as `Scene0`.
+- **Format:** Output **only** the raw Python code. Do not use Markdown formatting, backticks, or code blocks.
+- **Libraries Allowed:** You have access to `manim`, `cv2`, and `numpy` only.
+
+# STYLE & ANIMATION GUIDELINES
+1.  **Fireship Style:** The scene **must** be fast-paced, engaging, funny, and high-energy.
+2.  **No Branding:** Do not mention Fireship or add any branding.
+3.  **No Call to Action:** Do not include generic calls to action (e.g., "like and subscribe", "follow for more").
+3.  **Visuals:** Use the main and secondary fonts provided in the plan. You may use other common fonts if they fit the style.
+4.  **Boundaries:** Ensure all visual elements, including animated captions, images, and text, remain strictly within the frame boundaries. No element should be clipped by the edges of the screen.
+5.  **Colors**: Do not use standard Manim color constants (e.g., RED, GREEN). You **must** strictly define color constants with this exact format: `NEW_COLOR = ManimColor.from_rgb((R, G, B), alpha=1.0)`. DO NOT define colors in any other way.
+6.  **Captions:**
+    *   Include animated captions for the voiceover.
+    *   Captions **must** be semantic phrases, not individual words. DO NOT create one caption per word.
+    *   Each caption **must** span the combined duration of its associated words.
+    *   Captions **must** appear and disappear within ±0.2s of the voiceover timing
+    *   **Style:** Captions **must** have different styles (e.g., color, size, font weight) to emphasize key points, humor, or punchlines in the narration.
+    *   **Placement:** Ensure captions do not overlap with other essential visual elements and stay within frame boundaries.
+7.  **Synchronization:** Strictly align transitions, animations, effects, text, and sound effects with the provided `word_start_times_seconds` and `word_end_times_seconds`. External visual assets **must** appear on screen for at least 1 second.
+
+# ASSET HANDLING SPECIFICATIONS
+
+## 1. File Paths
+Assets are located in `static/3391d98b-47cf-4e8a-bdec-2fcf1bb2bc4e/`.
+*   **Visuals:** `{asset_id}.mp4` (includes static images converted to single-frame mp4s).
+*   **Audio (SFX):** `{asset_id}.mp3`.
+*   **Voiceover:** `narration_scene_0.mp3` (located in the same folder).
+
+The assets for this scene are as follows:
+
+
+## 2. Audio Implementation
+Use `self.add_sound("path/to/file.mp3")` for both the voiceover and sound effects.
+
+## 3. Visual Implementation (Custom CV2 Logic)
+All visual assets are `.mp4` files. Some are single-frame loops (images), others are video clips.
+*   **Scaling:** Resize frames to fit the scene using `frame_img.scale_to_fit_height()` or `.scale_to_fit_width()`. (Manim default: 14.22w x 8h).
+*   **Aspect Ratio:** Assume roughly square aspect ratios.
+*   **Minimum Duration**: Any external .mp4 asset **must** remain visible for a MINIMUM of 1 second. Do not cut them shorter than this, even if the voiceover is fast.
+*   **Logic:** If there are visual assets, you **must** adapt the following `cv2` pattern to display these assets, ensuring you loop or cut them to fit the scene duration:
+
+```python
+cap = cv2.VideoCapture("path to mp4 asset")
+visual_asset_duration = 1.0 # minimum duration for the visual asset in seconds (**must** be at least 1 second)
+frame_time = 0.04
+elapsed = 0
+
+current_frame = None
+while elapsed < visual_asset_duration:
+    flag, frame = cap.read()
+
+    if not flag:
+        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+        flag, frame = cap.read()
+
+    if flag:
+        if current_frame is not None:
+            self.remove(current_frame)
+
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame_img = ImageMobject(frame).scale_to_fit_height(5)
+        frame_img.move_to(UP * 0.5)
+        current_frame = frame_img
+        self.add(frame_img)
+        self.wait(frame_time)
+        elapsed += frame_time
+    else:
+        self.wait(frame_time)
+        elapsed += frame_time
+
+cap.release()
+```
+
+# TECHNICAL CONSTRAINTS
+You **must** strictly adhere to these rules to prevent runtime errors:
+1.  **Group vs. VGroup:** `ImageMobject` is **NOT** a `VMobject`.
+    *   **Never** add an `ImageMobject` to a `VGroup`.
+    *   If you need to group images (or mix images with vectors/text), you **must** use `Group()` instead of `VGroup()`.
+2.  **Numpy Types in Text:** If numpy strings used, you **must** explicitly cast them to a Python string before passing to Manim objects.
+3.  **Code Blocks:** If code snippets are required, you **must** strictly instantiate the `Code` class using the following signature (filling in `code_string` and `language` as needed):
+    ```python
+    Code(
+        code_string="...",
+        language="...",
+        formatter_style='vim',
+        tab_width=4,
+        add_line_numbers=True,
+        line_numbers_from=1,
+        background='rectangle',
+        background_config=None,
+        paragraph_config=None
+    )
+    ```
+4.  **Minimum Wait Time:** You **must** ensure that the wait duration in `self.wait(duration)` is positive, by enforcing a minimum wait time of 0.01s for any calls with `self.wait(max(0.01, duration))`.
+
+
+# INPUT DATA
+
+## 1. Full Video Plan
+Use this plan for context on flow and edit notes. **Only generate code for Scene 0.**
+
+{"topic":"Binary Trees","main_font":"JetBrains Mono","secondary_font":"Helvetica","scenes":[{"scene_number":0,"duration_seconds":5,"visuals_description":"Dark background with a simple node appearing in center, then splitting into two child nodes, forming a basic tree structure. Text 'BINARY TREE' appears at top. Nodes are clean circles with connecting lines. The tree structure glows slightly with a tech aesthetic.","narration_script":"Binary trees. It's literally just a node that can have at most two children. Left child, right child. That's it. That's the whole concept.","sound_description":"Soft electronic whoosh as nodes appear. Subtle pop sound for each node connection. Low ambient tech music begins.","edit_notes":"Quick fade in from black. Nodes appear with smooth animation. Text slides in from top with slight glow effect.","assets_needed":[],"scene_structure":"1. Dark background initialization\n2. Start scene voiceover immediately at t=0\n3. Animate title text 'BINARY TREE' at the top\n4. Single root node appears in center\n5. Root node splits into two child nodes with connecting lines\n6. Slight glow effect on the complete tree structure"},{"scene_number":1,"duration_seconds":5,"visuals_description":"Family tree visual morphs into a binary tree structure. Show comparison: regular family tree (chaotic, multiple children) vs binary tree (clean, max 2 children). Disappointed Anakin meme appears briefly showing 'unlimited children' vs 'only 2 children'.","narration_script":"Think of it like a family tree, except every parent practices extreme family planning and stops at exactly two kids. No exceptions. This isn't the Duggar family.","sound_description":"Record scratch sound when showing the constraint. Light comedic timing sound effect. Background music continues.","edit_notes":"Split screen comparison effect. Meme appears for 1.5 seconds with zoom-in effect. Quick transition between visuals.","assets_needed":[{"asset_id":"anakin_padme_meme","asset_type":"visual","asset_short_desc":"Anakin Padme meme format","asset_long_desc":"Four panel Anakin and Padme meme template showing Anakin saying something and Padme looking concerned, used to show the binary tree constraint of maximum two children"}],"scene_structure":"1. Start scene voiceover immediately at t=0\n2. Show chaotic family tree with many children per parent\n3. Transition to clean binary tree with max 2 children\n4. Display Anakin Padme meme with text about the two-child limit\n5. Emphasize the 'max 2 children' rule with highlight effect"},{"scene_number":2,"duration_seconds":5,"visuals_description":"Animated binary search tree with numbers. Show a search operation traversing left and right based on value comparisons. Display Big O notation 'O(log n)' prominently. Then show worst case: a completely unbalanced tree that looks like a linked list with 'O(n)' appearing with sad trombone visual effect.","narration_script":"The most popular flavor is the Binary Search Tree, where left is smaller, right is bigger. Searching is O(log n)... unless some psychopath inserted values in sorted order and now it's just a linked list with extra steps.","sound_description":"Satisfying click sounds during tree traversal. Sad trombone sound effect when showing degenerate tree. Background music intensifies slightly.","edit_notes":"Split timing: 3 seconds for balanced tree, 2 seconds for degenerate case. Use color coding: green for balanced, red for degenerate. Quick cut to degenerate tree for comedic effect.","assets_needed":[{"asset_id":"sad_trombone","asset_type":"sound_effect","asset_short_desc":"Sad trombone sound","asset_long_desc":"Classic sad trombone sound effect used in comedic timing to indicate failure or disappointment, plays when showing the degenerate binary tree"}],"scene_structure":"1. Start scene voiceover immediately at t=0\n2. Display balanced binary search tree with numbers\n3. Animate search operation with traversal path highlighted\n4. Show 'O(log n)' complexity notation with positive styling\n5. Quick transition to completely unbalanced tree (linked list shape)\n6. Display 'O(n)' with negative styling and play sad trombone\n7. Brief comparison showing both trees side by side"},{"scene_number":3,"duration_seconds":5,"visuals_description":"Rapid montage of tree traversal methods: Inorder, Preorder, Postorder shown as animated paths through a tree with different colors. Each traversal method name appears with its order pattern. End with a 'this is fine' dog meme appearing next to a complex tree with the caption 'leetcode interview questions'.","narration_script":"Now memorize three ways to traverse this thing: inorder, preorder, postorder. You'll definitely remember which is which during your interview at 3am when the anxiety hits. Good luck.","sound_description":"Fast-paced electronic beeps for each traversal type. Escalating tension in background music. Fire crackling sound effect with meme appearance.","edit_notes":"Quick cuts between traversal types (1 second each). Meme appears for final 1.5 seconds with slight zoom. End with abrupt cut to black.","assets_needed":[{"asset_id":"this_is_fine_dog","asset_type":"visual","asset_short_desc":"This is fine dog meme","asset_long_desc":"The 'this is fine' meme showing a cartoon dog sitting in a room on fire while saying everything is fine, representing the stress of leetcode binary tree interview questions"}],"scene_structure":"1. Start scene voiceover immediately at t=0\n2. Display binary tree in center\n3. Show inorder traversal with blue path highlighting\n4. Quickly transition to preorder traversal with green path\n5. Quickly transition to postorder traversal with red path\n6. Display 'this is fine' meme with leetcode context\n7. Fade to black"}]}
+
+## 2. Voiceover Script (Scene 0)
+Use this text for caption content.
+
+Binary trees. It's literally just a node that can have at most two children. Left child, right child. That's it. That's the whole concept.
+
+## 3. Timing Data
+Use the lists below for precise alignment. Times are in seconds relative to the start of this scene.
+*   `word_start_times_seconds`: Start time of each word.
+*   `word_end_times_seconds`: End time of each word.
+
+{"words":["Binary","trees.","It's","literally","just","a","node","that","can","have","at","most","two","children.","Left","child,","right","child.","That's","it.","That's","the","whole","concept."],"word_start_times_seconds":[0.0,0.35,0.7000000000000001,0.9500000000000003,1.4500000000000006,1.7000000000000008,1.800000000000001,2.0500000000000007,2.3,2.499999999999999,2.7499999999999982,2.8999999999999977,3.149999999999997,3.349999999999996,3.8499999999999943,4.099999999999993,4.449999999999992,4.749999999999991,5.09999999999999,5.449999999999989,5.649999999999988,5.999999999999987,6.199999999999986,6.499999999999985],"word_end_times_seconds":[0.3,0.65,0.9000000000000002,1.4000000000000006,1.6500000000000008,1.7500000000000009,2.000000000000001,2.25,2.4499999999999993,2.6999999999999984,2.849999999999998,3.099999999999997,3.2999999999999963,3.7999999999999945,4.049999999999994,4.399999999999992,4.699999999999991,5.04999999999999,5.399999999999989,5.599999999999988,5.949999999999987,6.149999999999986,6.449999999999985,6.8999999999999835]}
+
+# TIMING SPECIFICATIONS
+*   **Source of Truth:** Use the provided `word_start_times_seconds` and `word_end_times_seconds` lists to align animations and captions with the voiceover.
+*   **Timings:** Times are relative to the start of this scene (scene 0).
+*   **Precision:** Animation start times should be within ±0.1s of the narration timing.
+*   **Captions:** Captions may slightly overlap transitions for readability, but they should appear and disappear within ±0.2s of the voiceover timing.
+*   **Visuals:** All imported visual assets **must** appear on screen for at least 1 second to allow viewers to absorb them.
+*   **Native Manim Elements:**  Other Manim objects (shapes, text, code blocks, flashes) are NOT subject to the 1-second rule. These should be fast, transient, and match the high-energy "Fireship" pacing (e.g., appearing for only 0.8s is acceptable).
