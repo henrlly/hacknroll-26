@@ -1,0 +1,68 @@
+{
+  "topic": "Binary Trees",
+  "main_font": "JetBrains Mono",
+  "secondary_font": "Helvetica",
+  "scenes": [
+    {
+      "scene_number": 0,
+      "duration_seconds": 5,
+      "visuals_description": "Dark background with a simple node appearing in center, then splitting into two child nodes, forming a basic tree structure. Text 'BINARY TREE' appears at top. Nodes are clean circles with connecting lines. The tree structure glows slightly with a tech aesthetic.",
+      "narration_script": "Binary trees. It's literally just a node that can have at most two children. Left child, right child. That's it. That's the whole concept.",
+      "sound_description": "Soft electronic whoosh as nodes appear. Subtle pop sound for each node connection. Low ambient tech music begins.",
+      "edit_notes": "Quick fade in from black. Nodes appear with smooth animation. Text slides in from top with slight glow effect.",
+      "assets_needed": [],
+      "scene_structure": "1. Dark background initialization\n2. Start scene voiceover immediately at t=0\n3. Animate title text 'BINARY TREE' at the top\n4. Single root node appears in center\n5. Root node splits into two child nodes with connecting lines\n6. Slight glow effect on the complete tree structure"
+    },
+    {
+      "scene_number": 1,
+      "duration_seconds": 5,
+      "visuals_description": "Family tree visual morphs into a binary tree structure. Show comparison: regular family tree (chaotic, multiple children) vs binary tree (clean, max 2 children). Disappointed Anakin meme appears briefly showing 'unlimited children' vs 'only 2 children'.",
+      "narration_script": "Think of it like a family tree, except every parent practices extreme family planning and stops at exactly two kids. No exceptions. This isn't the Duggar family.",
+      "sound_description": "Record scratch sound when showing the constraint. Light comedic timing sound effect. Background music continues.",
+      "edit_notes": "Split screen comparison effect. Meme appears for 1.5 seconds with zoom-in effect. Quick transition between visuals.",
+      "assets_needed": [
+        {
+          "asset_id": "anakin_padme_meme",
+          "asset_type": "visual",
+          "asset_short_desc": "Anakin Padme meme format",
+          "asset_long_desc": "Four panel Anakin and Padme meme template showing Anakin saying something and Padme looking concerned, used to show the binary tree constraint of maximum two children"
+        }
+      ],
+      "scene_structure": "1. Start scene voiceover immediately at t=0\n2. Show chaotic family tree with many children per parent\n3. Transition to clean binary tree with max 2 children\n4. Display Anakin Padme meme with text about the two-child limit\n5. Emphasize the 'max 2 children' rule with highlight effect"
+    },
+    {
+      "scene_number": 2,
+      "duration_seconds": 5,
+      "visuals_description": "Animated binary search tree with numbers. Show a search operation traversing left and right based on value comparisons. Display Big O notation 'O(log n)' prominently. Then show worst case: a completely unbalanced tree that looks like a linked list with 'O(n)' appearing with sad trombone visual effect.",
+      "narration_script": "The most popular flavor is the Binary Search Tree, where left is smaller, right is bigger. Searching is O(log n)... unless some psychopath inserted values in sorted order and now it's just a linked list with extra steps.",
+      "sound_description": "Satisfying click sounds during tree traversal. Sad trombone sound effect when showing degenerate tree. Background music intensifies slightly.",
+      "edit_notes": "Split timing: 3 seconds for balanced tree, 2 seconds for degenerate case. Use color coding: green for balanced, red for degenerate. Quick cut to degenerate tree for comedic effect.",
+      "assets_needed": [
+        {
+          "asset_id": "sad_trombone",
+          "asset_type": "sound_effect",
+          "asset_short_desc": "Sad trombone sound",
+          "asset_long_desc": "Classic sad trombone sound effect used in comedic timing to indicate failure or disappointment, plays when showing the degenerate binary tree"
+        }
+      ],
+      "scene_structure": "1. Start scene voiceover immediately at t=0\n2. Display balanced binary search tree with numbers\n3. Animate search operation with traversal path highlighted\n4. Show 'O(log n)' complexity notation with positive styling\n5. Quick transition to completely unbalanced tree (linked list shape)\n6. Display 'O(n)' with negative styling and play sad trombone\n7. Brief comparison showing both trees side by side"
+    },
+    {
+      "scene_number": 3,
+      "duration_seconds": 5,
+      "visuals_description": "Rapid montage of tree traversal methods: Inorder, Preorder, Postorder shown as animated paths through a tree with different colors. Each traversal method name appears with its order pattern. End with a 'this is fine' dog meme appearing next to a complex tree with the caption 'leetcode interview questions'.",
+      "narration_script": "Now memorize three ways to traverse this thing: inorder, preorder, postorder. You'll definitely remember which is which during your interview at 3am when the anxiety hits. Good luck.",
+      "sound_description": "Fast-paced electronic beeps for each traversal type. Escalating tension in background music. Fire crackling sound effect with meme appearance.",
+      "edit_notes": "Quick cuts between traversal types (1 second each). Meme appears for final 1.5 seconds with slight zoom. End with abrupt cut to black.",
+      "assets_needed": [
+        {
+          "asset_id": "this_is_fine_dog",
+          "asset_type": "visual",
+          "asset_short_desc": "This is fine dog meme",
+          "asset_long_desc": "The 'this is fine' meme showing a cartoon dog sitting in a room on fire while saying everything is fine, representing the stress of leetcode binary tree interview questions"
+        }
+      ],
+      "scene_structure": "1. Start scene voiceover immediately at t=0\n2. Display binary tree in center\n3. Show inorder traversal with blue path highlighting\n4. Quickly transition to preorder traversal with green path\n5. Quickly transition to postorder traversal with red path\n6. Display 'this is fine' meme with leetcode context\n7. Fade to black"
+    }
+  ]
+}
