@@ -19,7 +19,7 @@
     }
 </script>
 
-<div class="h-full flex w-full border-2 justify-center items-center">
+<div class="flex w-full justify-center items-center">
     <Card.Root class="w-2/3">
         <Card.Header>
             <Card.Title>Enter Prompt</Card.Title>

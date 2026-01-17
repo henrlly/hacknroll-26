@@ -12,7 +12,7 @@
 	let character = $state("trump" as "trump" | "obama");
 	$effect(() => {
 		setTimeout(() => {
-			unityPlayer?.changeBackgroundColor("#000000");
+			unityPlayer?.changeBackgroundColor("#FFFFFF");
 		}, 5000)
 	})
 
@@ -21,19 +21,23 @@
 			unityPlayerHidden = true;
 		} else if (videoState.generationStepView === "WRITING SCRIPT") {
 			unityPlayerHidden = false;
-			unityPlayer?.changeCharacter(character);
 			unityPlayer?.startTyping(videoState.full_script);
 		} else if (videoState.generationStepView === "DOING TASKS") {
+			unityPlayerHidden = false;
 			unityPlayer?.startNarration(videoState.full_script);
 		} else {
-			
+			unityPlayerHidden = false;
+		}
+		
+		if (character) {
+			unityPlayer?.changeCharacter(character);
 		}
 	})
 </script>
 
 <div class="flex h-screen w-full flex-col items-center gap-4">
 	<ProgressFlow bind:generationStep={videoState.generationStepView} />
-	<div class="h-[80%] w-[90%] rounded-3xl">
+	<div class="h-[50vh] w-[90%] rounded-3xl {unityPlayerHidden ? "hidden" : "" }">
 		<UnityPlayer bind:this={unityPlayer}/>
 	</div>
 		{#if videoState.generationStepView === 'INPUT'}
