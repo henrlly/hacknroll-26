@@ -1,23 +1,23 @@
 <script lang="ts">
 	import ProgressFlow from '$lib/components/progress-flow.svelte';
 	import PromptInput from '$lib/components/prompt-input.svelte';
-	import PlanDisplay from '$lib/components/plan-display.svelte';
-	import ScenesDisplay from '$lib/components/scenes/ScenesDisplay.svelte';
-	import FinalVideo from '$lib/components/pages/final-video.svelte';
+	import ScriptWritingData from '$lib/components/script-writing-display.svelte';
+	import DoingTasksDisplay from '$lib/components/doing-tasks-display.svelte';
+	import FinalVideo from '$lib/components/final-video.svelte';
+	import { generationData } from '$lib/stores/generation-data.svelte';
 
-	let generationStep = $state("INPUT" as "INPUT" | "WRITING SCRIPT" | "DOING TASKS" | "COMPLETED");
 </script>
 
 <div class="flex h-screen w-full flex-col items-center gap-4">
-	<ProgressFlow bind:generationStep={generationStep}/>
+	<ProgressFlow bind:generationStep={generationData.generationStep}/>
 
-	{#if generationStep === 'INPUT'}
+	{#if generationData.generationStep === 'INPUT'}
 		<PromptInput />
-	{:else if generationStep === 'WRITING SCRIPT'}
-		<PlanDisplay />
-	{:else if generationStep === 'DOING TASKS'}
-		<!-- <ScenesDisplay scenes={scenesObj.data} {sessionId} {isStitching} /> -->
-	{:else if generationStep === "COMPLETED"}
-		<!-- <FinalVideo {sessionId} /> -->
+	{:else if generationData.generationStep === 'WRITING SCRIPT'}
+		<ScriptWritingData />
+	{:else if generationData.generationStep === 'DOING TASKS'}
+		<DoingTasksDisplay />
+	{:else if generationData.generationStep === "COMPLETED"}
+		<FinalVideo />
 	{/if}
 </div>
