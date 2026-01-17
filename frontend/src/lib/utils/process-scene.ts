@@ -5,7 +5,9 @@ import {
 	type SceneLoadingType,
 	type VideoLoadingType
 } from '$lib/types/sceneTypes';
+import { STATIC_API_BASE } from './constants';
 import { convertSceneToLoading } from './convert-scene-to-loading';
+import { getVideoDuration } from './get-video-duration';
 import { processNarrationGen, processSfxAssetGen, processVisualAssetGen } from './scenes';
 
 export function sceneFromPlan(plan: VideoPlan, videoObj: VideoLoadingType) {
@@ -28,7 +30,7 @@ function assetIdToSceneNumber(assetId: string, scenes: SceneLoadingType[]) {
 	return scenes.findIndex((scene) => scene.assets.map((a) => a.assetId).includes(assetId));
 }
 
-export function processSceneEvent(event: SceneResponseType, videoObj: VideoLoadingType) {
+export async function processSceneEvent(event: SceneResponseType, videoObj: VideoLoadingType) {
 	console.log(event);
 	// type safety doesnt work with switch statement
 	if (event.type === 'narration') {
@@ -96,7 +98,11 @@ export function processSceneEvent(event: SceneResponseType, videoObj: VideoLoadi
 		videoObj.scenes[event.scene_number].render[event.version_number].success = event.success;
 		videoObj.scenes[event.scene_number].render[event.version_number].aborted =
 			event.error_message === 'cancelled';
-	} else if (event.type === 'code_rendering_selection') {
+    if (event.event_type === 'rendering_end') {
+      const url = `${STATIC_API_BASE}/${videoObj.session_id}/scene_${event.scene_number}.mp4`
+      videoObj.sceneDurations[event.scene_number] = await getVideoDuration(url);
+		}
+  } else if (event.type === 'code_rendering_selection') {
 		videoObj.scenes[event.scene_number].render[event.version_number].selected = true;
 	}
 	console.log(videoObj.scenes);

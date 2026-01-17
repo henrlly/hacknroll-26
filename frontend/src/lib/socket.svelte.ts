@@ -65,7 +65,7 @@ export function connectWebSocket() {
 			result.data.type !== 'scene' &&
 			result.data.type !== 'select_image'
 		) {
-			processSceneEvent(result.data, videoState);
+			await processSceneEvent(result.data, videoState);
 		} else if (result.data.type === 'final_video') {
 			if (result.data.event_type === 'stitching_end') {
 				videoState.generationStep = 'COMPLETED';

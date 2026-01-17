@@ -1,10 +1,10 @@
 import { socketState } from '$lib/socket.svelte';
 import { EditSceneRequest, SelectImageRequest } from '$lib/types/apiTypes';
 
-export function sendEditPrompt(prompt: string) {
+export function sendEditPrompt(prompt: string, scene_number: number) {
 	const request = EditSceneRequest.parse({
 		custom_edit_prompt: prompt,
-		scene_number: 1,
+		scene_number,
 	});
 
 	socketState.socket?.send(JSON.stringify(request));

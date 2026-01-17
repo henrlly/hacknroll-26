@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SceneManager : MonoBehaviour
 {
@@ -10,12 +11,13 @@ public class SceneManager : MonoBehaviour
     private static readonly int Narrating = Animator.StringToHash("narrating");
     private static readonly int Shrink = Animator.StringToHash("shrink");
     private static readonly int Expand = Animator.StringToHash("expand");
+    private static readonly int ZoomedIn = Animator.StringToHash("zoomedIn");
 
     public TextMeshProUGUI typewriterText;
     public TextMeshProUGUI speechBubbleText;
     public GameObject speechBubble;
     public Camera mainCamera;
-    public CinemachineCamera cinemachineCamera;
+    public Animator cinemachineCameraAnimator;
 
     public GameObject trumpCharacter;
     public GameObject obamaCharacter;
@@ -28,6 +30,7 @@ public class SceneManager : MonoBehaviour
 
     private Queue<string> typeTextQueue = new();
     private bool _isTyping = false;
+
     public bool IsTyping
     {
         get => _isTyping;
@@ -38,14 +41,25 @@ public class SceneManager : MonoBehaviour
             {
                 if (value)
                 {
-                    cinemachineCamera.Lens.OrthographicSize = 25f;
+                    zoomOut();
                     speechBubble.SetActive(false);
                     typewriterText.gameObject.SetActive(true);
                     characterAnimator.SetBool(Narrating, false);
                 }
+
                 characterAnimator.SetBool(Typing, value);
             }
         }
+    }
+
+    private void zoomIn()
+    {
+        cinemachineCameraAnimator.SetBool(ZoomedIn, true);
+    }
+
+    private void zoomOut()
+    {
+        cinemachineCameraAnimator.SetBool(ZoomedIn, false);
     }
 
     private Queue<string> narrationQueue = new();
@@ -62,7 +76,7 @@ public class SceneManager : MonoBehaviour
             {
                 if (value)
                 {
-                    cinemachineCamera.Lens.OrthographicSize = 40f;
+                    zoomIn();
                     speechBubble.SetActive(true);
                     typewriterText.gameObject.SetActive(false);
                     characterAnimator.SetBool(Typing, false);
@@ -72,6 +86,7 @@ public class SceneManager : MonoBehaviour
                 {
                     speechBubble.GetComponent<Animator>().SetTrigger(Shrink);
                 }
+
                 characterAnimator.SetBool(Narrating, value);
             }
         }
@@ -84,6 +99,7 @@ public class SceneManager : MonoBehaviour
         {
             Destroy(character);
         }
+
         switch (characterName)
         {
             case "trump":
@@ -93,9 +109,10 @@ public class SceneManager : MonoBehaviour
                 character = Instantiate(obamaCharacter, new Vector3(0, -28, 0), Quaternion.identity);
                 break;
         }
+
         characterAnimator = character.GetComponent<Animator>();
     }
-    
+
     public void ChangeBackgroundColor(string colorHex)
     {
         mainCamera.backgroundColor = ColorUtility.TryParseHtmlString(colorHex, out Color color) ? color : Color.white;
@@ -105,7 +122,7 @@ public class SceneManager : MonoBehaviour
     {
         const float delay = 0.05f;
         IsTyping = true;
-        
+
         string currentText = "";
         foreach (char c in text)
         {
@@ -123,7 +140,7 @@ public class SceneManager : MonoBehaviour
 
         IsTyping = false;
     }
-    
+
     public void StartTyping(string text)
     {
         if (IsTyping)
@@ -138,6 +155,7 @@ public class SceneManager : MonoBehaviour
 
     public void StartSfx(string sfxDescription)
     {
+        zoomIn();
         switch (characterName)
         {
             case "trump":
@@ -163,14 +181,16 @@ public class SceneManager : MonoBehaviour
                 speechBubbleText.text += word + " ";
                 yield return new WaitForSeconds(delay);
             }
+
             yield return new WaitForSeconds(longerDelay);
             speechBubbleText.text = "";
         }
+
         if (narrationQueue.Count > 0)
         {
             StartCoroutine(narrateText(narrationQueue.Dequeue()));
         }
-        
+
         IsNarrating = false;
     }
 
@@ -188,7 +208,7 @@ public class SceneManager : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {        
+    {
         // Check if running on the WebGL platform
 #if !UNITY_EDITOR && UNITY_WEBGL
         // Set to false to allow other HTML elements (like text fields) to receive input

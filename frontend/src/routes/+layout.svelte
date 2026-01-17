@@ -35,8 +35,8 @@
 			<ModeSwitcher />
 		</div>
 	</header>
-	
-    <main class="flex-grow overflow-hidden">
+
+    <main class="flex-grow overflow-auto">
 		{@render children()}
     </main>
 </div>
@@ -44,6 +44,6 @@
 	<link rel="icon" href={favicon} />
 	<style>
 		/* Kill default browser margins that cause small scrolls */
-		body { margin: 0; padding: 0; overflow: hidden; }
+		body { margin: 0; padding: 0; }
 	</style>
 </svelte:head>

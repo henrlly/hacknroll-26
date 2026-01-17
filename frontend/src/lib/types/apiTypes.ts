@@ -127,7 +127,7 @@ export const EditSceneRequest = z.object({
 	edit_prompt_type: z.enum(['funny', 'detailed', 'pictures']).optional(),
 	custom_edit_prompt: z.string().optional(),
 	scene_number: z.number()
-});
+}).strict();
 
 export const SelectImageRequest = z.object({
 	type: z.literal('select_image_request').default('select_image_request'),
