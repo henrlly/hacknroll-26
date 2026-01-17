@@ -4,16 +4,16 @@
 	import { buttonVariants } from "$lib/components/ui/button";
     import { Badge } from "$lib/components/ui/badge/index.js";
 	import { onMount } from "svelte";
+    import { socketState } from "$lib/socket.svelte";
 
     let submitted = $state(false);
-    let socket: WebSocket;
 
     let sessionID: string = $state("");
     let generatedScript: string = $state("");
     let displayedScript: string = $state("");
 
     onMount(() => {
-        socket = new WebSocket("ws://localhost:8000/api/ws");
+
     })
 
     let voice = $state("trump");
@@ -24,9 +24,9 @@
     }
 
     async function handleSubmit() {
-        if (socket && socket.readyState === WebSocket.OPEN) {
+        if (socketState.status === "connected" && socketState.socket) {
             const payload = { prompt, voice };
-            socket.send(JSON.stringify(payload));
+            socketState.socket.send(JSON.stringify(payload));
             submitted = true;
         } else {
             console.error("WebSocket is not connected.");
