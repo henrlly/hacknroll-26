@@ -13,6 +13,8 @@ from app.utils.alignment import (
     mock_word_alignment,
 )
 from app.utils.normalize_volume import normalize_volume
+from app.services.trump_voice import generate_trump_voice
+from app.services.narration_timestamps import transcribe_with_scribe_v2
 
 client = AsyncElevenLabs(
     api_key=settings.ELEVENLABS_API_KEY, base_url="https://api.elevenlabs.io"
@@ -41,23 +43,10 @@ async def generate_speech(
         )
         alignment = mock_word_alignment(text)
     else:
-        res = await client.text_to_speech.convert_with_timestamps(
-            model_id="eleven_flash_v2_5"
-            if use_flash
-            else "eleven_v3",  # eleven_flash_v2_5, eleven_v3
-            voice_id="repzAAjoKlgcT2oOAIWt",  ## 6OzrBCQf8cjERkYgzSg8:black Ybqj6CIlqb6M85s9Bl4n:blacker repzAAjoKlgcT2oOAIWt:youtuber
-            text=text,
-        )
-        base64_audio = res.audio_base_64
-        audio_bytes = base64.b64decode(base64_audio)
+        res = await generate_trump_voice(text, file_name)
+        return transcribe_with_scribe_v2(res)
 
-        with open(file_name, "wb") as f:
-            f.write(audio_bytes)
 
-        if res.alignment is not None:
-            alignment = character_alignment_to_word_alignment(res.alignment)
-        else:
-            return mock_word_alignment(text)
 
     await callback(
         NarrationResponse(
