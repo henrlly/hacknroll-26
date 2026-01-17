@@ -20,12 +20,17 @@
 		}, 4000);
 	});
 
+	let cur_length = 0;
+
 	$effect(() => {
 		if (videoState.generationStepView === 'COMPLETED') {
 			unityPlayerHidden = true;
 		} else if (videoState.generationStepView === 'WRITING SCRIPT') {
 			unityPlayerHidden = false;
-			if (videoState.full_script !== '') unityPlayer?.startTyping(videoState.full_script);
+			if (videoState.full_script.length > cur_length) {
+				unityPlayer?.startTyping(videoState.full_script.slice(cur_length));
+				cur_length = videoState.full_script.length
+			}
 		} else if (videoState.generationStepView === 'DOING TASKS') {
 			unityPlayerHidden = false;
 			unityPlayer?.startNarration(videoState.full_script);
@@ -51,9 +56,9 @@
 <div class="flex h-screen w-full flex-col items-center">
 	<div class="max-w-8xl flex h-screen w-full flex-col items-center gap-4">
 		<ProgressFlow bind:generationStep={videoState.generationStepView} />
-		<div class="aspect-video w-3/5 rounded-3xl overflow-hidden relative">
-			<div class="w-full h-full scale-125">
-				<UnityPlayer bind:this={unityPlayer} bind:isUnityLoaded={isUnityLoaded} />
+		<div class="relative aspect-video w-3/5 overflow-hidden rounded-3xl">
+			<div class="h-full w-full scale-125">
+				<UnityPlayer bind:this={unityPlayer} bind:isUnityLoaded />
 			</div>
 		</div>
 		{#if videoState.generationStepView === 'INPUT'}
