@@ -49,8 +49,10 @@ export function connectWebSocket() {
 				plan_string += result.data.delta;
 				const plan = VideoPlanSchema.parse(parse(plan_string, ALL));
 				// console.log("PLANSTRING", plan_string)
-				videoState.generationStep = 'WRITING SCRIPT';
-			if (!videoState.completed) 	videoState.generationStepView = 'WRITING SCRIPT';
+				if (videoState.generationStep !== "WRITING SCRIPT") {
+					videoState.generationStep = 'WRITING SCRIPT';
+				}
+			if (!videoState.completed && videoState.generationStepView !== "WRITING SCRIPT") 	videoState.generationStepView = 'WRITING SCRIPT';
 				sceneFromPlan(plan, videoState);
 				processFullScript(videoState);
 			} else if (result.data.event_type === 'plan_end') {
@@ -58,8 +60,10 @@ export function connectWebSocket() {
 				processNarrationGen(videoState);
 				processVisualAssetGen(videoState);
 				processSfxAssetGen(videoState);
-				videoState.generationStep = 'DOING TASKS';
-			if (!videoState.completed) 	videoState.generationStepView = 'DOING TASKS';
+				if (videoState.generationStep !== "DOING TASKS") {
+					videoState.generationStep = 'DOING TASKS';
+				}
+			if (!videoState.completed && videoState.generationStep !== "DOING TASKS") 	videoState.generationStepView = 'DOING TASKS';
 			}
 		} else if (
 			result.data.type !== 'final_video' &&
