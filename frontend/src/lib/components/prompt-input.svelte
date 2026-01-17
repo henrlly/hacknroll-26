@@ -5,6 +5,7 @@
     import { Badge } from "$lib/components/ui/badge/index.js";
     import { socketState } from "$lib/socket.svelte";
 
+    let { character=$bindable() } = $props();
     let voice = $state("trump");
     let prompt = $state("");
 
@@ -18,7 +19,7 @@
     }
 </script>
 
-<div class="h-full flex items-center">
+<div class="h-full flex w-full border-2 justify-center items-center">
     <Card.Root class="w-2/3">
         <Card.Header>
             <Card.Title>Enter Prompt</Card.Title>
@@ -32,8 +33,8 @@
     
                 <div class="w-full flex justify-between">
                     <div class="flex gap-2">
-                    <Badge class="h-6" variant={voice === "trump" ? "default" : "outline"} onclick={() => { voice = "trump" }}>Trump</Badge>
-                    <Badge class="h-6" variant={voice === "obama" ? "default" : "outline"} onclick={() => { voice = "obama" }}>Obama</Badge>
+                    <Badge class="h-6" variant={voice === "trump" ? "default" : "outline"} onclick={() => { voice = "trump"; character = "trump" }}>Trump</Badge>
+                    <Badge class="h-6" variant={voice === "obama" ? "default" : "outline"} onclick={() => { voice = "obama"; character = "obama" }}>Obama</Badge>
                     <!-- <Badge class="h-6" variant={voice === "peter" ? "default" : "outline"} onclick={() => { voice = "peter" }}>Peter</Badge> -->
                     </div>
                     <button class="w-20 {buttonVariants({ variant: "default" })}">Submit</button>
