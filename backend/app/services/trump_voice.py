@@ -1,17 +1,19 @@
-from gradio_client import Client
-import shutil
 import os
+import shutil
+
+from gradio_client import Client
 
 client = Client("selfit-camera/Trump-Ai-Voice")
 
-import shutil
 import os
+import shutil
 
-def generate_trump_voice(text: str, output_filename: str = "output.mp3"):
+
+def generate_trump_voice(text: str, output_filename: str):
     result = client.predict(
         text=text,
         language_display="🇺🇸 English",
-        api_name="/generate_trump_voice_with_realtime_updates"
+        api_name="/generate_trump_voice_with_realtime_updates",
     )
 
     status = result[0]
@@ -23,7 +25,4 @@ def generate_trump_voice(text: str, output_filename: str = "output.mp3"):
     output_path = os.path.join(os.getcwd(), output_filename)
     shutil.copy(temp_audio_path, output_path)
 
-    return {
-        "status": status,
-        "path": output_path
-    }
+    return output_path
