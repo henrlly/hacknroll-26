@@ -8,7 +8,6 @@
 		class="h-full w-full rounded-xl"
 		src={`${STATIC_API_BASE}/${videoState.session_id}/final_video.mp4`}
 		controls
-		loop
 		autoplay
 	>
 		<track kind="captions" />
