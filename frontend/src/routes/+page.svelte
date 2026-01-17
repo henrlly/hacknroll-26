@@ -5,20 +5,19 @@
 	import DoingTasksDisplay from '$lib/components/doing-tasks-display.svelte';
 	import FinalVideo from '$lib/components/completed-stage.svelte';
 	import { videoState } from '$lib/stores/generation-data.svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
 </script>
 
 <div class="flex h-screen w-full flex-col items-center gap-4">
-	{#if videoState.completed}{:else}
-		<ProgressFlow bind:generationStep={videoState.generationStepView} />
+	<ProgressFlow bind:generationStep={videoState.generationStepView} />
 
-		{#if videoState.generationStepView === 'INPUT'}
-			<PromptInput />
+	{#if videoState.generationStepView === 'INPUT'}
+		<PromptInput />
 		{:else if videoState.generationStepView === 'WRITING SCRIPT'}
-			<ScriptWritingData />
+		<ScriptWritingData />
 		{:else if videoState.generationStepView === 'DOING TASKS'}
-			<DoingTasksDisplay />
+		<DoingTasksDisplay />
 		{:else if videoState.generationStepView === 'COMPLETED'}
-			<FinalVideo />
-		{/if}
+		<FinalVideo />
 	{/if}
 </div>
