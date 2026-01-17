@@ -35,19 +35,20 @@
 		}
 	})
 </script>
-
-<div class="flex h-screen w-full flex-col items-center gap-4">
-	<ProgressFlow bind:generationStep={videoState.generationStepView} />
-	<div class="h-[50vh] w-[90%] rounded-3xl {unityPlayerHidden ? "hidden" : "" }">
-		<UnityPlayer bind:this={unityPlayer}/>
+<div class="flex h-screen w-full flex-col items-center ">
+	<div class="flex h-screen w-full max-w-8xl flex-col items-center gap-4">
+		<ProgressFlow bind:generationStep={videoState.generationStepView} />
+		<div class="aspect-video w-4/5 rounded-3xl {unityPlayerHidden ? "hidden" : "" }">
+			<UnityPlayer bind:this={unityPlayer}/>
+		</div>
+			{#if videoState.generationStepView === 'INPUT'}
+			<PromptInput bind:character={character} />
+			{:else if videoState.generationStepView === 'WRITING SCRIPT'}
+			<ScriptWritingData />
+			{:else if videoState.generationStepView === 'DOING TASKS'}
+			<DoingTasksDisplay />
+			{:else if videoState.generationStepView === 'COMPLETED'}
+			<FinalVideo />
+		{/if}
 	</div>
-		{#if videoState.generationStepView === 'INPUT'}
-		<PromptInput bind:character={character} />
-		{:else if videoState.generationStepView === 'WRITING SCRIPT'}
-		<ScriptWritingData />
-		{:else if videoState.generationStepView === 'DOING TASKS'}
-		<DoingTasksDisplay />
-		{:else if videoState.generationStepView === 'COMPLETED'}
-		<FinalVideo />
-	{/if}
 </div>
