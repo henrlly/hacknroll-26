@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 81443835}
   serializedVersion: 2
   m_LocalRotation: {x: -0.6155302, y: 0.34802675, z: -0.34802675, w: 0.6155302}
-  m_LocalPosition: {x: 5.2599983, y: -0.23999977, z: 0}
+  m_LocalPosition: {x: 6.68, y: 2.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1069,7 +1069,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4982,7 +4982,7 @@ Transform:
   m_GameObject: {fileID: 211604797}
   serializedVersion: 2
   m_LocalRotation: {x: -0.6155302, y: 0.34802675, z: -0.34802675, w: 0.6155302}
-  m_LocalPosition: {x: 5.1449976, y: 0.015000343, z: 0}
+  m_LocalPosition: {x: 6.68, y: 2.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5905,7 +5905,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9829,6 +9829,7 @@ MonoBehaviour:
   obamaCharacter: {fileID: 8958276177977911787, guid: bebb8ec9326e24d86bf362078d6d738a, type: 3}
   trumpSfxCharacter: {fileID: 1155190363}
   obamaSfxCharacter: {fileID: 1731515871}
+  textParticleTemplate: {fileID: 8262769087728548765, guid: 027102c35d2d64a3f85fe9f75088f3b5, type: 3}
 --- !u!4 &227239457
 Transform:
   m_ObjectHideFlags: 0

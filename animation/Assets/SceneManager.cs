@@ -24,6 +24,7 @@ public class SceneManager : MonoBehaviour
 
     public GameObject trumpSfxCharacter;
     public GameObject obamaSfxCharacter;
+    public GameObject textParticleTemplate;
 
     GameObject character;
     Animator characterAnimator;
@@ -41,7 +42,7 @@ public class SceneManager : MonoBehaviour
             {
                 if (value)
                 {
-                    zoomOut();
+                    zoomIn();
                     speechBubble.SetActive(false);
                     typewriterText.gameObject.SetActive(true);
                     characterAnimator.SetBool(Narrating, false);
@@ -76,7 +77,7 @@ public class SceneManager : MonoBehaviour
             {
                 if (value)
                 {
-                    zoomIn();
+                    zoomOut();
                     speechBubble.SetActive(true);
                     typewriterText.gameObject.SetActive(false);
                     characterAnimator.SetBool(Typing, false);
@@ -155,17 +156,32 @@ public class SceneManager : MonoBehaviour
 
     public void StartSfx(string sfxDescription)
     {
-        zoomIn();
+        zoomOut();
+        GameObject sfxCharacter;
+
+        // sfxCharacter;
         switch (characterName)
         {
             case "trump":
-                trumpSfxCharacter.SetActive(true);
+                sfxCharacter = trumpSfxCharacter;
                 break;
             case "obama":
-                obamaSfxCharacter.SetActive(true);
+                sfxCharacter = obamaSfxCharacter;
                 break;
+            default:
+                return;
         }
+        if (sfxCharacter == null)
+        {
+            return;
+        }
+
+        var spawner = sfxCharacter.transform.Find("Spawn");
+        sfxCharacter.SetActive(true);
         // Start sound
+        var textParticle = Instantiate(textParticleTemplate, spawner.position, Quaternion.identity);
+        textParticle.GetComponentInChildren<TextMeshProUGUI>().text = sfxDescription;
+        textParticle.GetComponent<Rigidbody2D>().AddForce(new Vector2(500, 500));
     }
 
     IEnumerator narrateText(string text)
@@ -215,7 +231,6 @@ public class SceneManager : MonoBehaviour
         WebGLInput.captureAllKeyboardInput = false;
 #endif
         // Character selection
-        // ChangeCharacter("obama");
         // StartTyping("Hello, my name is .\n I am the President of the United States.");
         // StartNarration("Hello, my name is .\nI am the President of the United States.");
     }

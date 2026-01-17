@@ -14,7 +14,7 @@
                     setTimeout(() => {
                         unityPlayer?.startSfx("dog bark")
                     }, 1000)
-                }, 1000);
+                }, 3000);
             }, 1000);
 
         }, 4000)
