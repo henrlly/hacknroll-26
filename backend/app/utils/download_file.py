@@ -125,6 +125,7 @@ def _save_raw_data_as_jpg(data: bytes, file_name: str):
     cv2.imwrite(file_name, img)
 
 
+# if use webm/mp4/gif with transparency, need ffmpeg
 def _save_raw_data_as_mp4(data: bytes, file_name: str):
     image_array = np.frombuffer(data, np.uint8)
     img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
@@ -138,7 +139,7 @@ def _save_raw_data_as_mp4(data: bytes, file_name: str):
     )  # cannot use mp4v, web browser doesnt support
     video = cv2.VideoWriter(file_name, fourcc, 1, (width, height))
 
-    video.write(img)  # write 30 frames,
+    video.write(img)  # write 1 frame
     video.release()
 
 

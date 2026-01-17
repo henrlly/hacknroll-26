@@ -8,15 +8,17 @@
 </script>
 
 <div class="flex h-screen w-full flex-col items-center gap-4">
-	<ProgressFlow bind:generationStep={videoState.generationStepView}/>
+	{#if videoState.completed}{:else}
+		<ProgressFlow bind:generationStep={videoState.generationStepView} />
 
-	{#if videoState.generationStepView === 'INPUT'}
-		<PromptInput />
-	{:else if videoState.generationStepView === 'WRITING SCRIPT'}
-		<ScriptWritingData />
-	{:else if videoState.generationStepView === 'DOING TASKS'}
-		<DoingTasksDisplay />
-	{:else if videoState.generationStepView === "COMPLETED"}
-		<FinalVideo />
+		{#if videoState.generationStepView === 'INPUT'}
+			<PromptInput />
+		{:else if videoState.generationStepView === 'WRITING SCRIPT'}
+			<ScriptWritingData />
+		{:else if videoState.generationStepView === 'DOING TASKS'}
+			<DoingTasksDisplay />
+		{:else if videoState.generationStepView === 'COMPLETED'}
+			<FinalVideo />
+		{/if}
 	{/if}
 </div>

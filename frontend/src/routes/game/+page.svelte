@@ -6,8 +6,15 @@
     $effect(() => {
         setTimeout(() => {
             unityPlayer?.changeBackgroundColor("#4f00aa");
-            unityPlayer?.startTyping("Hello, this is a test of the Unity Svelte integration!");
-        }, 5000)
+            unityPlayer?.changeCharacter('obama');
+            setTimeout(() => {
+                unityPlayer?.startTyping("Hello, this is a test of the Unity Svelte integration!");
+                setTimeout(() => {
+                    unityPlayer?.startNarration("Hello, this is a test of the Unity Svelte integration!");
+                }, 1000);
+            }, 1000);
+
+        }, 4000)
     });
 </script>
 
