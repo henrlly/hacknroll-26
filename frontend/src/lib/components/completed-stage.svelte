@@ -42,13 +42,47 @@
 			console.error('Failed to send edit:', err);
 		}
 	}
+
+	let videoElement: HTMLVideoElement | null = $state(null);
+	function handleKeyDown(e: KeyboardEvent) {
+		if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) {
+            return;
+        }
+
+        if (!videoElement) return;
+
+        switch (e.code) {
+			case 'KeyK':
+            case 'Space':
+                e.preventDefault(); // Stop page from scrolling down
+                if (videoElement.paused) {
+                    videoElement.play();
+                } else {
+                    videoElement.pause();
+                }
+                break;
+			case 'KeyL':
+            case 'ArrowRight':
+                e.preventDefault();
+                videoElement.currentTime += 4;
+                break;
+			case 'KeyJ':
+            case 'ArrowLeft':
+                e.preventDefault();
+                videoElement.currentTime -= 4;
+                break;
+        }
+	}
 </script>
+
+<svelte:window onkeydown={handleKeyDown} />
 
 <div class="mx-auto flex w-full flex-col items-center gap-6 py-4">
 	<div class="relative aspect-video w-4/5 rounded-xl border-1 border-dashed border-primary">
 		<video
 			bind:currentTime
 			bind:paused
+			bind:this={videoElement}
 			onclick={() => (paused = !paused)}
 			class="h-full w-full rounded-xl"
 			src={`${STATIC_API_BASE}/${videoState.session_id}/final_video.mp4`}
