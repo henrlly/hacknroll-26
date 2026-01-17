@@ -11,7 +11,8 @@ import { processNarrationGen, processSfxAssetGen, processVisualAssetGen } from '
 export function sceneFromPlan(plan: VideoPlan, videoObj: VideoLoadingType) {
 	console.log('processing plan');
 	console.log(plan);
-	if (plan?.scenes === undefined) return;
+  if (plan?.scenes === undefined) return;
+  videoObj.scenes = []
 	for (let scene of plan.scenes) {
 		videoObj.scenes.push(convertSceneToLoading(scene));
 		// assetIdToSceneNumber = updateAssetIdToSceneNumber(scene, assetIdToSceneNumber);

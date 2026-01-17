@@ -54,8 +54,9 @@ export function processSfxAssetGen(video: VideoLoadingType) {
 			if (asset.type === 'visual') continue;
 			sfx_asset_gen.push(
 				SfxAssetGenObj.parse({
-					url: `${STATIC_API_BASE}/${video.session_id}/${asset.assetId}.mp3`,
-					desc: asset.assetShortDesc
+					// url: `${STATIC_API_BASE}/${video.session_id}/${asset.assetId}.mp3`,
+					desc: asset.assetShortDesc,
+					done: asset.state === 'done'
 				})
 			);
 		}
