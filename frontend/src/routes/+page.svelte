@@ -13,10 +13,6 @@
 	import { Badge } from '$lib/components/ui/badge';
     import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
 
-	let socket: WebSocket;
-
-	// TODO: enable or disable based on page state
-	let allGenerationSteps = ["INPUT", "WRITING SCRIPT", "DOING TASKS", "COMPLETED"]
 	let generationStep = $state("INPUT" as "INPUT" | "WRITING SCRIPT" | "DOING TASKS" | "COMPLETED");
 
 	let plan = $state<VideoPlan>({});
@@ -29,29 +25,27 @@
 </script>
 
 <div class="flex h-screen w-full flex-col items-center gap-4">
-	<div class="flex gap-2">
-        <Breadcrumb.Root>
-            <Breadcrumb.List>
-                {#each allGenerationSteps as step}
-                    <Breadcrumb.Item class={generationStep === step ? 'text-primary' : 'brightness-80'}>
-                        <label>
-                            <input
-                                class="sr-only"
-                                type="radio"
-                                name="scoops"
-                                value={step}
-                                bind:group={generationStep}
-                            />
-                            {step.charAt(0) + step.slice(1).toLowerCase()}
-                        </label>
-                    </Breadcrumb.Item>
-                    {#if step !== "COMPLETED"}
-                    <Breadcrumb.Separator />
-                    {/if}
-                {/each}
-            </Breadcrumb.List>
-        </Breadcrumb.Root>
-	</div>
+	<Breadcrumb.Root>
+		<Breadcrumb.List>
+			{#each allGenerationSteps as step}
+				<Breadcrumb.Item class={generationStep === step ? 'text-primary' : 'brightness-80'}>
+					<label>
+						<input
+							class="sr-only"
+							type="radio"
+							name="scoops"
+							value={step}
+							bind:group={generationStep}
+						/>
+						{step.charAt(0) + step.slice(1).toLowerCase()}
+					</label>
+				</Breadcrumb.Item>
+				{#if step !== "COMPLETED"}
+				<Breadcrumb.Separator />
+				{/if}
+			{/each}
+		</Breadcrumb.List>
+	</Breadcrumb.Root>
 
 	{#if generationStep === 'INPUT'}
 		<PromptInput />
