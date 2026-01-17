@@ -8,7 +8,7 @@
     import { Badge } from "$lib/components/ui/badge";
 	import { Input } from "$lib/components/ui/input/index.js";
 	import { ChevronDown, ChevronUp, Sparkles, Wand2, Edit2, Check } from '@lucide/svelte';
-	import { sendEditPrompt } from '$lib/utils/editing';
+	import { sendEditPrompt, selectVisual } from '$lib/utils/editing';
 
 	let editingMode = $state(false);
 	let currentIndex = $state(0);
@@ -79,8 +79,12 @@
                     
                     <div class="flex flex-col gap-1.5 h-1/2">
                         <Label class="text-xs uppercase text-muted-foreground">Adjust Prompt</Label>
-						<form >
-							<Input type="text" name="editPrompt" placeholder="e.g. Make the tone more exciting..." bind:value={editPrompt} />
+						<form onsubmit={(e) => { e.preventDefault(); sendEditPrompt(editPrompt); }} class="relative z-10">
+							<Input 
+								type="text" 
+								placeholder="e.g. Make the tone more exciting..." 
+
+							/>
 						</form>
                     </div>
                 </div>
@@ -122,7 +126,7 @@
                 <div class="grid grid-cols-3 gap-4 py-4">
                     {#each videoState.visual_asset_gen as asset}
                         <button 
-                            onclick={() => {/* Logic to update activeAsset */}}
+                            onclick={() => { selectVisual({ assetId: "idk", selectedCandidateId: "idk"})}}
                             class="relative aspect-video rounded-md overflow-hidden border-2 transition-all hover:ring-2 hover:ring-primary"
                         >
                             <video src={asset.mp4Url} class="object-cover w-full h-full">
