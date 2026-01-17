@@ -35,8 +35,6 @@ export function connectWebSocket() {
 		}
 		if (result.data.type === 'start') {
 			videoState.session_id = result.data.session_id;
-			videoState.generationStep = 'WRITING SCRIPT';
-			videoState.generationStepView = 'WRITING SCRIPT';
 		} else if (result.data.type === 'plan') {
 			// TODO: add plan loading before stream
 			if (result.data.event_type === 'plan_start') {
@@ -44,6 +42,8 @@ export function connectWebSocket() {
 			} else if (result.data.event_type === 'plan_stream') {
 				plan_string += result.data.delta;
 				plan = VideoPlanSchema.parse(parse(plan_string, ALL));
+                videoState.generationStep = 'WRITING SCRIPT';
+			    videoState.generationStepView = 'WRITING SCRIPT';
 				sceneFromPlan(plan, videoState);
         processFullScript(videoState);
 			} else {
