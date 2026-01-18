@@ -108,7 +108,7 @@ class ManimCodeRendingResponse(BaseModel):
     event_type: Literal["rendering_start", "rendering_end"]
     scene_number: int
     version_number: int
-    duration: Optional[int] = None
+    duration: Optional[float] = None
     # if failed during rendering,
     # retry_number indicates which attempt it is
     # initial generation will have retry_number = 0
