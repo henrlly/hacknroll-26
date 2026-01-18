@@ -1,4 +1,8 @@
 ```sh
+brew install manim ffmpeg
+```
+
+```sh
 uv run fastapi dev --no-reload # static folder contains .py files
 ```
 
