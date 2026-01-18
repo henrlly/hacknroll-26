@@ -28,7 +28,7 @@ async def _render_manim_code(
     scene_number: int,
     version_number: int,
     mock: bool = app_config.MOCK_CODE_RENDER,
-) -> tuple[str, str | None, number]:
+) -> tuple[str, str | None, float]:
     video_file_path = get_manim_scene_version_video_file_path(session_id, scene_number, version_number)
     if mock:
         shutil.copyfile(
