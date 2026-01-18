@@ -63,7 +63,7 @@
 	<div class="max-w-8xl flex h-screen w-full flex-col items-center gap-4">
 		<ProgressFlow bind:generationStep={videoState.generationStepView} />
 		<div class="relative aspect-video w-3/5 overflow-hidden rounded-3xl">
-			<div class="h-full w-full scale-125">
+			<div class="h-full w-full scale-105">
 				<UnityPlayer bind:this={unityPlayer} bind:isUnityLoaded />
 			</div>
 		</div>
