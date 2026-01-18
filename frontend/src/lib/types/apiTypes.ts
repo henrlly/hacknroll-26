@@ -64,7 +64,8 @@ export const ManimCodeRendingResponse = z.object({
 	event_type: z.enum(['rendering_start', 'rendering_end']),
 	scene_number: z.number(),
 	version_number: z.number(),
-	retry_number: z.number().catch(0),
+  retry_number: z.number().catch(0),
+	duration: z.number().catch(0),
 	success: z.boolean(),
 	error_message: z.literal('cancelled').nullish()
 });

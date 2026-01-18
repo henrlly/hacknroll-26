@@ -50,6 +50,7 @@ async def _render_manim_loop(
     version_number: int,
     max_retries: int = app_config.MANIM_SCENE_MAX_RETRIES,
 ):
+    duration = 0
     retry_number = 0
     try:
         for attempt in range(max_retries):
@@ -65,7 +66,7 @@ async def _render_manim_loop(
                         success=True,
                     )
                 )
-                _video_file_path, error_message = await asyncio.wait_for(
+                _video_file_path, error_message, duration = await asyncio.wait_for(
                     _render_manim_code(session_id, scene_number, version_number),
                     timeout=app_config.MANIM_RENDER_TIMEOUT_SECONDS,
                 )  # wait_for has not been tested
@@ -80,6 +81,7 @@ async def _render_manim_loop(
                         scene_number=scene_number,
                         version_number=version_number,
                         retry_number=attempt,
+                        duration=duration,
                         success=True,
                     )
                 )

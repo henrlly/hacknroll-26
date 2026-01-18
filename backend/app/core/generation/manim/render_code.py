@@ -9,14 +9,26 @@ from app.utils.get_file_path import (
     get_manim_scene_version_video_file_path,
     get_manim_scene_video_file_path,
 )
+import ffmpeg
 
+def get_video_duration(filename):
+    try:
+        info = ffmpeg.probe(filename)
+        duration = float(info['format']['duration'])
+        return duration
+    except ffmpeg.Error as e:
+        print(f"FFmpeg error: {e.stderr.decode('utf8')}")
+        return None
+    except KeyError:
+        print("Could not find duration in video metadata.")
+        return None
 
 async def _render_manim_code(
     session_id: str,
     scene_number: int,
     version_number: int,
     mock: bool = app_config.MOCK_CODE_RENDER,
-) -> tuple[str, str | None]:
+) -> tuple[str, str | None, number]:
     video_file_path = get_manim_scene_version_video_file_path(session_id, scene_number, version_number)
     if mock:
         shutil.copyfile(
@@ -24,7 +36,7 @@ async def _render_manim_code(
             video_file_path,
         )
         print("Mock render complete")
-        return video_file_path, None
+        return video_file_path, None, 0
 
     media_dir = get_manim_media_dir_path(session_id, scene_number, version_number)
     print(f"Rendering scene {scene_number}, task {version_number}...!")
@@ -49,7 +61,7 @@ async def _render_manim_code(
 
     if process.returncode != 0:
         print(f"Error rendering scene {scene_number}, task {version_number}")
-        return video_file_path, stderr.decode()
+        return video_file_path, stderr.decode(), 0
 
     print(f"Successfully rendered scene {scene_number}, task {version_number}")
 
@@ -60,6 +72,7 @@ async def _render_manim_code(
     shutil.copyfile(output_file_path, video_file_path)
     print(f"Rendered scene {scene_number}, task {version_number} to {video_file_path}")
 
+    duration = get_video_duration(video_file_path)
     # delete media dir to save space
     shutil.rmtree(media_dir, ignore_errors=True)
-    return video_file_path, None
+    return video_file_path, None, duration
