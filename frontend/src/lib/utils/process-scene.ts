@@ -99,11 +99,11 @@ export async function processSceneEvent(event: SceneResponseType, videoObj: Vide
 		videoObj.scenes[event.scene_number].render[event.version_number].aborted =
 			event.error_message === 'cancelled';
     if (event.event_type === 'rendering_end') {
+		console.log("Event Duration: " + event.duration);
       const url = `${STATIC_API_BASE}/${videoObj.session_id}/scene_${event.scene_number}.mp4`
       videoObj.sceneDurations[event.scene_number] = event.duration;
 		}
   } else if (event.type === 'code_rendering_selection') {
 		videoObj.scenes[event.scene_number].render[event.version_number].selected = true;
 	}
-	console.log(videoObj.scenes);
 }

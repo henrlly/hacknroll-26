@@ -59,14 +59,18 @@
 
 <div class="mx-auto w-full max-w-4xl p-4">
 	<div class="mb-4">
-		<h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">
-			Scene {scene.scene_number+1}
-		</h2>
-		{#if scene.duration_seconds > 0}
-			<p class="text-sm text-gray-600 dark:text-gray-400">
-				Duration: {scene.duration_seconds}s
-			</p>
-		{/if}
+		<div>
+			<h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">
+				Scene {scene.scene_number+1}
+			</h2>
+			{#if scene.duration_seconds > 0}
+				<p class="text-sm text-gray-600 dark:text-gray-400">
+					Duration: {scene.duration_seconds}s
+				</p>
+			{/if}
+
+			
+		</div>
 	</div>
 
 	<Tabs value="structure" class="w-full">

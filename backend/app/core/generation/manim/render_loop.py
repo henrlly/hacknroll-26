@@ -70,6 +70,7 @@ async def _render_manim_loop(
                     _render_manim_code(session_id, scene_number, version_number),
                     timeout=app_config.MANIM_RENDER_TIMEOUT_SECONDS,
                 )  # wait_for has not been tested
+
             except asyncio.TimeoutError:
                 error_message = "Rendering timed out."
                 print("ERR")
@@ -93,6 +94,7 @@ async def _render_manim_loop(
                         scene_number=scene_number,
                         version_number=version_number,
                         retry_number=attempt,
+                        duration = duration,
                         success=False,
                     )
                 )
@@ -113,6 +115,7 @@ async def _render_manim_loop(
                 version_number=version_number,
                 retry_number=retry_number,
                 success=False,
+                duration = duration,
                 error_message="cancelled",
             )
         )

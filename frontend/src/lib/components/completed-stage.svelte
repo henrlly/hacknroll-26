@@ -125,6 +125,7 @@
 			class="h-full w-full rounded-xl"
 			{src}
 			autoplay
+			controls
 		>
 			<track kind="captions" />
 		</video>
@@ -132,7 +133,7 @@
 			<Sparkles class="size-3" /> Final Render
 		</Badge>
 	</div>
-	<Timeline bind:currentScene bind:currentTime bind:paused />
+	<!-- <Timeline bind:currentScene bind:currentTime bind:paused /> -->
 	<div class="flex w-4/5 items-center justify-between px-2">
 		<div class="flex flex-col">
 			<h3 class="text-sm font-medium tracking-wider text-muted-foreground uppercase">

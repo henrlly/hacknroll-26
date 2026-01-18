@@ -17,7 +17,7 @@
 		currentScene = $bindable(0),
 		paused = $bindable(false)
 	}: { currentTime: number; currentScene: number; paused: boolean } = $props();
-	let sceneDurations: number[] = videoState.sceneDurations;
+	let sceneDurations: number[] = $derived(videoState.sceneDurations);
 
 	let timelineElement: HTMLDivElement;
 	let isDragging: boolean = $state(false);

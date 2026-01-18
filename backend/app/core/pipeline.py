@@ -48,7 +48,7 @@ async def pipeline(
         chars_per_stream_message=chars_per_stream_message,
     )
 
-    await callback(PlanStreamedResponse(event_type="plan_end"), delay=0)
+    await callback(PlanStreamedResponse(event_type="plan_end"))
 
     print(f"\nGenerated Plan:\n{plan.model_dump_json(indent=2)}\n")
 
