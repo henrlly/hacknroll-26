@@ -33,13 +33,6 @@
 				unityPlayer?.startTyping(slice);
 				completed_index = nextPeriod + 1;
 			}
-			// if (videoState.full_script.length > completed_index) {
-			// 	let slice = videoState.full_script.slice(completed_index, nextPeriod);
-			// 	if (slice) {
-			// 		unityPlayer?.startTyping(slice);
-			// 		completed_index = nextPeriod + 1;
-			// 	}
-			// }
 		} else if (videoState.generationStepView === 'DOING TASKS') {
 			unityPlayerHidden = false;
 			unityPlayer?.startNarration(videoState.full_script);
@@ -52,6 +45,7 @@
 					i++;
 				}, 2000);
 			}
+			unityPlayer?.startScrolling(JSON.stringify(videoState.visual_asset_gen))
 		} else {
 			unityPlayerHidden = false;
 			// unityPlayer.stopEverything
