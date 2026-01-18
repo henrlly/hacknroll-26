@@ -58,7 +58,7 @@
 	let soundEffects = $derived(parseSoundEffects(scene.sound_description));
 </script>
 
-<div class="mx-auto w-full max-w-4xl p-4">
+<div class="mx-auto w-4xl p-4">
 	<div class="mb-4 flex justify-between">
 		<div class="flex flex-col gap-2">
 			<h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">
@@ -71,10 +71,10 @@
 			{/if}
 		</div>
 		<div class="flex gap-2">
-			<Button onclick={() => currentScene--}>
+			<Button disabled={currentScene <= 0} onclick={() => currentScene--}>
 				<ChevronLeft />
 			</Button>
-			<Button onclick={() => currentScene++}>
+			<Button disabled={currentScene >=3} onclick={() => currentScene++}>
 				<ChevronRight />
 			</Button>
 		</div>

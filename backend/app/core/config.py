@@ -5,15 +5,15 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # Override by setting environment variables or directly modifying here for dev/testing
 # e.g. to change MOCK_PLAN, export APP_MOCK_PLAN=False
 class Config(BaseSettings):
-    MOCK_PLAN: bool = False
-    MOCK_VISUAL_ASSET: bool = False
-    MOCK_SFX: bool = False
-    MOCK_NARRATION: bool = False
-    MOCK_CODE_GEN: bool = False
-    MOCK_CODE_FIX: bool = False
-    MOCK_CODE_RENDER: bool = False  # rendering 4 scenes in parallel takes 5s
-    MOCK_EDIT_SCENE: bool = False  # rendering 4 scenes in parallel takes 5s
-    USE_LOCAL_TTS: bool = False
+    MOCK_PLAN: bool = True
+    MOCK_VISUAL_ASSET: bool = True
+    MOCK_SFX: bool = True
+    MOCK_NARRATION: bool = True
+    MOCK_CODE_GEN: bool = True
+    MOCK_CODE_FIX: bool = True
+    MOCK_CODE_RENDER: bool = True  # rendering 4 scenes in parallel takes 5s
+    MOCK_EDIT_SCENE: bool = True  # rendering 4 scenes in parallel takes 5s
+    USE_LOCAL_TTS: bool = True
     # if we mock everything it takes 7s on my computer
 
     CALLBACK_DELAY: float = 0.1  # seconds
