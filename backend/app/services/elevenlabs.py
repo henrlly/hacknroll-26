@@ -35,7 +35,7 @@ async def generate_speech(
     file_name: str,
     callback: Callable[[BaseModel], Awaitable],
     scene_number: int,
-    mock: bool = True,
+    mock: bool = app_config.MOCK_NARRATION,
     use_flash: bool = app_config.MOCK_NARRATION,
     use_local: bool = app_config.USE_LOCAL_TTS,
 ) -> str:
