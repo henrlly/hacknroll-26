@@ -8,7 +8,7 @@ from app.core.models import PipelineCallback
 
 
 def make_callback(
-    send_text: Callable[[str], Awaitable], delay: float = app_config.CALLBACK_DELAY
+    send_text: Callable[[str], Awaitable], delay: float = 0
 ) -> PipelineCallback:
     async def callback(model: BaseModel, delay: float = delay):
         await asyncio.sleep(delay)

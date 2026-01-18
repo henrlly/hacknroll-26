@@ -51,19 +51,20 @@ export function connectWebSocket() {
 				// console.log("PLANSTRING", plan_string)
 				if (videoState.generationStep !== "WRITING SCRIPT") {
 					videoState.generationStep = 'WRITING SCRIPT';
+					videoState.generationStepView = 'WRITING SCRIPT';
 				}
-			if (!videoState.completed && videoState.generationStepView !== "WRITING SCRIPT") 	videoState.generationStepView = 'WRITING SCRIPT';
 				sceneFromPlan(plan, videoState);
 				processFullScript(videoState);
 			} else if (result.data.event_type === 'plan_end') {
+				console.log("Hi from plan end")
 				plan_string = '';
 				processNarrationGen(videoState);
 				processVisualAssetGen(videoState);
 				processSfxAssetGen(videoState);
 				if (videoState.generationStep !== "DOING TASKS") {
 					videoState.generationStep = 'DOING TASKS';
+					videoState.generationStepView = 'DOING TASKS';
 				}
-			if (!videoState.completed && videoState.generationStep !== "DOING TASKS") 	videoState.generationStepView = 'DOING TASKS';
 			}
 		} else if (
 			result.data.type !== 'final_video' &&
@@ -86,10 +87,7 @@ export function connectWebSocket() {
 			} else if (result.data.event_type === 'scene_stream') {
 				scene_string += result.data.delta;
         const scene = SceneSchema.parse(parse(scene_string, ALL));
-				console.log(scene.narration_script)
-				console.log("PLANSTRING", scene_string)
         sceneFromScenePlan(scene, videoState);
-				console.log(scene, videoState)
 				processFullScript(videoState);
 
 				// cant specify scene_end
@@ -106,7 +104,6 @@ export function connectWebSocket() {
 			// well image is selected
 			processSelectImage(result.data.asset_id, result.data.selected_candidate_id, videoState);	//
 		}
-		console.log(videoState);
 	};
 
 	socket.onclose = () => {
