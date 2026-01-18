@@ -20,17 +20,26 @@
 		}, 4000);
 	});
 
-	let cur_length = 0;
+	let completed_index = 0;
 
 	$effect(() => {
 		if (videoState.generationStepView === 'COMPLETED') {
 			unityPlayerHidden = true;
 		} else if (videoState.generationStepView === 'WRITING SCRIPT') {
 			unityPlayerHidden = false;
-			if (videoState.full_script.length > cur_length) {
-				unityPlayer?.startTyping(videoState.full_script.slice(cur_length));
-				cur_length = videoState.full_script.length
+			let nextPeriod = videoState.full_script.indexOf('.', completed_index);
+			if (nextPeriod !== -1) {
+				const slice = videoState.full_script.slice(completed_index, nextPeriod);
+				unityPlayer?.startTyping(slice);
+				completed_index = nextPeriod + 1;
 			}
+			// if (videoState.full_script.length > completed_index) {
+			// 	let slice = videoState.full_script.slice(completed_index, nextPeriod);
+			// 	if (slice) {
+			// 		unityPlayer?.startTyping(slice);
+			// 		completed_index = nextPeriod + 1;
+			// 	}
+			// }
 		} else if (videoState.generationStepView === 'DOING TASKS') {
 			unityPlayerHidden = false;
 			unityPlayer?.startNarration(videoState.full_script);

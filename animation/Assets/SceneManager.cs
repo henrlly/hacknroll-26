@@ -138,8 +138,10 @@ public class SceneManager : MonoBehaviour
         {
             StartCoroutine(typeText(typeTextQueue.Dequeue()));
         }
-
-        IsTyping = false;
+        else
+        {
+            IsTyping = false;
+        }
     }
 
     public void StartTyping(string text)
@@ -207,8 +209,10 @@ public class SceneManager : MonoBehaviour
         {
             StartCoroutine(narrateText(narrationQueue.Dequeue()));
         }
-
-        IsNarrating = false;
+        else
+        {
+            IsNarrating = false;
+        }
     }
 
     public void StartNarration(string narration)

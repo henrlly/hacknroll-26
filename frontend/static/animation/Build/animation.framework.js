@@ -1,7 +1,7 @@
 
 var unityFramework = (() => {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
-
+  
   return (
 function(unityFramework = {})  {
 
@@ -453,7 +453,7 @@ function _WaitForInitialization() {
     return _playerIsInitializedPromise;
 }
 
-Module["WebPlayer"] = {
+Module["WebPlayer"] = {    
     PlayerIsInitialized: _resolvePlayerIsInitialized,
     WaitForInitialization: _WaitForInitialization,
 };
@@ -870,7 +870,7 @@ function initRuntime() {
 
   checkStackCookie();
 
-
+  
 if (!Module["noFSInit"] && !FS.init.initialized)
   FS.init();
 FS.ignorePermissions = false;
@@ -882,7 +882,7 @@ SOCKFS.root = FS.mount(SOCKFS, {}, null);
 
 function preMain() {
   checkStackCookie();
-
+  
   callRuntimeCallbacks(__ATMAIN__);
 }
 
@@ -1379,14 +1379,14 @@ function dbg(text) {
       }
     }
 
-
+  
   function getCppExceptionTag() {
       // In static linking, tags are defined within the wasm module and are
       // exported, whereas in dynamic linking, tags are defined in library.js in
       // JS code and wasm modules import them.
       return Module['asm']['__cpp_exception'];
     }
-
+  
   function getCppExceptionThrownObjectFromWebAssemblyException(ex) {
       // In Wasm EH, the value extracted from WebAssembly.Exception is a pointer
       // to the unwind header. Convert it to the actual thrown value.
@@ -1404,9 +1404,9 @@ function dbg(text) {
       stackRestore(stack);
       return ret;
     }
-
-
-
+  
+  
+  
   function lengthBytesUTF8(str) {
       var len = 0;
       for (var i = 0; i < str.length; ++i) {
@@ -1427,14 +1427,14 @@ function dbg(text) {
       }
       return len;
     }
-
+  
   function stringToUTF8Array(str, heap, outIdx, maxBytesToWrite) {
       assert(typeof str === 'string');
       // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
       // undefined and false each don't write out any bytes.
       if (!(maxBytesToWrite > 0))
         return 0;
-
+  
       var startIdx = outIdx;
       var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
       for (var i = 0; i < str.length; ++i) {
@@ -1485,9 +1485,9 @@ function dbg(text) {
       stringToUTF8(str, ret, size);
       return ret;
     }
-
+  
   var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder('utf8') : undefined;
-
+  
     /**
      * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
      * array that contains uint8 values, returns a copy of that string as a
@@ -1506,7 +1506,7 @@ function dbg(text) {
       // (As a tiny code save trick, compare endPtr against endIdx using a negation,
       // so that undefined means Infinity)
       while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
-
+  
       if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
         return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
       }
@@ -1529,7 +1529,7 @@ function dbg(text) {
           if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
           u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
         }
-
+  
         if (u0 < 0x10000) {
           str += String.fromCharCode(u0);
         } else {
@@ -1539,8 +1539,8 @@ function dbg(text) {
       }
       return str;
     }
-
-
+  
+  
     /**
      * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
      * emscripten HEAP, returns a copy of that string as a Javascript String object.
@@ -1587,10 +1587,10 @@ function dbg(text) {
       });
     }
 
-
-
-
-
+  
+  
+  
+  
   function getExceptionMessageCommon(ptr) {
       return withStackSave(function() {
         var type_addr_addr = stackAlloc(4);
@@ -1614,7 +1614,7 @@ function dbg(text) {
     }
   Module["getExceptionMessage"] = getExceptionMessage;
 
-
+  
     /**
      * @param {number} ptr
      * @param {string} type
@@ -1634,7 +1634,7 @@ function dbg(text) {
     }
   }
 
-
+  
   function incrementExceptionRefcount(ex) {
       var ptr = getCppExceptionThrownObjectFromWebAssemblyException(ex);
       ___cxa_increment_exception_refcount(ptr);
@@ -1645,7 +1645,7 @@ function dbg(text) {
       return '0x' + ptr.toString(16).padStart(8, '0');
     }
 
-
+  
     /**
      * @param {number} ptr
      * @param {number} value
@@ -1682,7 +1682,7 @@ function dbg(text) {
       }
       return error.stack.toString();
     }
-
+  
   function demangleAll(text) {
       var regex =
         /\b_Z[\w\d_]+/g;
@@ -1726,22 +1726,22 @@ function dbg(text) {
     }
 
   var JS_Accelerometer = null;
-
+  
   var JS_Accelerometer_callback = 0;
   function _JS_Accelerometer_IsRunning() {
           // Sensor is running if there is an activated new JS_Accelerometer; or the JS_Accelerometer_callback is hooked up
           return (JS_Accelerometer && JS_Accelerometer.activated) || (JS_Accelerometer_callback != 0);
       }
 
-
-
-
+  
+  
+  
   var JS_Accelerometer_multiplier = 1;
-
+  
   var JS_Accelerometer_lastValue = {x:0,y:0,z:0};
-
+  
   var wasmTableMirror = [];
-
+  
   function getWasmTableEntry(funcPtr) {
       assert(funcPtr >= 0, "Function pointers must be nonnegative!");
       var func = wasmTableMirror[funcPtr];
@@ -1762,20 +1762,20 @@ function dbg(text) {
           if (JS_Accelerometer_callback != 0)
               getWasmTableEntry(JS_Accelerometer_callback)(JS_Accelerometer_lastValue.x, JS_Accelerometer_lastValue.y, JS_Accelerometer_lastValue.z);
       }
-
-
+  
+  
   var JS_Accelerometer_frequencyRequest = 0;
-
+  
   var JS_Accelerometer_frequency = 0;
-
-
+  
+  
   var JS_LinearAccelerationSensor_callback = 0;
-
+  
   var JS_GravitySensor_callback = 0;
-
+  
   var JS_Gyroscope_callback = 0;
-
-
+  
+  
   function JS_ComputeGravity(accelerometerValue, linearAccelerationValue) {
           // On some Android devices, the linear acceleration direction is reversed compared to its accelerometer
           // So, compute both the difference and sum (difference of the negative) and return the one that's the smallest in magnitude
@@ -1785,17 +1785,17 @@ function dbg(text) {
               z: accelerometerValue.z - linearAccelerationValue.z
           };
           var differenceMagnitudeSq = difference.x*difference.x + difference.y*difference.y + difference.z*difference.z;
-
+  
           var sum = {
               x: accelerometerValue.x + linearAccelerationValue.x,
               y: accelerometerValue.y + linearAccelerationValue.y,
               z: accelerometerValue.z + linearAccelerationValue.z
           };
           var sumMagnitudeSq = sum.x*sum.x + sum.y*sum.y + sum.z*sum.z;
-
+  
           return (differenceMagnitudeSq <= sumMagnitudeSq) ? difference : sum;
       }
-
+  
   function JS_DeviceMotion_eventHandler(event) {
           // The accelerationIncludingGravity property is the amount of acceleration recorded by the device, in meters per second squared (m/s2).
           // Its value is the sum of the acceleration of the device as induced by the user and the acceleration caused by gravity.
@@ -1807,7 +1807,7 @@ function dbg(text) {
           };
           if (JS_Accelerometer_callback != 0)
               getWasmTableEntry(JS_Accelerometer_callback)(accelerometerValue.x, accelerometerValue.y, accelerometerValue.z);
-
+  
           // The acceleration property is the amount of acceleration recorded by the device, in meters per second squared (m/s2), compensated for gravity.
           // Apply the JS_Accelerometer_multiplier to convert to g
           var linearAccelerationValue = {
@@ -1817,14 +1817,14 @@ function dbg(text) {
           };
           if (JS_LinearAccelerationSensor_callback != 0)
               getWasmTableEntry(JS_LinearAccelerationSensor_callback)(linearAccelerationValue.x, linearAccelerationValue.y, linearAccelerationValue.z);
-
+  
           // Compute and raise the gravity sensor vector
           if (JS_GravitySensor_callback != 0) {
               assert(typeof GravitySensor === 'undefined');
               var gravityValue = JS_ComputeGravity(accelerometerValue, linearAccelerationValue);
               getWasmTableEntry(JS_GravitySensor_callback)(gravityValue.x, gravityValue.y, gravityValue.z);
           }
-
+  
           // The rotationRate property describes the rotation rates of the device around each of its axes (deg/s), but we want in radians/s so must scale
           // Note that the spec here has been updated so x,y,z axes are alpha,beta,gamma.
           // Therefore the order of axes at https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent/rotationRate is incorrect
@@ -1836,7 +1836,7 @@ function dbg(text) {
               getWasmTableEntry(JS_Gyroscope_callback)(event.rotationRate.alpha * degToRad, event.rotationRate.beta * degToRad, event.rotationRate.gamma * degToRad);
           }
       }
-
+  
   var JS_DeviceSensorPermissions = 0;
   function JS_RequestDeviceSensorPermissions(permissions) {
           // iOS requires that we request permissions before using device sensor events
@@ -1877,10 +1877,10 @@ function dbg(text) {
               }
           }
       }
-
-
-
-
+  
+  
+  
+  
   function JS_DeviceMotion_add() {
           // Only add the event listener if we don't yet have any of the motion callbacks set
           if (JS_Accelerometer_callback == 0 &&
@@ -1891,11 +1891,11 @@ function dbg(text) {
               window.addEventListener('devicemotion', JS_DeviceMotion_eventHandler);
           }
       }
-
+  
   function JS_DefineAccelerometerMultiplier() {
           // Earth's gravity in m/s^2, same as ASENSOR_STANDARD_GRAVITY
           var g = 9.80665;
-
+  
           // Multiplier is 1/g to normalize acceleration
           // iOS has its direction opposite to Android and Windows (tested Surface Pro tablet)
           // We include Macintosh in the test to capture Safari on iOS viewing in Desktop mode (the default now on iPads)
@@ -1903,18 +1903,18 @@ function dbg(text) {
       }
   function _JS_Accelerometer_Start(callback, frequency) {
           // callback can be zero here when called via JS_GravitySensor_Start
-
+  
           JS_DefineAccelerometerMultiplier();
-
+  
           // If we don't have new sensor API, fallback to old DeviceMotionEvent
           if (typeof Accelerometer === 'undefined') {
               JS_DeviceMotion_add(); // Must call before we set the callback
               if (callback != 0) JS_Accelerometer_callback = callback;
               return;
           }
-
+  
           if (callback != 0) JS_Accelerometer_callback = callback;
-
+  
           function InitializeAccelerometer(frequency) {
               // Use device referenceFrame, since New Input System package does its own compensation
               JS_Accelerometer = new Accelerometer({ frequency: frequency, referenceFrame: 'device' });
@@ -1926,7 +1926,7 @@ function dbg(text) {
               JS_Accelerometer.start();
               JS_Accelerometer_frequency = frequency;
           }
-
+  
           // If the sensor is already created, stop and re-create it with new frequency
           if (JS_Accelerometer) {
               if (JS_Accelerometer_frequency != frequency) {
@@ -1941,7 +1941,7 @@ function dbg(text) {
           }
           else {
               JS_Accelerometer_frequencyRequest = frequency;
-
+  
               // Request required permission for the Accelerometer
               navigator.permissions.query({name: 'accelerometer'})
                   .then(function(result) {
@@ -1955,15 +1955,15 @@ function dbg(text) {
           }
       }
 
-
-
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
+  
+  
   function JS_DeviceMotion_remove() {
           // If we've removed the last callback, remove the devicemotion event listener
           if (JS_Accelerometer_callback == 0 &&
@@ -1991,7 +1991,7 @@ function dbg(text) {
       }
 
   var ExceptionsSeen = 0;
-
+  
   function LogErrorWithAdditionalInformation(error) {
   		// Module.dynCall_* or dynCall_* is directly is used for calling callbacks.
   		// Use makeDynCall instead for compatibility with WebAssembly.Table.
@@ -2004,10 +2004,10 @@ function dbg(text) {
   		) {
   			error.message = 'Detected use of deprecated "Module.dynCall_*" API. Use "makeDynCall" API instead. Refer to https://docs.unity3d.com/6000.0/Documentation/Manual/web-interacting-browser-deprecated.html#dyncall for more information.\n' + error.message;
   		}
-
+  
   		console.error(error);
   	}
-
+  
   function _JS_CallAsLongAsNoExceptionsSeen(cb) {
   		if (!ExceptionsSeen) {
   			try {
@@ -2040,7 +2040,7 @@ function dbg(text) {
   		if (typeof window.CSS !== "undefined" && typeof window.CSS.escape !== "undefined") {
   			return window.CSS.escape(id);
   		}
-
+  
   		// Fallback: Escape special characters with RegExp. This handles most cases but not all!
   		return id.replace(/(#|\.|\+|\[|\]|\(|\)|\{|\})/g, "\\$1");
   	}
@@ -2064,15 +2064,15 @@ function dbg(text) {
   		HEAPU32[targetY] = viewportY - (rect ? rect.top : 0);
   	}
 
-
-
+  
+  
   function stringToNewUTF8(str) {
       var size = lengthBytesUTF8(str) + 1;
       var ret = _malloc(size);
       if (ret) stringToUTF8(str, ret, size);
       return ret;
     }
-
+  
   function _JS_DOM_UnityCanvasSelector() {
   		var canvasSelector = jsCanvasSelector();
   		if (_JS_DOM_UnityCanvasSelector.selector != canvasSelector) {
@@ -2083,7 +2083,7 @@ function dbg(text) {
   		return _JS_DOM_UnityCanvasSelector.ptr;
   	}
 
-
+  
   function _JS_Eval_OpenURL(ptr)
   {
   	var str = UTF8ToString(ptr);
@@ -2115,7 +2115,7 @@ function dbg(text) {
       // getRandomValues() cannot be called for more than 64K bytes at a time.
       if (typeof crypto === 'undefined' || numBytes > 65535)
           return 0;
-
+  
       crypto.getRandomValues(new Uint8Array(HEAPU8.buffer, destBuffer, numBytes));
       return 1;
     }
@@ -2126,15 +2126,15 @@ function dbg(text) {
     }
 
   var JS_GravitySensor = null;
-
+  
   function _JS_GravitySensor_IsRunning() {
           return (typeof GravitySensor !== 'undefined') ? (JS_GravitySensor && JS_GravitySensor.activated) : JS_GravitySensor_callback != 0;
       }
 
-
-
-
-
+  
+  
+  
+  
   function JS_GravitySensor_eventHandler() {
           if (JS_GravitySensor_callback != 0)
               getWasmTableEntry(JS_GravitySensor_callback)(
@@ -2142,20 +2142,20 @@ function dbg(text) {
                   JS_GravitySensor.y * JS_Accelerometer_multiplier,
                   JS_GravitySensor.z * JS_Accelerometer_multiplier);
       }
-
-
+  
+  
   var JS_GravitySensor_frequencyRequest = 0;
-
-
-
+  
+  
+  
   var JS_LinearAccelerationSensor = null;
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
   function JS_LinearAccelerationSensor_eventHandler() {
           var linearAccelerationValue = {
               x: JS_LinearAccelerationSensor.x * JS_Accelerometer_multiplier,
@@ -2164,34 +2164,34 @@ function dbg(text) {
           };
           if (JS_LinearAccelerationSensor_callback != 0)
               getWasmTableEntry(JS_LinearAccelerationSensor_callback)(linearAccelerationValue.x, linearAccelerationValue.y, linearAccelerationValue.z);
-
+  
           // Calculate and call the Gravity callback if the Gravity Sensor API isn't present
           if (JS_GravitySensor_callback != 0 && typeof GravitySensor === 'undefined') {
               var gravityValue = JS_ComputeGravity(JS_Accelerometer_lastValue, linearAccelerationValue);
               getWasmTableEntry(JS_GravitySensor_callback)(gravityValue.x, gravityValue.y, gravityValue.z);
           }
       }
-
-
+  
+  
   var JS_LinearAccelerationSensor_frequencyRequest = 0;
-
+  
   var JS_LinearAccelerationSensor_frequency = 0;
-
-
+  
+  
   function _JS_LinearAccelerationSensor_Start(callback, frequency) {
           // callback can be zero here when called via JS_GravitySensor_Start
-
+  
           JS_DefineAccelerometerMultiplier();
-
+  
           // If we don't have new sensor API, fallback to old DeviceMotionEvent
           if (typeof LinearAccelerationSensor === 'undefined') {
               JS_DeviceMotion_add(); // Must call before we set the callback
               if (callback != 0) JS_LinearAccelerationSensor_callback = callback;
               return;
           }
-
+  
           if (callback != 0) JS_LinearAccelerationSensor_callback = callback;
-
+  
           function InitializeLinearAccelerationSensor(frequency) {
               // Use device referenceFrame, since New Input System package does its own compensation
               JS_LinearAccelerationSensor = new LinearAccelerationSensor({ frequency: frequency, referenceFrame: 'device' });
@@ -2203,7 +2203,7 @@ function dbg(text) {
               JS_LinearAccelerationSensor.start();
               JS_LinearAccelerationSensor_frequency = frequency;
           }
-
+  
           // If the sensor is already created, stop and re-create it with new frequency
           if (JS_LinearAccelerationSensor) {
               if (JS_LinearAccelerationSensor_frequency != frequency) {
@@ -2218,7 +2218,7 @@ function dbg(text) {
           }
           else {
               JS_LinearAccelerationSensor_frequencyRequest = frequency;
-
+  
               // Request required permission for the LinearAccelerationSensor
               navigator.permissions.query({name: 'accelerometer'})
                   .then(function(result) {
@@ -2231,27 +2231,27 @@ function dbg(text) {
               });
           }
       }
-
-
+  
+  
   function _JS_GravitySensor_Start(callback, frequency) {
           assert(callback != 0, 'Invalid callback passed to JS_GravitySensor_Start');
-
+  
           // If we don't have explicit new Gravity Sensor API, start the Accelerometer and LinearAccelerationSensor
           // and we will compute the gravity value from those readings
           if (typeof GravitySensor === 'undefined') {
               // Start both Accelerometer and LinearAccelerationSensor
               _JS_Accelerometer_Start(0, Math.max(frequency, JS_Accelerometer_frequency));
               _JS_LinearAccelerationSensor_Start(0, Math.max(frequency, JS_LinearAccelerationSensor_frequency));
-
+  
               // Add the gravity sensor callback (must be after Accelerometer and LinearAccelerationSensor start)
               JS_GravitySensor_callback = callback;
               return;
           }
-
+  
           JS_DefineAccelerometerMultiplier();
-
+  
           JS_GravitySensor_callback = callback;
-
+  
           function InitializeGravitySensor(frequency) {
               // Use device referenceFrame, since New Input System package does its own compensation
               JS_GravitySensor = new GravitySensor({ frequency: frequency, referenceFrame: 'device' });
@@ -2262,7 +2262,7 @@ function dbg(text) {
               });
               JS_GravitySensor.start();
           }
-
+  
           // If the sensor is already created, stop and re-create it with new frequency
           if (JS_GravitySensor) {
               JS_GravitySensor.stop();
@@ -2275,7 +2275,7 @@ function dbg(text) {
           }
           else {
               JS_GravitySensor_frequencyRequest = frequency;
-
+  
               // Request required permission for the GravitySensor
               navigator.permissions.query({name: 'accelerometer'})
                   .then(function(result) {
@@ -2289,17 +2289,17 @@ function dbg(text) {
           }
       }
 
-
-
-
-
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   function _JS_LinearAccelerationSensor_Stop() {
           if (JS_LinearAccelerationSensor) {
               // Only actually stop the Linear Acceleration Sensor if we don't need it to compute gravity values
@@ -2318,7 +2318,7 @@ function dbg(text) {
       }
   function _JS_GravitySensor_Stop() {
           JS_GravitySensor_callback = 0;
-
+  
           // If we don't have Gravity Sensor API, stop the Accelerometer and LinearAccelerationSensor
           if (typeof GravitySensor === 'undefined') {
               // Stop the source sensors if they're not used explicitly by Unity
@@ -2326,7 +2326,7 @@ function dbg(text) {
               if (JS_LinearAccelerationSensor_callback == 0) _JS_LinearAccelerationSensor_Stop();
               return;
           }
-
+  
           if (JS_GravitySensor) {
               JS_GravitySensor.stop();
               JS_GravitySensor.removeEventListener('reading', JS_GravitySensor_eventHandler);
@@ -2335,36 +2335,36 @@ function dbg(text) {
       }
 
   var JS_Gyroscope = null;
-
+  
   function _JS_Gyroscope_IsRunning() {
           // Sensor is running if there is an activated new JS_Gyroscope; or the JS_Gyroscope_callback is hooked up
           return (JS_Gyroscope && JS_Gyroscope.activated) || (JS_Gyroscope_callback != 0);
       }
 
-
-
-
+  
+  
+  
   function JS_Gyroscope_eventHandler() {
           // Radians per second
           if (JS_Gyroscope_callback != 0)
               getWasmTableEntry(JS_Gyroscope_callback)(JS_Gyroscope.x, JS_Gyroscope.y, JS_Gyroscope.z);
       }
-
-
+  
+  
   var JS_Gyroscope_frequencyRequest = 0;
-
+  
   function _JS_Gyroscope_Start(callback, frequency) {
           assert(callback != 0, 'Invalid callback passed to JS_Gyroscope_Start');
-
+  
           // If we don't have new sensor API, fallback to old DeviceMotionEvent
           if (typeof Gyroscope === 'undefined') {
               JS_DeviceMotion_add(); // Must call before we set the callback
               JS_Gyroscope_callback = callback;
               return;
           }
-
+  
           JS_Gyroscope_callback = callback;
-
+  
           function InitializeGyroscope(frequency) {
               // Use device referenceFrame, since New Input System package does its own compensation
               JS_Gyroscope = new Gyroscope({ frequency: frequency, referenceFrame: 'device' });
@@ -2375,7 +2375,7 @@ function dbg(text) {
               });
               JS_Gyroscope.start();
           }
-
+  
           // If the sensor is already created, stop and re-create it with new frequency
           if (JS_Gyroscope) {
               JS_Gyroscope.stop();
@@ -2388,7 +2388,7 @@ function dbg(text) {
           }
           else {
               JS_Gyroscope_frequencyRequest = frequency;
-
+  
               // Request required permission for the Gyroscope
               navigator.permissions.query({name: 'gyroscope'})
                   .then(function(result) {
@@ -2402,9 +2402,9 @@ function dbg(text) {
           }
       }
 
-
-
-
+  
+  
+  
   function _JS_Gyroscope_Stop() {
           if (JS_Gyroscope) {
               JS_Gyroscope.stop();
@@ -2423,28 +2423,28 @@ function dbg(text) {
               if(event.target.localName !== "canvas")
                   _ReleaseKeys();
           }
-
+  
           document.addEventListener("contextmenu", _handleContextMenu);
-
+  
           Module.deinitializers.push(function() {
               document.removeEventListener("contextmenu", _handleContextMenu);
           });
       }
 
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
   var mobile_input_hide_delay = null;
   var mobile_input_text = null;
-
+  
   var mobile_input = null;
-
+  
   function _JS_Init_CopyPaste() {
           var canvas = document.querySelector(jsCanvasSelector());
-
+          
           // UUM-72388 we need to conditionally prevent default so that users can
           // copy paste between elements on the page to the unity canvas. Check
           // mobile input here otherwise paste data will paste twice.
@@ -2452,7 +2452,7 @@ function dbg(text) {
               if (document.activeElement == canvas || !!mobile_input)
                   event.preventDefault();
               const data = event.clipboardData.getData("text");
-
+  
               if(!!mobile_input){
                   mobile_input.input.value += data;
               } else {
@@ -2461,24 +2461,24 @@ function dbg(text) {
                   _free(str_wasm);
               }
           }
-
+  
           const _handleCopy = function (event) {
               if (document.activeElement == canvas)
                   event.preventDefault();
-              const data = !!mobile_input ?
-              mobile_input.input.value.slice(mobile_input.input.selectionStart, mobile_input.input.selectionEnd)
+              const data = !!mobile_input ? 
+              mobile_input.input.value.slice(mobile_input.input.selectionStart, mobile_input.input.selectionEnd) 
               : UTF8ToString(_GetCopyBufferAsCStr());
-
+  
               event.clipboardData.setData("text/plain", data);
           }
-
+  
           // Add the event listener on the window to account for mobile copy paste.
           // When copying/pasting elements, the canvas is not the one in focus so
           // we cannot prevent default. On desktop canvas does not pick up copy paste events.
           window.addEventListener("paste", _handlePaste);
           window.addEventListener("copy", _handleCopy);
           window.addEventListener("cut", _handleCopy);
-
+  
           Module.deinitializers.push(function() {
               window.removeEventListener("paste", _handlePaste);
               window.removeEventListener("copy", _handleCopy);
@@ -2486,7 +2486,7 @@ function dbg(text) {
           });
       }
 
-
+  
   function _JS_LinearAccelerationSensor_IsRunning() {
           // Sensor is running if there is an activated new JS_LinearAccelerationSensor; or the JS_LinearAccelerationSensor_callback is hooked up
           return (JS_LinearAccelerationSensor && JS_LinearAccelerationSensor.activated) || (JS_LinearAccelerationSensor_callback != 0);
@@ -2494,7 +2494,7 @@ function dbg(text) {
 
 
 
-
+  
   function _JS_Log_Dump(ptr, type)
   {
   	var str = UTF8ToString(ptr);
@@ -2507,37 +2507,37 @@ function dbg(text) {
   		case 4: //LogType_Exception
   			console.error (str);
   			return;
-
+  
   		case 2: //LogType_Warning
   			console.warn (str);
   			return;
-
+  
   		case 3: //LogType_Log
   		case 5: //LogType_Debug
   			console.log (str);
-  			return;
-
+  			return;			
+  
   		default:
   			console.error ("Unknown console message type!")
   			console.error (str);
   	}
   }
 
-
+  
   function _JS_Log_StackTrace(buffer, bufferSize)
   {
   	var trace = stackTrace();
   	if (buffer)
   		stringToUTF8(trace, buffer, bufferSize);
-  	return lengthBytesUTF8(trace);
+  	return lengthBytesUTF8(trace);	
   }
 
-
-
+  
+  
   var mobile_input_ignore_blur_event = false;
-
-
-
+  
+  
+  
   function _JS_MobileKeybard_GetIgnoreBlurEvent() {
       // On some platforms, such as iOS15, a blur event is sent to the window after the keyboard
       // is closed. This causes the game to be paused in the blur event handler in ScreenManagerWebGL.
@@ -2545,8 +2545,8 @@ function dbg(text) {
       return mobile_input_ignore_blur_event;
   }
 
-
-
+  
+  
   function _JS_MobileKeyboard_GetKeyboardStatus()
   {
       var kKeyboardStatusVisible = 0;
@@ -2557,10 +2557,10 @@ function dbg(text) {
       return kKeyboardStatusVisible;
   }
 
-
-
-
-
+  
+  
+  
+  
   function _JS_MobileKeyboard_GetText(buffer, bufferSize)
   {
       // If the keyboard was closed, use the cached version of the input's text so that Unity can
@@ -2572,13 +2572,13 @@ function dbg(text) {
       return lengthBytesUTF8(text);
   }
 
-
-
+  
+  
   function _JS_MobileKeyboard_GetTextSelection(outStart, outLength)
   {
       outStart = (outStart >> 2);
       outLength = (outLength >> 2);
-
+  
       if (!mobile_input) {
           HEAP32[outStart] = 0;
           HEAP32[outLength] = 0;
@@ -2588,14 +2588,14 @@ function dbg(text) {
       HEAP32[outLength] = mobile_input.input.selectionEnd - mobile_input.input.selectionStart;
   }
 
-
-
-
+  
+  
+  
   function _JS_MobileKeyboard_Hide(delay)
   {
       if (mobile_input_hide_delay) return;
       mobile_input_ignore_blur_event = true;
-
+  
       function hideMobileKeyboard() {
           if (mobile_input && mobile_input.input) {
               mobile_input_text = mobile_input.input.value;
@@ -2606,7 +2606,7 @@ function dbg(text) {
           }
           mobile_input = null;
           mobile_input_hide_delay = null;
-
+  
           // mobile_input_ignore_blur_event was set to true so that ScreenManagerWebGL will ignore
           // the blur event it might get from the closing of the keyboard. But it might not get that
           // blur event, too, depending on the browser. So we want to clear the flag, as soon as we
@@ -2615,7 +2615,7 @@ function dbg(text) {
               mobile_input_ignore_blur_event = false;
           }, 100);
       }
-
+  
       if (delay) {
           // Delaying the hide of the input/keyboard allows a new input to be selected and re-use the
           // existing control. This fixes a problem where a quick tap select of a new element would
@@ -2628,18 +2628,18 @@ function dbg(text) {
       }
   }
 
-
-
+  
+  
   function _JS_MobileKeyboard_SetCharacterLimit(limit)
   {
       if (!mobile_input) return;
       mobile_input.input.maxLength = limit;
   }
 
-
-
-
-
+  
+  
+  
+  
   function _JS_MobileKeyboard_SetText(text)
   {
       if (!mobile_input) return;
@@ -2647,8 +2647,8 @@ function dbg(text) {
       mobile_input.input.value = text;
   }
 
-
-
+  
+  
   function _JS_MobileKeyboard_SetTextSelection(start, length)
   {
       if (!mobile_input) return;
@@ -2661,11 +2661,11 @@ function dbg(text) {
       }
   }
 
-
-
-
-
-
+  
+  
+  
+  
+  
   function _JS_MobileKeyboard_Show(text, keyboardType, autocorrection, multiline, secure, alert,
                                    placeholder, characterLimit)
   {
@@ -2673,16 +2673,16 @@ function dbg(text) {
           clearTimeout(mobile_input_hide_delay);
           mobile_input_hide_delay = null;
       }
-
+  
       text = UTF8ToString(text);
       mobile_input_text = text;
-
+  
       placeholder = UTF8ToString(placeholder);
-
+  
       var container = document.body;
-
+  
       var hasExistingMobileInput = !!mobile_input;
-
+  
       // From KeyboardOnScreen::KeyboardTypes
       var input_type;
       var KEYBOARD_TYPE_NUMBERS_AND_PUNCTUATION = 2;
@@ -2710,44 +2710,44 @@ function dbg(text) {
       } else {
           input_type = "password";
       }
-
+  
       if (hasExistingMobileInput) {
           if (mobile_input.multiline != multiline) {
               _JS_MobileKeyboard_Hide(false);
               return;
           }
       }
-
+  
       var inputContainer = mobile_input || document.createElement("div");
       if (!hasExistingMobileInput) {
           inputContainer.style = "width:100%; position:fixed; bottom:0px; margin:0px; padding:0px; left:0px; border: 1px solid #000; border-radius: 5px; background-color:#fff; font-size:14pt;";
-
+  
           container.appendChild(inputContainer);
           mobile_input = inputContainer;
       }
-
+  
       var input = hasExistingMobileInput ?
           mobile_input.input :
           document.createElement(multiline ? "textarea" : "input");
-
+  
       mobile_input.multiline = multiline;
       mobile_input.secure = secure;
       mobile_input.keyboardType = keyboardType;
       mobile_input.inputType = input_type;
-
+  
       input.type = input_type;
       input.style = "width:calc(100% - 85px); " + (multiline ? "height:100px;" : "") + "vertical-align:top; border-radius: 5px; outline:none; cursor:default; resize:none; border:0px; padding:10px 0px 10px 10px;";
-
+  
       input.spellcheck = autocorrection ? true : false;
       input.maxLength = characterLimit > 0 ? characterLimit : 524288;
       input.value = text;
       input.placeholder = placeholder;
-
+  
       if (!hasExistingMobileInput) {
           inputContainer.appendChild(input);
           inputContainer.input = input;
       }
-
+  
       if (!hasExistingMobileInput) {
           var okButton = document.createElement("button");
           okButton.innerText = "OK";
@@ -2755,10 +2755,10 @@ function dbg(text) {
           okButton.addEventListener("touchend", function() {
               _JS_MobileKeyboard_Hide(true);
           });
-
+  
           inputContainer.appendChild(okButton);
           inputContainer.okButton = okButton;
-
+  
           // For single-line text input, enter key will close the keyboard.
           input.addEventListener('keyup', function(e) {
               if (input.parentNode.multiline) return;
@@ -2766,7 +2766,7 @@ function dbg(text) {
                   _JS_MobileKeyboard_Hide(true);
               }
           });
-
+  
           // On iOS, the keyboard has a done button that hides the keyboard. The only way to detect
           // when this happens seems to be when the HTML input looses focus, so we watch for the blur
           // event on the input element and close the element/keybaord when it's gotten.
@@ -2775,7 +2775,7 @@ function dbg(text) {
               e.stopPropagation();
               e.preventDefault();
           });
-
+  
           input.select();
           input.focus();
       } else {
@@ -2796,55 +2796,55 @@ function dbg(text) {
     }
 
   var JS_OrientationSensor = null;
-
+  
   var JS_OrientationSensor_callback = 0;
   function _JS_OrientationSensor_IsRunning() {
           // Sensor is running if there is an activated new JS_OrientationSensor; or the DeviceOrientation handler is hooked up
           return (JS_OrientationSensor && JS_OrientationSensor.activated) || (JS_OrientationSensor_callback != 0);
       }
 
-
-
-
+  
+  
+  
   function JS_OrientationSensor_eventHandler() {
           if (JS_OrientationSensor_callback != 0)
               getWasmTableEntry(JS_OrientationSensor_callback)(JS_OrientationSensor.quaternion[0], JS_OrientationSensor.quaternion[1], JS_OrientationSensor.quaternion[2], JS_OrientationSensor.quaternion[3]);
       }
-
-
+  
+  
   var JS_OrientationSensor_frequencyRequest = 0;
-
-
+  
+  
   function JS_DeviceOrientation_eventHandler(event) {
           if (JS_OrientationSensor_callback) {
               // OBSERVATION: On Android Firefox, absolute = false, webkitCompassHeading = null
               // OBSERVATION: On iOS Safari, absolute is undefined, webkitCompassHeading and webkitCompassAccuracy are set
-
+  
               // Convert alpha, beta, gamma Euler angles to a quaternion
               var degToRad = Math.PI / 180;
               var x = event.beta * degToRad;
               var y = event.gamma * degToRad;
               var z = event.alpha * degToRad;
-
+  
               var cx = Math.cos(x/2);
               var sx = Math.sin(x/2);
               var cy = Math.cos(y/2);
               var sy = Math.sin(y/2);
               var cz = Math.cos(z/2);
               var sz = Math.sin(z/2);
-
+  
               var qx = sx * cy * cz - cx * sy * sz;
               var qy = cx * sy * cz + sx * cy * sz;
               var qz = cx * cy * sz + sx * sy * cz;
               var qw = cx * cy * cz - sx * sy * sz;
-
+  
               getWasmTableEntry(JS_OrientationSensor_callback)(qx, qy, qz, qw);
           }
       }
-
+  
   function _JS_OrientationSensor_Start(callback, frequency) {
           assert(callback != 0, 'Invalid callback passed to JS_OrientationSensor_Start');
-
+  
           // If we don't have new sensor API, fallback to old DeviceOrientationEvent
           if (typeof RelativeOrientationSensor === 'undefined') {
               if (JS_OrientationSensor_callback == 0) {
@@ -2854,9 +2854,9 @@ function dbg(text) {
               }
               return;
           }
-
+  
           JS_OrientationSensor_callback = callback;
-
+  
           function InitializeOrientationSensor(frequency) {
               // Use device referenceFrame, since New Input System package does its own compensation
               // Use relative orientation to match native players
@@ -2868,7 +2868,7 @@ function dbg(text) {
               });
               JS_OrientationSensor.start();
           }
-
+  
           // If the sensor is already created, stop and re-create it with new frequency
           if (JS_OrientationSensor) {
               JS_OrientationSensor.stop();
@@ -2881,7 +2881,7 @@ function dbg(text) {
           }
           else {
               JS_OrientationSensor_frequencyRequest = frequency;
-
+  
               // Request required permissions for the RelativeOrientationSensor
               Promise.all([navigator.permissions.query({ name: "accelerometer" }),
                            navigator.permissions.query({ name: "gyroscope" })])
@@ -2896,9 +2896,9 @@ function dbg(text) {
           }
       }
 
-
-
-
+  
+  
+  
   function _JS_OrientationSensor_Stop() {
           if (JS_OrientationSensor) {
               JS_OrientationSensor.stop();
@@ -2911,10 +2911,10 @@ function dbg(text) {
           JS_OrientationSensor_callback = 0;
       }
 
-
+  
   function _JS_RequestDeviceSensorPermissionsOnTouch() {
           if (JS_DeviceSensorPermissions == 0) return;
-
+  
           // Re-request any required device sensor permissions (iOS requires that permissions are requested on a user interaction event)
           JS_RequestDeviceSensorPermissions(JS_DeviceSensorPermissions);
       }
@@ -2924,11 +2924,11 @@ function dbg(text) {
   }
 
   var JS_ScreenOrientation_callback = 0;
-
+  
   function JS_ScreenOrientation_eventHandler() {
   		if (JS_ScreenOrientation_callback) getWasmTableEntry(JS_ScreenOrientation_callback)(window.innerWidth, window.innerHeight, screen.orientation ? screen.orientation.angle : window.orientation);
   	}
-
+  
   function _JS_ScreenOrientation_DeInit() {
   		JS_ScreenOrientation_callback = 0;
   		window.removeEventListener('resize', JS_ScreenOrientation_eventHandler);
@@ -2937,7 +2937,7 @@ function dbg(text) {
   		}
   	}
 
-
+  
   function _JS_ScreenOrientation_Init(callback) {
   		// Only register if not yet registered
   		if (!JS_ScreenOrientation_callback) {
@@ -2949,7 +2949,7 @@ function dbg(text) {
   				// (Firefox, Chrome, Chrome for Android, Firefox for Android)
   				screen.orientation.addEventListener('change', JS_ScreenOrientation_eventHandler);
   			}
-
+  
   			// As a fallback, use deprecated DOM window.orientation field if available:
   			// - https://compat.spec.whatwg.org/#dom-window-orientation
   			// - https://developer.mozilla.org/en-US/docs/Web/API/Window/orientation
@@ -2957,9 +2957,9 @@ function dbg(text) {
   			// Listening to resize event also helps emulate landscape/portrait transitions on desktop
   			// browsers when the browser window is scaled to narrow/wide configurations.
   			window.addEventListener('resize', JS_ScreenOrientation_eventHandler);
-
+  
   			JS_ScreenOrientation_callback = callback;
-
+  
   			// Trigger the event handler immediately after the engine initialization is done to start up
   			// ScreenManager with the initial state.
   			setTimeout(JS_ScreenOrientation_eventHandler, 0);
@@ -2967,9 +2967,9 @@ function dbg(text) {
   	}
 
   var JS_ScreenOrientation_requestedLockType = -1;
-
+  
   var JS_ScreenOrientation_appliedLockType = -1;
-
+  
   var JS_ScreenOrientation_timeoutID = -1;
   function _JS_ScreenOrientation_Lock(orientationLockType) {
   		// We will use the Screen Orientation API if available, and silently return if not available
@@ -2980,17 +2980,17 @@ function dbg(text) {
   			// As of writing, this is only not implemented on Safari
   			return;
   		}
-
+  
   		// Callback to apply the lock
   		function applyLock() {
   			JS_ScreenOrientation_appliedLockType = JS_ScreenOrientation_requestedLockType;
-
+  
   			// Index must match enum class OrientationLockType in ScreenOrientation.h
   			var screenOrientations = ['any', 0/*natural*/, 'landscape', 'portrait', 'portrait-primary', 'portrait-secondary', 'landscape-primary', 'landscape-secondary' ];
   			var type = screenOrientations[JS_ScreenOrientation_appliedLockType];
-
+  
   			assert(type, 'Invalid orientationLockType passed to JS_ScreenOrientation_Lock');
-
+  
   			// Apply the lock, which is done asynchronously and returns a Promise
   			screen.orientation.lock(type).then(function() {
   				// Upon success, see if the JS_ScreenOrientation_requestedLockType value has changed, in which case, we will now need to queue another applyLock
@@ -3005,21 +3005,21 @@ function dbg(text) {
   				warnOnce(err);
   				JS_ScreenOrientation_timeoutID = -1;
   			});
-
+  
   			// Note, there is also an screen.orientation.unlock() which unlocks auto rotate to default orientation.
   			// On my Google Pixel 5, this allows 'portrait-primary' AND 'landscape', but will differ depending on device.
   		}
-
+  
   		// Request this orientationLockType be applied on the callback
   		JS_ScreenOrientation_requestedLockType = orientationLockType;
-
+  
   		// Queue applyLock callback if there is not already a callback or a screen.orientation.lock call in progress
   		if (JS_ScreenOrientation_timeoutID == -1 && orientationLockType != JS_ScreenOrientation_appliedLockType) {
   			JS_ScreenOrientation_timeoutID = setTimeout(applyLock, 0);
   		}
   	}
 
-
+  
   function handleException(e) {
       // Certain exception types we do not treat as errors since they are used for
       // internal control flow.
@@ -3037,8 +3037,8 @@ function dbg(text) {
       }
       quit_(1, e);
     }
-
-
+  
+  
   var PATH = {isAbs:(path) => path.charAt(0) === '/',splitPath:(filename) => {
         var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
         return splitPathRe.exec(filename).slice(1);
@@ -3103,7 +3103,7 @@ function dbg(text) {
       },join2:(l, r) => {
         return PATH.normalize(l + '/' + r);
       }};
-
+  
   function initRandomFill() {
       if (typeof crypto == 'object' && typeof crypto['getRandomValues'] == 'function') {
         // for modern web browsers
@@ -3116,9 +3116,9 @@ function dbg(text) {
       // Lazily init on the first invocation.
       return (randomFill = initRandomFill())(view);
     }
-
-
-
+  
+  
+  
   var PATH_FS = {resolve:function() {
         var resolvedPath = '',
           resolvedAbsolute = false;
@@ -3169,9 +3169,9 @@ function dbg(text) {
         outputParts = outputParts.concat(toParts.slice(samePartsLength));
         return outputParts.join('/');
       }};
-
-
-
+  
+  
+  
   /** @type {function(string, boolean=, number=)} */
   function intArrayFromString(stringy, dontAddNull, length) {
     var len = length > 0 ? length : lengthBytesUTF8(stringy)+1;
@@ -3180,7 +3180,7 @@ function dbg(text) {
     if (dontAddNull) u8array.length = numBytesWritten;
     return u8array;
   }
-
+  
   var TTY = {ttys:[],init:function () {
         // https://github.com/emscripten-core/emscripten/pull/1555
         // if (ENVIRONMENT_IS_NODE) {
@@ -3301,13 +3301,13 @@ function dbg(text) {
             tty.output = [];
           }
         }}};
-
-
+  
+  
   function zeroMemory(address, size) {
       HEAPU8.fill(0, address, address + size);
       return address;
     }
-
+  
   function alignMemory(size, alignment) {
       assert(alignment, "alignment argument is required");
       return Math.ceil(size / alignment) * alignment;
@@ -3386,7 +3386,7 @@ function dbg(text) {
           // When the byte data of the file is populated, this will point to either a typed array, or a normal JS array. Typed arrays are preferred
           // for performance, and used by default. However, typed arrays are not resizable like normal JS arrays are, so there is a small disk size
           // penalty involved for appending file writes that continuously grow a file similar to std::vector capacity vs used -scheme.
-          node.contents = null;
+          node.contents = null; 
         } else if (FS.isLink(node.mode)) {
           node.node_ops = MEMFS.ops_table.link.node;
           node.stream_ops = MEMFS.ops_table.link.stream;
@@ -3541,11 +3541,11 @@ function dbg(text) {
           if (buffer.buffer === HEAP8.buffer) {
             canOwn = false;
           }
-
+  
           if (!length) return 0;
           var node = stream.node;
           node.timestamp = Date.now();
-
+  
           if (buffer.subarray && (!node.contents || node.contents.subarray)) { // This write is from a typed array to a typed array?
             if (canOwn) {
               assert(position === 0, 'canOwn must imply no weird position inside the file');
@@ -3561,7 +3561,7 @@ function dbg(text) {
               return length;
             }
           }
-
+  
           // Appending to an existing file and we need to reallocate, or source data did not come as a typed array.
           MEMFS.expandFileStorage(node, position+length);
           if (node.contents.subarray && buffer.subarray) {
@@ -3625,7 +3625,7 @@ function dbg(text) {
           // should we check if bytesWritten and length are the same?
           return 0;
         }}};
-
+  
   /** @param {boolean=} noRunDep */
   function asyncLoad(url, onload, onerror, noRunDep) {
       var dep = !noRunDep ? getUniqueRunDependency('al ' + url) : '';
@@ -3642,12 +3642,12 @@ function dbg(text) {
       });
       if (dep) addRunDependency(dep);
     }
-
+  
   var preloadPlugins = Module['preloadPlugins'] || [];
   function FS_handledByPreloadPlugin(byteArray, fullname, finish, onerror) {
       // Ensure plugins are ready.
       if (typeof Browser != 'undefined') Browser.init();
-
+  
       var handled = false;
       preloadPlugins.forEach(function(plugin) {
         if (handled) return;
@@ -3687,7 +3687,7 @@ function dbg(text) {
         processData(url);
       }
     }
-
+  
   function FS_modeStringToFlags(str) {
       var flagModes = {
         'r': 0,
@@ -3703,19 +3703,19 @@ function dbg(text) {
       }
       return flags;
     }
-
+  
   function FS_getMode(canRead, canWrite) {
       var mode = 0;
       if (canRead) mode |= 292 | 73;
       if (canWrite) mode |= 146;
       return mode;
     }
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
   var IDBFS = {dbs:{},indexedDB:() => {
         if (typeof indexedDB != 'undefined') return indexedDB;
         var ret = null;
@@ -3728,13 +3728,13 @@ function dbg(text) {
       },syncfs:(mount, populate, callback) => {
         IDBFS.getLocalSet(mount, (err, local) => {
           if (err) return callback(err);
-
+  
           IDBFS.getRemoteSet(mount, (err, remote) => {
             if (err) return callback(err);
-
+  
             var src = populate ? remote : local;
             var dst = populate ? local : remote;
-
+  
             IDBFS.reconcile(src, dst, callback);
           });
         });
@@ -3747,7 +3747,7 @@ function dbg(text) {
         if (db) {
           return callback(null, db);
         }
-
+  
         var req;
         try {
           req = IDBFS.indexedDB().open(name, IDBFS.DB_VERSION);
@@ -3760,22 +3760,22 @@ function dbg(text) {
         req.onupgradeneeded = (e) => {
           var db = /** @type {IDBDatabase} */ (e.target.result);
           var transaction = e.target.transaction;
-
+  
           var fileStore;
-
+  
           if (db.objectStoreNames.contains(IDBFS.DB_STORE_NAME)) {
             fileStore = transaction.objectStore(IDBFS.DB_STORE_NAME);
           } else {
             fileStore = db.createObjectStore(IDBFS.DB_STORE_NAME);
           }
-
+  
           if (!fileStore.indexNames.contains('timestamp')) {
             fileStore.createIndex('timestamp', 'timestamp', { unique: false });
           }
         };
         req.onsuccess = () => {
           db = /** @type {IDBDatabase} */ (req.result);
-
+  
           // add to the cache
           IDBFS.dbs[name] = db;
           callback(null, db);
@@ -3786,7 +3786,7 @@ function dbg(text) {
         };
       },getLocalSet:(mount, callback) => {
         var entries = {};
-
+  
         function isRealDir(p) {
           return p !== '.' && p !== '..';
         };
@@ -3795,52 +3795,52 @@ function dbg(text) {
             return PATH.join2(root, p);
           }
         };
-
+  
         var check = FS.readdir(mount.mountpoint).filter(isRealDir).map(toAbsolute(mount.mountpoint));
-
+  
         while (check.length) {
           var path = check.pop();
           var stat;
-
+  
           try {
             stat = FS.stat(path);
           } catch (e) {
             return callback(e);
           }
-
+  
           if (FS.isDir(stat.mode)) {
             check.push.apply(check, FS.readdir(path).filter(isRealDir).map(toAbsolute(path)));
           }
-
+  
           entries[path] = { 'timestamp': stat.mtime };
         }
-
+  
         return callback(null, { type: 'local', entries: entries });
       },getRemoteSet:(mount, callback) => {
         var entries = {};
-
+  
         IDBFS.getDB(mount.mountpoint, (err, db) => {
           if (err) return callback(err);
-
+  
           try {
             var transaction = db.transaction([IDBFS.DB_STORE_NAME], 'readonly');
             transaction.onerror = (e) => {
               callback(this.error);
               e.preventDefault();
             };
-
+  
             var store = transaction.objectStore(IDBFS.DB_STORE_NAME);
             var index = store.index('timestamp');
-
+  
             index.openKeyCursor().onsuccess = (event) => {
               var cursor = event.target.result;
-
+  
               if (!cursor) {
                 return callback(null, { type: 'remote', db: db, entries: entries });
               }
-
+  
               entries[cursor.primaryKey] = { 'timestamp': cursor.key };
-
+  
               cursor.continue();
             };
           } catch (e) {
@@ -3849,7 +3849,7 @@ function dbg(text) {
         });
       },loadLocalEntry:(path, callback) => {
         var stat, node;
-
+  
         try {
           var lookup = FS.lookupPath(path);
           node = lookup.node;
@@ -3857,7 +3857,7 @@ function dbg(text) {
         } catch (e) {
           return callback(e);
         }
-
+  
         if (FS.isDir(stat.mode)) {
           return callback(null, { 'timestamp': stat.mtime, 'mode': stat.mode });
         } else if (FS.isFile(stat.mode)) {
@@ -3877,18 +3877,18 @@ function dbg(text) {
           } else {
             return callback(new Error('node type not supported'));
           }
-
+  
           FS.chmod(path, entry['mode']);
           FS.utime(path, entry['timestamp'], entry['timestamp']);
         } catch (e) {
           return callback(e);
         }
-
+  
         callback(null);
       },removeLocalEntry:(path, callback) => {
         try {
           var stat = FS.stat(path);
-
+  
           if (FS.isDir(stat.mode)) {
             FS.rmdir(path);
           } else if (FS.isFile(stat.mode)) {
@@ -3897,7 +3897,7 @@ function dbg(text) {
         } catch (e) {
           return callback(e);
         }
-
+  
         callback(null);
       },loadRemoteEntry:(store, path, callback) => {
         var req = store.get(path);
@@ -3927,7 +3927,7 @@ function dbg(text) {
         };
       },reconcile:(src, dst, callback) => {
         var total = 0;
-
+  
         var create = [];
         Object.keys(src.entries).forEach(function (key) {
           var e = src.entries[key];
@@ -3937,7 +3937,7 @@ function dbg(text) {
             total++;
           }
         });
-
+  
         var remove = [];
         Object.keys(dst.entries).forEach(function (key) {
           if (!src.entries[key]) {
@@ -3945,34 +3945,34 @@ function dbg(text) {
             total++;
           }
         });
-
+  
         if (!total) {
           return callback(null);
         }
-
+  
         var errored = false;
         var db = src.type === 'remote' ? src.db : dst.db;
         var transaction = db.transaction([IDBFS.DB_STORE_NAME], 'readwrite');
         var store = transaction.objectStore(IDBFS.DB_STORE_NAME);
-
+  
         function done(err) {
           if (err && !errored) {
             errored = true;
             return callback(err);
           }
         };
-
+  
         transaction.onerror = (e) => {
           done(this.error);
           e.preventDefault();
         };
-
+  
         transaction.oncomplete = (e) => {
           if (!errored) {
             callback(null);
           }
         };
-
+  
         // sort paths in ascending order so directory entries are created
         // before the files inside them
         create.sort().forEach((path) => {
@@ -3988,7 +3988,7 @@ function dbg(text) {
             });
           }
         });
-
+  
         // sort paths in descending order so files are deleted before their
         // parent directories
         remove.sort().reverse().forEach((path) => {
@@ -3999,50 +3999,50 @@ function dbg(text) {
           }
         });
       }};
-
+  
   var ERRNO_MESSAGES = {0:"Success",1:"Arg list too long",2:"Permission denied",3:"Address already in use",4:"Address not available",5:"Address family not supported by protocol family",6:"No more processes",7:"Socket already connected",8:"Bad file number",9:"Trying to read unreadable message",10:"Mount device busy",11:"Operation canceled",12:"No children",13:"Connection aborted",14:"Connection refused",15:"Connection reset by peer",16:"File locking deadlock error",17:"Destination address required",18:"Math arg out of domain of func",19:"Quota exceeded",20:"File exists",21:"Bad address",22:"File too large",23:"Host is unreachable",24:"Identifier removed",25:"Illegal byte sequence",26:"Connection already in progress",27:"Interrupted system call",28:"Invalid argument",29:"I/O error",30:"Socket is already connected",31:"Is a directory",32:"Too many symbolic links",33:"Too many open files",34:"Too many links",35:"Message too long",36:"Multihop attempted",37:"File or path name too long",38:"Network interface is not configured",39:"Connection reset by network",40:"Network is unreachable",41:"Too many open files in system",42:"No buffer space available",43:"No such device",44:"No such file or directory",45:"Exec format error",46:"No record locks available",47:"The link has been severed",48:"Not enough core",49:"No message of desired type",50:"Protocol not available",51:"No space left on device",52:"Function not implemented",53:"Socket is not connected",54:"Not a directory",55:"Directory not empty",56:"State not recoverable",57:"Socket operation on non-socket",59:"Not a typewriter",60:"No such device or address",61:"Value too large for defined data type",62:"Previous owner died",63:"Not super-user",64:"Broken pipe",65:"Protocol error",66:"Unknown protocol",67:"Protocol wrong type for socket",68:"Math result not representable",69:"Read only file system",70:"Illegal seek",71:"No such process",72:"Stale file handle",73:"Connection timed out",74:"Text file busy",75:"Cross-device link",100:"Device not a stream",101:"Bad font file fmt",102:"Invalid slot",103:"Invalid request code",104:"No anode",105:"Block device required",106:"Channel number out of range",107:"Level 3 halted",108:"Level 3 reset",109:"Link number out of range",110:"Protocol driver not attached",111:"No CSI structure available",112:"Level 2 halted",113:"Invalid exchange",114:"Invalid request descriptor",115:"Exchange full",116:"No data (for no delay io)",117:"Timer expired",118:"Out of streams resources",119:"Machine is not on the network",120:"Package not installed",121:"The object is remote",122:"Advertise error",123:"Srmount error",124:"Communication error on send",125:"Cross mount point (not really error)",126:"Given log. name not unique",127:"f.d. invalid for this operation",128:"Remote address changed",129:"Can   access a needed shared lib",130:"Accessing a corrupted shared lib",131:".lib section in a.out corrupted",132:"Attempting to link in too many libs",133:"Attempting to exec a shared library",135:"Streams pipe error",136:"Too many users",137:"Socket type not supported",138:"Not supported",139:"Protocol family not supported",140:"Can't send after socket shutdown",141:"Too many references",142:"Host is down",148:"No medium (in tape drive)",156:"Level 2 not synchronized"};
-
+  
   var ERRNO_CODES = {};
-
+  
   var FS = {root:null,mounts:[],devices:{},streams:[],nextInode:1,nameTable:null,currentPath:"/",initialized:false,ignorePermissions:true,ErrnoError:null,genericErrors:{},filesystems:null,syncFSRequests:0,lookupPath:(path, opts = {}) => {
         path = PATH_FS.resolve(path);
-
+  
         if (!path) return { path: '', node: null };
-
+  
         var defaults = {
           follow_mount: true,
           recurse_count: 0
         };
         opts = Object.assign(defaults, opts)
-
+  
         if (opts.recurse_count > 8) {  // max recursive lookup of 8
           throw new FS.ErrnoError(32);
         }
-
+  
         // split the absolute path
         var parts = path.split('/').filter((p) => !!p);
-
+  
         // start at the root
         var current = FS.root;
         var current_path = '/';
-
+  
         for (var i = 0; i < parts.length; i++) {
           var islast = (i === parts.length-1);
           if (islast && opts.parent) {
             // stop resolving
             break;
           }
-
+  
           current = FS.lookupNode(current, parts[i]);
           current_path = PATH.join2(current_path, parts[i]);
-
+  
           // jump to the mount's root node if this is a mountpoint
           if (FS.isMountpoint(current)) {
             if (!islast || (islast && opts.follow_mount)) {
               current = current.mounted.root;
             }
           }
-
+  
           // by default, lookupPath will not follow a symlink if it is the final path component.
           // setting opts.follow = true will override this behavior.
           if (!islast || opts.follow) {
@@ -4050,17 +4050,17 @@ function dbg(text) {
             while (FS.isLink(current.mode)) {
               var link = FS.readlink(current_path);
               current_path = PATH_FS.resolve(PATH.dirname(current_path), link);
-
+  
               var lookup = FS.lookupPath(current_path, { recurse_count: opts.recurse_count + 1 });
               current = lookup.node;
-
+  
               if (count++ > 40) {  // limit max consecutive symlinks to 40 (SYMLOOP_MAX).
                 throw new FS.ErrnoError(32);
               }
             }
           }
         }
-
+  
         return { path: current_path, node: current };
       },getPath:(node) => {
         var path;
@@ -4075,7 +4075,7 @@ function dbg(text) {
         }
       },hashName:(parentid, name) => {
         var hash = 0;
-
+  
         for (var i = 0; i < name.length; i++) {
           hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
         }
@@ -4115,9 +4115,9 @@ function dbg(text) {
       },createNode:(parent, name, mode, rdev) => {
         assert(typeof parent == 'object')
         var node = new FS.FSNode(parent, name, mode, rdev);
-
+  
         FS.hashAddNode(node);
-
+  
         return node;
       },destroyNode:(node) => {
         FS.hashRemoveNode(node);
@@ -4276,37 +4276,37 @@ function dbg(text) {
       },getDevice:(dev) => FS.devices[dev],getMounts:(mount) => {
         var mounts = [];
         var check = [mount];
-
+  
         while (check.length) {
           var m = check.pop();
-
+  
           mounts.push(m);
-
+  
           check.push.apply(check, m.mounts);
         }
-
+  
         return mounts;
       },syncfs:(populate, callback) => {
         if (typeof populate == 'function') {
           callback = populate;
           populate = false;
         }
-
+  
         FS.syncFSRequests++;
-
+  
         if (FS.syncFSRequests > 1) {
           err('warning: ' + FS.syncFSRequests + ' FS.syncfs operations in flight at once, probably just doing extra work');
         }
-
+  
         var mounts = FS.getMounts(FS.root.mount);
         var completed = 0;
-
+  
         function doCallback(errCode) {
           assert(FS.syncFSRequests > 0);
           FS.syncFSRequests--;
           return callback(errCode);
         }
-
+  
         function done(errCode) {
           if (errCode) {
             if (!done.errored) {
@@ -4319,7 +4319,7 @@ function dbg(text) {
             doCallback(null);
           }
         };
-
+  
         // sync all mounts
         mounts.forEach((mount) => {
           if (!mount.type.syncfs) {
@@ -4336,78 +4336,78 @@ function dbg(text) {
         var root = mountpoint === '/';
         var pseudo = !mountpoint;
         var node;
-
+  
         if (root && FS.root) {
           throw new FS.ErrnoError(10);
         } else if (!root && !pseudo) {
           var lookup = FS.lookupPath(mountpoint, { follow_mount: false });
-
+  
           mountpoint = lookup.path;  // use the absolute path
           node = lookup.node;
-
+  
           if (FS.isMountpoint(node)) {
             throw new FS.ErrnoError(10);
           }
-
+  
           if (!FS.isDir(node.mode)) {
             throw new FS.ErrnoError(54);
           }
         }
-
+  
         var mount = {
           type: type,
           opts: opts,
           mountpoint: mountpoint,
           mounts: []
         };
-
+  
         // create a root node for the fs
         var mountRoot = type.mount(mount);
         mountRoot.mount = mount;
         mount.root = mountRoot;
-
+  
         if (root) {
           FS.root = mountRoot;
         } else if (node) {
           // set as a mountpoint
           node.mounted = mount;
-
+  
           // add the new mount to the current mount's children
           if (node.mount) {
             node.mount.mounts.push(mount);
           }
         }
-
+  
         return mountRoot;
       },unmount:(mountpoint) => {
         var lookup = FS.lookupPath(mountpoint, { follow_mount: false });
-
+  
         if (!FS.isMountpoint(lookup.node)) {
           throw new FS.ErrnoError(28);
         }
-
+  
         // destroy the nodes for this mount, and all its child mounts
         var node = lookup.node;
         var mount = node.mounted;
         var mounts = FS.getMounts(mount);
-
+  
         Object.keys(FS.nameTable).forEach((hash) => {
           var current = FS.nameTable[hash];
-
+  
           while (current) {
             var next = current.name_next;
-
+  
             if (mounts.includes(current.mount)) {
               FS.destroyNode(current);
             }
-
+  
             current = next;
           }
         });
-
+  
         // no longer a mountpoint
         node.mounted = null;
-
+  
         // remove this mount from the child mounts
         var idx = node.mount.mounts.indexOf(mount);
         assert(idx !== -1);
@@ -4483,13 +4483,13 @@ function dbg(text) {
         var new_name = PATH.basename(new_path);
         // parents must exist
         var lookup, old_dir, new_dir;
-
+  
         // let the errors from non existant directories percolate up
         lookup = FS.lookupPath(old_path, { parent: true });
         old_dir = lookup.node;
         lookup = FS.lookupPath(new_path, { parent: true });
         new_dir = lookup.node;
-
+  
         if (!old_dir || !new_dir) throw new FS.ErrnoError(44);
         // need to be part of the same mount
         if (old_dir.mount !== new_dir.mount) {
@@ -4780,7 +4780,7 @@ function dbg(text) {
         }
         // we've already handled these, don't pass down to the underlying vfs
         flags &= ~(128 | 512 | 131072);
-
+  
         // register the stream with the filesystem
         var stream = FS.createStream({
           node: node,
@@ -5044,7 +5044,7 @@ function dbg(text) {
         // TODO deprecate the old functionality of a single
         // input / output callback and that utilizes FS.createDevice
         // and instead require a unique set of stream ops
-
+  
         // by default, we symlink the standard streams to the
         // default tty devices. however, if the standard streams
         // have been overwritten we create a unique device for
@@ -5064,7 +5064,7 @@ function dbg(text) {
         } else {
           FS.symlink('/dev/tty1', '/dev/stderr');
         }
-
+  
         // open default streams for the stdin, stdout and stderr devices
         var stdin = FS.open('/dev/stdin', 0);
         var stdout = FS.open('/dev/stdout', 1);
@@ -5094,7 +5094,7 @@ function dbg(text) {
           };
           this.setErrno(errno);
           this.message = ERRNO_MESSAGES[errno];
-
+  
           // Try to get a maximally helpful stack trace. On Node.js, getting Error.stack
           // now ensures it shows what we want.
           if (this.stack) {
@@ -5112,15 +5112,15 @@ function dbg(text) {
         });
       },staticInit:() => {
         FS.ensureErrnoError();
-
+  
         FS.nameTable = new Array(4096);
-
+  
         FS.mount(MEMFS, {}, '/');
-
+  
         FS.createDefaultDirectories();
         FS.createDefaultDevices();
         FS.createSpecialDirectories();
-
+  
         FS.filesystems = {
           'MEMFS': MEMFS,
           'IDBFS': IDBFS,
@@ -5128,14 +5128,14 @@ function dbg(text) {
       },init:(input, output, error) => {
         assert(!FS.init.initialized, 'FS.init was previously called. If you want to initialize later with custom parameters, remove any earlier calls (note that one is automatically added to the generated code)');
         FS.init.initialized = true;
-
+  
         FS.ensureErrnoError();
-
+  
         // Allow Module.stdin etc. to provide defaults, if none explicitly passed to us here
         Module['stdin'] = input || Module['stdin'];
         Module['stdout'] = output || Module['stdout'];
         Module['stderr'] = error || Module['stderr'];
-
+  
         FS.createStandardStreams();
       },quit:() => {
         FS.init.initialized = false;
@@ -5321,27 +5321,27 @@ function dbg(text) {
           var header;
           var hasByteServing = (header = xhr.getResponseHeader("Accept-Ranges")) && header === "bytes";
           var usesGzip = (header = xhr.getResponseHeader("Content-Encoding")) && header === "gzip";
-
+  
           var chunkSize = 1024*1024; // Chunk size in bytes
-
+  
           if (!hasByteServing) chunkSize = datalength;
-
+  
           // Function to get a range from the remote URL.
           var doXHR = (from, to) => {
             if (from > to) throw new Error("invalid range (" + from + ", " + to + ") or no bytes requested!");
             if (to > datalength-1) throw new Error("only " + datalength + " bytes available! programmer error!");
-
+  
             // TODO: Use mozResponseArrayBuffer, responseStream, etc. if available.
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url, false);
             if (datalength !== chunkSize) xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
-
+  
             // Some hints to the browser that we want binary data.
             xhr.responseType = 'arraybuffer';
             if (xhr.overrideMimeType) {
               xhr.overrideMimeType('text/plain; charset=x-user-defined');
             }
-
+  
             xhr.send(null);
             if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
             if (xhr.response !== undefined) {
@@ -5360,7 +5360,7 @@ function dbg(text) {
             if (typeof lazyArray.chunks[chunkNum] == 'undefined') throw new Error('doXHR failed!');
             return lazyArray.chunks[chunkNum];
           });
-
+  
           if (usesGzip || !datalength) {
             // if the server uses gzip or doesn't supply the length, we have to download the whole file to get the (uncompressed) length
             chunkSize = datalength = 1; // this will force getter(0)/doXHR do download the whole file
@@ -5368,7 +5368,7 @@ function dbg(text) {
             chunkSize = datalength;
             out("LazyFiles on gzip forces download of the whole file when length is accessed");
           }
-
+  
           this._length = datalength;
           this._chunkSize = chunkSize;
           this.lengthKnown = true;
@@ -5394,12 +5394,12 @@ function dbg(text) {
               }
             }
           });
-
+  
           var properties = { isDevice: false, contents: lazyArray };
         } else {
           var properties = { isDevice: false, url: url };
         }
-
+  
         var node = FS.createFile(parent, name, properties, canRead, canWrite);
         // This is a total hack, but I want to get this lazy file code out of the
         // core of MEMFS. If we want to keep this lazy file concept I feel it should
@@ -5473,7 +5473,7 @@ function dbg(text) {
       },standardizePath:() => {
         abort('FS.standardizePath has been removed; use PATH.normalize instead');
       }};
-
+  
   var SYSCALLS = {DEFAULT_POLLMASK:5,calculateAt:function(dirfd, path, allowEmpty) {
         if (PATH.isAbs(path)) {
           return path;
@@ -5559,20 +5559,20 @@ function dbg(text) {
   /** @param {boolean|number=} implicit */
   function exitJS(status, implicit) {
       EXITSTATUS = status;
-
+  
       checkUnflushedContent();
-
+  
       // if exit() was called explicitly, warn the user if the runtime isn't actually being shut down
       if (keepRuntimeAlive() && !implicit) {
         var msg = `program exited (with status: ${status}), but keepRuntimeAlive() is set (counter=${runtimeKeepaliveCounter}) due to an async operation, so halting execution but not exiting the runtime or preventing further async execution (you can use emscripten_force_exit, if you want to force a true shutdown)`;
         readyPromiseReject(msg);
         err(msg);
       }
-
+  
       _proc_exit(status);
     }
   var _exit = exitJS;
-
+  
   function maybeExit() {
       if (!keepRuntimeAlive()) {
         try {
@@ -5594,19 +5594,19 @@ function dbg(text) {
         handleException(e);
       }
     }
-
+  
   /** @param {number=} timeout */
   function safeSetTimeout(func, timeout) {
-
+      
       return setTimeout(() => {
-
+        
         callUserCallback(func);
       }, timeout);
     }
-
-
-
-
+  
+  
+  
+  
   var Browser = {mainLoop:{running:false,scheduler:null,method:"",currentlyRunningMainloop:0,func:null,arg:0,timingMode:0,timingValue:0,currentFrameNumber:0,queue:[],pause:function() {
           Browser.mainLoop.scheduler = null;
           // Incrementing this signals the previous main loop that it's now become old, and it must return.
@@ -5649,7 +5649,7 @@ function dbg(text) {
         }},isFullscreen:false,pointerLock:false,moduleContextCreatedCallbacks:[],workers:[],init:function() {
         if (Browser.initted) return;
         Browser.initted = true;
-
+  
         // Support for plugins that can process preloaded files. You can add more of these to
         // your app by creating and appending to preloadPlugins.
         //
@@ -5657,7 +5657,7 @@ function dbg(text) {
         // it is given the file's raw data. When it is done, it calls a callback with the file's
         // (possibly modified) data. For example, a plugin might decompress a file, or it
         // might create some side data structure for use later (like an Image element, etc.).
-
+  
         var imagePlugin = {};
         imagePlugin['canHandle'] = function imagePlugin_canHandle(name) {
           return !Module.noImageDecoding && /\.(jpg|jpeg|png|bmp)$/i.test(name);
@@ -5689,7 +5689,7 @@ function dbg(text) {
           img.src = url;
         };
         preloadPlugins.push(imagePlugin);
-
+  
         var audioPlugin = {};
         audioPlugin['canHandle'] = function audioPlugin_canHandle(name) {
           return !Module.noAudioDecoding && name.substr(-4) in { '.ogg': 1, '.wav': 1, '.mp3': 1 };
@@ -5750,9 +5750,9 @@ function dbg(text) {
           }, 10000);
         };
         preloadPlugins.push(audioPlugin);
-
+  
         // Canvas event setup
-
+  
         function pointerLockChange() {
           Browser.pointerLock = document['pointerLockElement'] === Module['canvas'] ||
                                 document['mozPointerLockElement'] === Module['canvas'] ||
@@ -5763,7 +5763,7 @@ function dbg(text) {
         if (canvas) {
           // forced aspect ratio can be enabled by defining 'forcedAspectRatio' on Module
           // Module['forcedAspectRatio'] = 4 / 3;
-
+  
           canvas.requestPointerLock = canvas['requestPointerLock'] ||
                                       canvas['mozRequestPointerLock'] ||
                                       canvas['webkitRequestPointerLock'] ||
@@ -5775,12 +5775,12 @@ function dbg(text) {
                                    document['msExitPointerLock'] ||
                                    (() => {}); // no-op if function does not exist
           canvas.exitPointerLock = canvas.exitPointerLock.bind(document);
-
+  
           document.addEventListener('pointerlockchange', pointerLockChange, false);
           document.addEventListener('mozpointerlockchange', pointerLockChange, false);
           document.addEventListener('webkitpointerlockchange', pointerLockChange, false);
           document.addEventListener('mspointerlockchange', pointerLockChange, false);
-
+  
           if (Module['elementPointerLock']) {
             canvas.addEventListener("click", (ev) => {
               if (!Browser.pointerLock && Module['canvas'].requestPointerLock) {
@@ -5792,7 +5792,7 @@ function dbg(text) {
         }
       },createContext:function(/** @type {HTMLCanvasElement} */ canvas, useWebGL, setInModule, webGLContextAttributes) {
         if (useWebGL && Module.ctx && canvas == Module.canvas) return Module.ctx; // no need to recreate GL context if it's already been created for this canvas.
-
+  
         var ctx;
         var contextHandle;
         if (useWebGL) {
@@ -5802,13 +5802,13 @@ function dbg(text) {
             alpha: false,
             majorVersion: (typeof WebGL2RenderingContext != 'undefined') ? 2 : 1,
           };
-
+  
           if (webGLContextAttributes) {
             for (var attribute in webGLContextAttributes) {
               contextAttributes[attribute] = webGLContextAttributes[attribute];
             }
           }
-
+  
           // This check of existence of GL is here to satisfy Closure compiler, which yells if variable GL is referenced below but GL object is not
           // actually compiled in because application is not doing any GL operations. TODO: Ideally if GL is not being used, this function
           // Browser.createContext() should not even be emitted.
@@ -5821,12 +5821,12 @@ function dbg(text) {
         } else {
           ctx = canvas.getContext('2d');
         }
-
+  
         if (!ctx) return null;
-
+  
         if (setInModule) {
           if (!useWebGL) assert(typeof GLctx == 'undefined', 'cannot set in module if GLctx is used, but we are a non-GL context that would replace it');
-
+  
           Module.ctx = ctx;
           if (useWebGL) GL.makeContextCurrent(contextHandle);
           Module.useWebGL = useWebGL;
@@ -5839,7 +5839,7 @@ function dbg(text) {
         Browser.resizeCanvas = resizeCanvas;
         if (typeof Browser.lockPointer == 'undefined') Browser.lockPointer = true;
         if (typeof Browser.resizeCanvas == 'undefined') Browser.resizeCanvas = false;
-
+  
         var canvas = Module['canvas'];
         function fullscreenChange() {
           Browser.isFullscreen = false;
@@ -5859,7 +5859,7 @@ function dbg(text) {
             // remove the full screen specific parent of the canvas again to restore the HTML structure from before going full screen
             canvasContainer.parentNode.insertBefore(canvas, canvasContainer);
             canvasContainer.parentNode.removeChild(canvasContainer);
-
+  
             if (Browser.resizeCanvas) {
               Browser.setWindowedCanvasSize();
             } else {
@@ -5869,7 +5869,7 @@ function dbg(text) {
           if (Module['onFullScreen']) Module['onFullScreen'](Browser.isFullscreen);
           if (Module['onFullscreen']) Module['onFullscreen'](Browser.isFullscreen);
         }
-
+  
         if (!Browser.fullscreenHandlersInstalled) {
           Browser.fullscreenHandlersInstalled = true;
           document.addEventListener('fullscreenchange', fullscreenChange, false);
@@ -5877,19 +5877,19 @@ function dbg(text) {
           document.addEventListener('webkitfullscreenchange', fullscreenChange, false);
           document.addEventListener('MSFullscreenChange', fullscreenChange, false);
         }
-
+  
         // create a new parent to ensure the canvas has no siblings. this allows browsers to optimize full screen performance when its parent is the full screen root
         var canvasContainer = document.createElement("div");
         canvas.parentNode.insertBefore(canvasContainer, canvas);
         canvasContainer.appendChild(canvas);
-
+  
         // use parent of canvas as full screen root to allow aspect ratio correction (Firefox stretches the root to screen size)
         canvasContainer.requestFullscreen = canvasContainer['requestFullscreen'] ||
                                             canvasContainer['mozRequestFullScreen'] ||
                                             canvasContainer['msRequestFullscreen'] ||
                                            (canvasContainer['webkitRequestFullscreen'] ? () => canvasContainer['webkitRequestFullscreen'](Element['ALLOW_KEYBOARD_INPUT']) : null) ||
                                            (canvasContainer['webkitRequestFullScreen'] ? () => canvasContainer['webkitRequestFullScreen'](Element['ALLOW_KEYBOARD_INPUT']) : null);
-
+  
         canvasContainer.requestFullscreen();
       },requestFullScreen:function() {
         abort('Module.requestFullScreen has been replaced by Module.requestFullscreen (without a capital S)');
@@ -5900,7 +5900,7 @@ function dbg(text) {
         if (!Browser.isFullscreen) {
           return false;
         }
-
+  
         var CFS = document['exitFullscreen'] ||
                   document['cancelFullScreen'] ||
                   document['mozCancelFullScreen'] ||
@@ -5934,9 +5934,9 @@ function dbg(text) {
         // See https://github.com/libsdl-org/SDL/pull/6304
         return safeSetTimeout(func, timeout);
       },safeRequestAnimationFrame:function(func) {
-
+        
         return Browser.requestAnimationFrame(() => {
-
+          
           callUserCallback(func);
         });
       },getMimetype:function(name) {
@@ -6011,7 +6011,7 @@ function dbg(text) {
             Browser.mouseMovementX = Browser.getMovementX(event);
             Browser.mouseMovementY = Browser.getMovementY(event);
           }
-
+  
           // check if SDL is available
           if (typeof SDL != "undefined") {
             Browser.mouseX = SDL.mouseX + Browser.mouseMovementX;
@@ -6028,7 +6028,7 @@ function dbg(text) {
           var rect = Module["canvas"].getBoundingClientRect();
           var cw = Module["canvas"].width;
           var ch = Module["canvas"].height;
-
+  
           // Neither .scrollX or .pageXOffset are defined in a spec, but
           // we prefer .scrollX because it is currently in a spec draft.
           // (see: http://www.w3.org/TR/2013/WD-cssom-view-20131217/)
@@ -6037,21 +6037,21 @@ function dbg(text) {
           // If this assert lands, it's likely because the browser doesn't support scrollX or pageXOffset
           // and we have no viable fallback.
           assert((typeof scrollX != 'undefined') && (typeof scrollY != 'undefined'), 'Unable to retrieve scroll position, mouse positions likely broken.');
-
+  
           if (event.type === 'touchstart' || event.type === 'touchend' || event.type === 'touchmove') {
             var touch = event.touch;
             if (touch === undefined) {
               return; // the "touch" property is only defined in SDL
-
+  
             }
             var adjustedX = touch.pageX - (scrollX + rect.left);
             var adjustedY = touch.pageY - (scrollY + rect.top);
-
+  
             adjustedX = adjustedX * (cw / rect.width);
             adjustedY = adjustedY * (ch / rect.height);
-
+  
             var coords = { x: adjustedX, y: adjustedY };
-
+  
             if (event.type === 'touchstart') {
               Browser.lastTouches[touch.identifier] = coords;
               Browser.touches[touch.identifier] = coords;
@@ -6063,16 +6063,16 @@ function dbg(text) {
             }
             return;
           }
-
+  
           var x = event.pageX - (scrollX + rect.left);
           var y = event.pageY - (scrollY + rect.top);
-
+  
           // the canvas might be CSS-scaled compared to its backbuffer;
           // SDL-using content will want mouse coordinates in terms
           // of backbuffer units.
           x = x * (cw / rect.width);
           y = y * (ch / rect.height);
-
+  
           Browser.mouseMovementX = x - Browser.mouseX;
           Browser.mouseMovementY = y - Browser.mouseY;
           Browser.mouseX = x;
@@ -6151,14 +6151,14 @@ function dbg(text) {
   function _emscripten_set_main_loop_timing(mode, value) {
       Browser.mainLoop.timingMode = mode;
       Browser.mainLoop.timingValue = value;
-
+  
       if (!Browser.mainLoop.func) {
         err('emscripten_set_main_loop_timing: Cannot set timing mode for main loop since a main loop does not exist! Call emscripten_set_main_loop first to set one up.');
         return 1; // Return non-zero on failure, can't set timing mode when there is no main loop.
       }
-
+  
       if (!Browser.mainLoop.running) {
-
+        
         Browser.mainLoop.running = true;
       }
       if (mode == 0 /*EM_TIMING_SETTIMEOUT*/) {
@@ -6203,30 +6203,30 @@ function dbg(text) {
       }
       return 0;
     }
-
+  
   var _emscripten_get_now;_emscripten_get_now = () => performance.now();
   ;
-
-
+  
+  
     /**
      * @param {number=} arg
      * @param {boolean=} noSetTiming
      */
   function setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop, arg, noSetTiming) {
       assert(!Browser.mainLoop.func, 'emscripten_set_main_loop: there can only be one main loop function at once: call emscripten_cancel_main_loop to cancel the previous one before setting a new one with different parameters.');
-
+  
       Browser.mainLoop.func = browserIterationFunc;
       Browser.mainLoop.arg = arg;
-
+  
       var thisMainLoopId = Browser.mainLoop.currentlyRunningMainloop;
       function checkIsRunning() {
         if (thisMainLoopId < Browser.mainLoop.currentlyRunningMainloop) {
-
+          
           return false;
         }
         return true;
       }
-
+  
       // We create the loop runner here but it is not actually running until
       // _emscripten_set_main_loop_timing is called (which might happen a
       // later time).  This member signifies that the current runner has not
@@ -6252,17 +6252,17 @@ function dbg(text) {
           }
           out('main loop blocker "' + blocker.name + '" took ' + (Date.now() - start) + ' ms'); //, left: ' + Browser.mainLoop.remainingBlockers);
           Browser.mainLoop.updateStatus();
-
+  
           // catches pause/resume main loop from blocker execution
           if (!checkIsRunning()) return;
-
+  
           setTimeout(Browser.mainLoop.runner, 0);
           return;
         }
-
+  
         // catch pauses from non-main loop sources
         if (!checkIsRunning()) return;
-
+  
         // Implement very basic swap interval control
         Browser.mainLoop.currentFrameNumber = Browser.mainLoop.currentFrameNumber + 1 | 0;
         if (Browser.mainLoop.timingMode == 1/*EM_TIMING_RAF*/ && Browser.mainLoop.timingValue > 1 && Browser.mainLoop.currentFrameNumber % Browser.mainLoop.timingValue != 0) {
@@ -6272,45 +6272,45 @@ function dbg(text) {
         } else if (Browser.mainLoop.timingMode == 0/*EM_TIMING_SETTIMEOUT*/) {
           Browser.mainLoop.tickStartTime = _emscripten_get_now();
         }
-
+  
         // Signal GL rendering layer that processing of a new frame is about to start. This helps it optimize
         // VBO double-buffering and reduce GPU stalls.
         GL.newRenderingFrameStarted();
-
+  
         if (Browser.mainLoop.method === 'timeout' && Module.ctx) {
           warnOnce('Looks like you are rendering without using requestAnimationFrame for the main loop. You should use 0 for the frame rate in emscripten_set_main_loop in order to use requestAnimationFrame, as that can greatly improve your frame rates!');
           Browser.mainLoop.method = ''; // just warn once per call to set main loop
         }
-
+  
         Browser.mainLoop.runIter(browserIterationFunc);
-
+  
         checkStackCookie();
-
+  
         // catch pauses from the main loop itself
         if (!checkIsRunning()) return;
-
+  
         // Queue new audio data. This is important to be right after the main loop invocation, so that we will immediately be able
         // to queue the newest produced audio samples.
         // TODO: Consider adding pre- and post- rAF callbacks so that GL.newRenderingFrameStarted() and SDL.audio.queueNewAudioData()
         //       do not need to be hardcoded into this function, but can be more generic.
         if (typeof SDL == 'object' && SDL.audio && SDL.audio.queueNewAudioData) SDL.audio.queueNewAudioData();
-
+  
         Browser.mainLoop.scheduler();
       }
-
+  
       if (!noSetTiming) {
         if (fps && fps > 0) _emscripten_set_main_loop_timing(0/*EM_TIMING_SETTIMEOUT*/, 1000.0 / fps);
         else _emscripten_set_main_loop_timing(1/*EM_TIMING_RAF*/, 1); // Do rAF by rendering each frame (no decimating)
-
+  
         Browser.mainLoop.scheduler();
       }
-
+  
       if (simulateInfiniteLoop) {
         throw 'unwind';
       }
     }
-
-
+  
+  
   function _emscripten_set_main_loop(func, fps, simulateInfiniteLoop) {
       var browserIterationFunc = getWasmTableEntry(func);
       setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop);
@@ -6330,12 +6330,12 @@ function dbg(text) {
   		var t = (WEBAudio.audioContext.currentTime - source.playbackStartTime) * source.playbackRate.value;
   		// Collapse extra times that the audio clip has looped through.
   		if (source.loop && t >= source.loopStart) {
-
+  
   			t = (t - source.loopStart) % (source.loopEnd - source.loopStart) + source.loopStart;
   		}
   		return t;
   	}
-
+  
   	// Add a helper to AudioBufferSourceNode to allow adjusting pitch in a way that keeps playback position estimation functioning.
   	source.setPitch = function (newPitch) {
   		var curPosition = source.estimatePlaybackPosition();
@@ -6345,18 +6345,18 @@ function dbg(text) {
   		if (source.playbackRate.value !== newPitch) source.playbackRate.value = newPitch;
   	}
   }
-
+  
   function jsAudioCreateUncompressedSoundClip(buffer, error) {
   	var soundClip = {
   		buffer: buffer,
   		error: error
   	};
-
+  
   	/**
   	 * Release resources of a sound clip
   	 */
   	soundClip.release = function () { };
-
+  
   	/**
   	 * Get length of sound clip in number of samples
   	 * @returns {number}
@@ -6366,10 +6366,10 @@ function dbg(text) {
   			console.log ("Trying to get length of sound which is not loaded yet.");
   			return 0;
   		}
-
+  
   		return this.buffer.length;
   	}
-
+  
   	/**
   	 * Gets uncompressed audio data from sound clip.
   	 * If output buffer is smaller than the sound data only the first portion
@@ -6385,22 +6385,22 @@ function dbg(text) {
   			console.log ("Trying to get data of sound which is not loaded.");
   			return 0;
   		}
-
+  
   		// Get output buffer
   		var startOutputBuffer = (ptr >> 2);
   		var output = HEAPF32.subarray(startOutputBuffer, startOutputBuffer + (length >> 2));
   		var numMaxSamples = Math.floor((length >> 2) / this.buffer.numberOfChannels);
   		var numReadSamples = Math.min(this.buffer.length, numMaxSamples);
-
+  
   		// Copy audio data to outputbuffer
   		for (var i = 0; i < this.buffer.numberOfChannels; i++) {
   			var channelData = this.buffer.getChannelData(i).subarray(0, numReadSamples);
   			output.set(channelData, i * numReadSamples);
   		}
-
+  
   		return numReadSamples * this.buffer.numberOfChannels * 4;
   	}
-
+  
   	/**
   	 * Gets number of channels of soundclip
   	 * @returns {number}
@@ -6410,10 +6410,10 @@ function dbg(text) {
   			console.log ("Trying to get metadata of sound which is not loaded.");
   			return 0;
   		}
-
+  
   		return this.buffer.numberOfChannels;
   	}
-
+  
   	/**
   	 * Gets sampling rate in Hz
   	 * @returns {number}
@@ -6423,10 +6423,10 @@ function dbg(text) {
   			console.log ("Trying to get metadata of sound which is not loaded.");
   			return 0;
   		}
-
+  
   		return this.buffer.sampleRate;
   	}
-
+  
   	/**
   	 * Create an audio source node.
   	 * @returns {AudioBufferSourceNode}
@@ -6435,18 +6435,18 @@ function dbg(text) {
   		if (!this.buffer) {
   			console.log ("Trying to play sound which is not loaded.");
   		}
-
+  
   		var source = WEBAudio.audioContext.createBufferSource();
   		source.buffer = this.buffer;
   		jsAudioMixinSetPitch(source);
-
+  
   		return source;
   	};
-
+  
   	return soundClip;
   }
-
-
+  
+  
   function jsAudioCreateChannel(callback, userData) {
   	var channel = {
   		callback: callback,
@@ -6462,9 +6462,9 @@ function dbg(text) {
   		loopEnd: 0,
   		pitch: 1.0
   	};
-
+  
   	channel.panner.rolloffFactor = 0; // We calculate rolloff ourselves.
-
+  
   	/**
   	 * Release internal resources.
   	 */
@@ -6476,7 +6476,7 @@ function dbg(text) {
   		this.gain.disconnect();
   		this.panner.disconnect();
   	}
-
+  
   	/**
   	 * Play a sound clip on the channel
   	 * @param {UncompressedSoundClip|CompressedSoundClip} soundClip
@@ -6484,13 +6484,13 @@ function dbg(text) {
   	 * @param {number} startOffset Start offset in seconds
   	 */
   	channel.playSoundClip = function (soundClip, startTime, startOffset) {
-
+  
   		try {
   			var self = this;
   			this.source = soundClip.createSourceNode();
   			this.configurePanningNodes();
   			this.setSpatialBlendLevel(this.spatialBlendLevel);
-
+  
   			// Setup on ended callback
   			this.source.onended = function () {
   				self.source.isStopped = true;
@@ -6499,7 +6499,7 @@ function dbg(text) {
   					getWasmTableEntry(self.callback)(self.userData);
   				}
   			};
-
+  
   			this.source.loop = this.loop;
   			this.source.loopStart = this.loopStart;
   			this.source.loopEnd = this.loopEnd;
@@ -6511,7 +6511,7 @@ function dbg(text) {
   			console.error("Channel.playSoundClip error. Exception: " + e);
   		}
   	};
-
+  
   	/**
   	 * Stop playback on channel
   	 */
@@ -6519,7 +6519,7 @@ function dbg(text) {
   		if (!this.source) {
   			return;
   		}
-
+  
   		// stop source currently playing.
   		try {
   			channel.source.stop(WEBAudio.audioContext.currentTime + delay);
@@ -6528,12 +6528,12 @@ function dbg(text) {
   			// InvalidStateError: DOM Exception 11: An attempt was made to use an object that is not, or is no longer, usable.
   			// Ignore that exception.
   		}
-
+  
   		if (delay == 0) {
   			this.disconnectSource();
   		}
   	};
-
+  
   	/**
   	 * Return wether the channel is currently paused
   	 * @returns {boolean}
@@ -6542,18 +6542,18 @@ function dbg(text) {
   		if (!this.source) {
   			return true;
   		}
-
+  
   		if (this.source.isPausedMockNode) {
   			return true;
   		}
-
+  
   		if (this.source.mediaElement) {
   			return this.source.mediaElement.paused || this.source.pauseRequested;
   		}
-
+  
   		return false;
   	};
-
+  
   	/**
   	 * Pause playback of channel
   	 */
@@ -6561,12 +6561,12 @@ function dbg(text) {
   		if (!this.source || this.source.isPausedMockNode) {
   			return;
   		}
-
+  
   		if (this.source.mediaElement) {
   			this.source._pauseMediaElement();
   			return;
   		}
-
+  
   		// WebAudio does not have support for pausing and resuming AudioBufferSourceNodes (they are a fire-once abstraction)
   		// When we want to pause a node, create a mocked object in its place that represents the needed state that is required
   		// for resuming the clip.
@@ -6590,7 +6590,7 @@ function dbg(text) {
   		// .. and replace the source with a paused mock version.
   		this.source = pausedSource;
   	};
-
+  
   	/**
   	 * Resume playback on channel.
   	 */
@@ -6601,34 +6601,34 @@ function dbg(text) {
   			this.source.start(undefined, this.source.currentTime);
   			return;
   		}
-
+  
   		// N.B. We only resume a source that has been previously paused. That is, resume() cannot be used to start playback if
   		// channel was not playing an audio clip before, but playSoundClip() is to be used.
   		if (!this.source || !this.source.isPausedMockNode) {
   			return;
   		}
-
+  
   		var pausedSource = this.source;
-
+  
   		// In case playbackPausedAtPosition returns negative, we use its absolute value as the start delay
   		var startTime = WEBAudio.audioContext.currentTime;
   		if (pausedSource.playbackPausedAtPosition < 0)
   			startTime -= pausedSource.playbackPausedAtPosition;
-
+  
   		var soundClip = jsAudioCreateUncompressedSoundClip(pausedSource.buffer, false);
   		this.playSoundClip(soundClip, startTime, Math.max(0, pausedSource.playbackPausedAtPosition) + offset);
   		this.source.loop = pausedSource.loop;
   		this.source.loopStart = pausedSource.loopStart;
   		this.source.loopEnd = pausedSource.loopEnd;
   		this.source.setPitch(pausedSource.playbackRate);
-
+  
   		// Apply scheduled stop of source if present
   		if (typeof pausedSource.scheduledStopTime !== "undefined") {
   			var delay = Math.max(pausedSource.scheduledStopTime - WEBAudio.audioContext.currentTime, 0);
   			this.stop(delay);
   		}
   	};
-
+  
   	/**
   	 * Set loop mode
   	 * @param {boolean} loop If true audio will be looped.
@@ -6638,10 +6638,10 @@ function dbg(text) {
   		if (!this.source || this.source.loop == loop) {
   			return;
   		}
-
+  
   		this.source.loop = loop;
   	}
-
+  
   	/**
   	 * Set loop start and end
   	 * @param {number} loopStart Start of the loop in seconds.
@@ -6653,16 +6653,16 @@ function dbg(text) {
   		if (!this.source) {
   			return;
   		}
-
+  
   		if (this.source.loopStart !== loopStart) {
   			this.source.loopStart = loopStart;
   		}
-
+  
   		if (this.source.loopEnd !== loopEnd) {
   			this.source.loopEnd = loopEnd;
   		}
   	}
-
+  
   	/**
   	 * Set channel 3D mode
   	 * @param {number} spatialBlendLevel Dry/wet mix for spatial panning
@@ -6672,22 +6672,22 @@ function dbg(text) {
   			this.setSpatialBlendLevel(spatialBlendLevel);
   		}
   	}
-
+  
   	/**
   	 * Set the pitch of the channel
   	 * @param {number} pitch Pitch of the channel
   	 */
   	channel.setPitch = function (pitch) {
   		this.pitch = pitch;
-
+  
   		// Only update pitch if source is initialized
   		if (!this.source) {
   			return;
   		}
-
+  
   		this.source.setPitch(pitch);
   	}
-
+  
   	/**
   	 * Set volume of channel
   	 * @param {number} volume Volume of channel
@@ -6699,10 +6699,10 @@ function dbg(text) {
   		if (this.gain.gain.value == volume) {
   			return;
   		}
-
+  
   		this.gain.gain.value = volume;
   	}
-
+  
   	/**
   	 * Set the 3D position of the audio channel
   	 * @param {number} x
@@ -6711,7 +6711,7 @@ function dbg(text) {
   	 */
   	channel.setPosition = function (x, y, z) {
   		var p = this.panner;
-
+  
   		// Work around Chrome performance bug https://bugs.chromium.org/p/chromium/issues/detail?id=1133233
   		// by only updating the PannerNode position if it has changed.
   		// See case 1270768.
@@ -6728,7 +6728,7 @@ function dbg(text) {
   			p._z = z;
   		}
   	}
-
+  
   	/**
   	 * Disconnect source node from graph
   	 */
@@ -6736,68 +6736,68 @@ function dbg(text) {
   		if (!this.source || this.source.isPausedMockNode) {
   			return;
   		}
-
+  
   		if (this.source.mediaElement) {
   			// Pause playback of media element
   			this.source._pauseMediaElement();
   		}
-
+  
   		this.source.onended = null;
   		this.source.disconnect();
   		delete this.source;
   	};
-
+  
   	/**
   	 * Updates the spatial blend of the channel, reconfigures audio nodes if necessary
   	 */
   	channel.setSpatialBlendLevel = function (spatialBlendLevel) {
-
+  
   		var sourceCanBeConfigured = this.source && !this.source.isPausedMockNode;
   		var spatializationTypeChanged = (this.spatialBlendLevel > 0 && spatialBlendLevel == 0) || (this.spatialBlendLevel == 0 && spatialBlendLevel > 0);
   		var needToReconfigureNodes = sourceCanBeConfigured && spatializationTypeChanged;
-
+  
   		this.spatialBlendWetGain.gain.value = spatialBlendLevel;
   		this.spatialBlendDryGain.gain.value = 1 - spatialBlendLevel;
   		this.spatialBlendLevel = spatialBlendLevel;
-
+  
   		if (needToReconfigureNodes)
   			this.configurePanningNodes();
   	}
-
+  	
   	/**
   	 * Configure audio panning options either for 3D or 2D.
   	 */
   	channel.configurePanningNodes = function() {
-
+  
   		if (!this.source)
   			return;
-
+  
   		this.source.disconnect();
   		this.spatialBlendDryGain.disconnect();
   		this.spatialBlendWetGain.disconnect();
   		this.panner.disconnect();
   		this.gain.disconnect();
-
+  		
   		if (this.spatialBlendLevel > 0) {
   			// In 3D: SourceNode -> DryGainNode --------------> GainNode -> AudioContext.destination
   			//                    ↘ WetGainNode -> PannerNode ↗
-
+  	
   			// Dry path
   			this.source.connect(this.spatialBlendDryGain);
   			this.spatialBlendDryGain.connect(this.gain);
-
+  			
   			// Spatialized path
   			this.source.connect(this.spatialBlendWetGain);
   			this.spatialBlendWetGain.connect(this.panner);
   			this.panner.connect(this.gain);
-
+  			
   		} else {
   			// In 2D: SourceNode -> GainNode -> AudioContext.destination
   			this.source.connect(this.gain);
   		}
   		this.gain.connect(WEBAudio.audioContext.destination);
   	}
-
+  
   	/**
   	 * Returns wether playback on a channel is stopped.
   	 * @returns {boolean} Returns true if playback on channel is stopped.
@@ -6808,23 +6808,23 @@ function dbg(text) {
   			// No playback source -> channel is stopped
   			return true;
   		}
-
+  
   		if (this.source.mediaElement) {
   			// Compressed audio
   			return this.source.isStopped;
-  		}
-
+  		} 
+  
   		return false;
   	}
-
+  
   	return channel;
   }
-
+  
   function _JS_Sound_Create_Channel(callback, userData)
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	WEBAudio.audioInstances[++WEBAudio.audioInstanceIdCounter] = jsAudioCreateChannel(callback, userData);
   	return WEBAudio.audioInstanceIdCounter;
   }
@@ -6833,16 +6833,16 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return WEBAudio.FAKEMOD_SAMPLERATE;
-
+  
   	var audioInstance = WEBAudio.audioInstances[soundInstance];
   	if (!audioInstance)
   		return WEBAudio.FAKEMOD_SAMPLERATE;
-
+  
   	// Handle the case where it's a channel instance rather than a sound instance
   	var buffer = audioInstance.buffer ? audioInstance.buffer : audioInstance.source ? audioInstance.source.buffer : 0;
   	if (!buffer)
   		return WEBAudio.FAKEMOD_SAMPLERATE;
-
+  
   	return buffer.sampleRate;
   }
 
@@ -6857,12 +6857,12 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return 0;
-
+  
   	var soundClip = WEBAudio.audioInstances[bufferInstance];
-
+  
   	if (!soundClip)
   		return 0;
-
+  
   	return soundClip.getLength();
   }
 
@@ -6870,7 +6870,7 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return 2;
-
+  
   	var sound = WEBAudio.audioInstances[bufferInstance];
   	if (sound.error)
   		return 2;
@@ -6888,70 +6888,70 @@ function dbg(text) {
   		HEAPU32[metaData + 1] = 0;
   		return false;
   	}
-
+  
   	var soundClip = WEBAudio.audioInstances[bufferInstance];
-
+  
   	if (!soundClip)
   	{
-
+  
   		HEAPU32[metaData] = 0;
   		HEAPU32[metaData + 1] = 0;
   		return false;
   	}
-
+  
   	HEAPU32[metaData] = soundClip.getNumberOfChannels();
   	HEAPU32[metaData + 1] = soundClip.getFrequency();
-
+  
   	return true;
   }
 
   function _JS_Sound_Init() {
-
+  
   	try {
   		window.AudioContext = window.AudioContext || window.webkitAudioContext;
   		WEBAudio.audioContext = new AudioContext();
   		WEBAudio.audioContextSuspendedTime = _GetFakemodTimeInSeconds();
   		WEBAudio.audioContextResumeOffset = 0;
-
+  
   		WEBAudio.audioContext.onstatechange = () => {
   			var contextState = WEBAudio.audioContext.state;
-
+  
   			if (contextState === 'running') {
-
+  
   				WEBAudio.contextIsRunning = true;
   				var currentTime = _GetFakemodTimeInSeconds();
   				WEBAudio.audioContextResumeOffset = currentTime - WEBAudio.audioContextSuspendedTime;
   				console.log('Audio context resumed after ' + WEBAudio.audioContextResumeOffset.toFixed(3) + ' seconds.');
-
+  
   				var sound = WEBAudio.soundsPendingContextResume.pop();
   				while (sound !== undefined) {
-
+  
   					// Sound was paused
   					if (sound.channel.source) {
   						sound.channel.resume(sound.offset + WEBAudio.audioContextResumeOffset);
-
+  
   					// Sound was not started yet
   					} else {
   						var resumeOffset = 0;
   						if (currentTime > sound.startTime)
   							resumeOffset = currentTime - sound.startTime;
-
+  
   						sound.channel.playSoundClip(
   							sound.clip,
   							sound.startTime,
   							sound.offset + resumeOffset,
   						);
   					}
-
+  
   					sound = WEBAudio.soundsPendingContextResume.pop();
   				}
-
+  					
   			} else {
-
+    
   				WEBAudio.contextIsRunning = false;
   				console.log('Audio context suspended.');
   				WEBAudio.audioContextSuspendedTime = _GetFakemodTimeInSeconds();
-
+  
   				Object.values(WEBAudio.audioInstances).forEach(audioInstance => {
   					if (audioInstance.source != null)
   					{
@@ -6968,7 +6968,7 @@ function dbg(text) {
   				});
   			}
   		}
-
+  
   		var tryToResumeAudioContext = function () {
   			if (WEBAudio.audioContext.state === 'suspended')
   				WEBAudio.audioContext.resume().catch(function (error) {
@@ -6978,9 +6978,9 @@ function dbg(text) {
   				Module.clearInterval(resumeInterval);
   		};
   		var resumeInterval = Module.setInterval(tryToResumeAudioContext, 400);
-
+  
   		WEBAudio.audioWebEnabled = 1;
-
+  
   		// Safari has the restriction where Audio elements need to be created from a direct user event,
   		// even if the rest of the audio playback requirements is that a user event has happeend
   		// at some point previously. The AudioContext also needs to be resumed, if paused, from a
@@ -6997,7 +6997,7 @@ function dbg(text) {
   						console.warn("Could not resume audio context. Exception: " + error);
   					});
   				}
-
+  
   				// How many audio elements should we cache? How many compressed audio channels might
   				// be played at a single time?
   				var audioCacheSize = 20;
@@ -7013,7 +7013,7 @@ function dbg(text) {
   		};
   		window.addEventListener("mousedown", _userEventCallback);
   		window.addEventListener("touchstart", _userEventCallback);
-
+  
   		// Make sure we release the event listeners when the app quits to avoid leaking memory.
   		Module.deinitializers.push(function () {
   			window.removeEventListener("mousedown", _userEventCallback);
@@ -7025,10 +7025,10 @@ function dbg(text) {
   	}
   }
 
-
+  
   function jsAudioCreateUncompressedSoundClipFromCompressedAudio(audioData) {
   	var soundClip = jsAudioCreateUncompressedSoundClip(null, false);
-
+  
   	WEBAudio.audioContext.decodeAudioData(
   		audioData,
   		function (_buffer) {
@@ -7039,11 +7039,11 @@ function dbg(text) {
   			console.log("Decode error: " + _error);
   		}
   	);
-
+  
   	return soundClip;
   }
-
-
+  
+  
   function jsAudioGetMimeTypeFromType(fmodSoundType) {
   	switch(fmodSoundType)
   	{
@@ -7055,17 +7055,17 @@ function dbg(text) {
   			return "audio/mp4";
   	}
   }
-
+  
   function jsAudioCreateCompressedSoundClip(audioData, fmodSoundType) {
   	var mimeType = jsAudioGetMimeTypeFromType(fmodSoundType);
   	var blob = new Blob([audioData], { type: mimeType });
-
+  
   	var soundClip = {
   		url: URL.createObjectURL(blob),
   		error: false,
   		mediaElement: new Audio()
   	};
-
+  
   	// An Audio element is created for the buffer so that we can access properties like duration
   	// in JS_Sound_GetLength, which knows about the buffer object, but not the channel object.
   	// This Audio element is used for metadata properties only, not for playback. Trying to play
@@ -7073,7 +7073,7 @@ function dbg(text) {
   	// direct user event handler.
   	soundClip.mediaElement.preload = "metadata";
   	soundClip.mediaElement.src = soundClip.url;
-
+  
   	/**
   	 * Release resources of a sound clip
   	 */
@@ -7081,13 +7081,13 @@ function dbg(text) {
   		if (!this.mediaElement) {
   			return;
   		}
-
+  
   		this.mediaElement.src = "";
   		URL.revokeObjectURL(this.url);
   		delete this.mediaElement;
   		delete this.url;
   	}
-
+  
   	/**
   	 * Get length of sound clip in number of samples
   	 * @returns {number}
@@ -7108,30 +7108,30 @@ function dbg(text) {
   	 */
   	 soundClip.getData = function (ptr, length) {
   		console.warn("getData() is not supported for compressed sound.");
-
+  
   		return 0;
   	}
-
+  
   	/**
   	 * Gets number of channels of soundclip
   	 * @returns {number}
   	 */
   	soundClip.getNumberOfChannels = function () {
   		console.warn("getNumberOfChannels() is not supported for compressed sound.");
-
+  
   		return 0;
   	}
-
+  
   	/**
   	 * Gets sampling rate in Hz
   	 * @returns {number}
   	 */
   	soundClip.getFrequency = function () {
   		console.warn("getFrequency() is not supported for compressed sound.");
-
+  
   		return 0;
   	}
-
+  
   	/**
   	 * Create an audio source node
   	 * @returns {MediaElementAudioSourceNode}
@@ -7142,7 +7142,7 @@ function dbg(text) {
   		mediaElement.preload = "metadata";
   		mediaElement.src = this.url;
   		var source = WEBAudio.audioContext.createMediaElementSource(mediaElement);
-
+  
   		Object.defineProperty(source, "loop", {
   			get: function () {
   				return source.mediaElement.loop;
@@ -7151,7 +7151,7 @@ function dbg(text) {
   				if (source.mediaElement.loop !== v) source.mediaElement.loop = v;
   			}
   		});
-
+  
   		source.playbackRate = {};
   		Object.defineProperty(source.playbackRate, "value", {
   			get: function () {
@@ -7185,12 +7185,12 @@ function dbg(text) {
   				source.mediaElement.onended = onended;
   			}
   		});
-
+  
   		source.playPromise = null;
   		source.playTimeout = null;
   		source.pauseRequested = false;
   		source.isStopped = false;
-
+  
   		source._pauseMediaElement = function () {
   			// If there is a play request still pending, then pausing now would cause an
   			// error. Instead, mark that we want the audio paused as soon as it can be,
@@ -7202,17 +7202,17 @@ function dbg(text) {
   				source.mediaElement.pause();
   			}
   		};
-
+  
   		source._startPlayback = function (offset) {
   			if (source.playPromise || source.playTimeout) {
   				source.mediaElement.currentTime = offset;
   				source.pauseRequested = false;
   				return;
   			}
-
+  
   			source.mediaElement.currentTime = offset;
   			source.playPromise = source.mediaElement.play();
-
+  
   			if (source.playPromise) {
   				source.playPromise.then(function () {
   					// If a pause was requested between play() and the MediaElement actually
@@ -7229,16 +7229,16 @@ function dbg(text) {
   				});
   			}
   		};
-
+  
   		source.start = function (startTime, offset) {
   			if (typeof startTime === "undefined") {
   				startTime = WEBAudio.audioContext.currentTime;
   			}
-
+  
   			if (typeof offset === "undefined") {
   				offset = 0.0;
   			}
-
+  
   			// Compare startTime to WEBAudio context currentTime, and if
   			// startTime is more than about 4 msecs in the future, do a setTimeout() wait
   			// for the remaining duration, and only then play. 4 msecs boundary because
@@ -7255,12 +7255,12 @@ function dbg(text) {
   				source._startPlayback(offset);
   			}
   		};
-
+  
   		source.stop = function (stopTime) {
   			if (typeof stopTime === "undefined") {
   				stopTime = WEBAudio.audioContext.currentTime;
   			}
-
+  
   			// Compare stopTime to WEBAudio context currentTime, and if
   			// stopTime is more than about 4 msecs in the future, do a setTimeout() wait
   			// for the remaining duration, and only then stop. 4 msecs boundary because
@@ -7268,7 +7268,7 @@ function dbg(text) {
   			var stopDelayThresholdMS = 4;
   			// Convert startTime and currentTime to milliseconds
   			var stopDelayMS = (stopTime - WEBAudio.audioContext.currentTime) * 1000;
-
+  
   			if (stopDelayMS > stopDelayThresholdMS) {
   				setTimeout(function () {
   					source._pauseMediaElement();
@@ -7279,57 +7279,57 @@ function dbg(text) {
   				source.isStopped = true;
   			}
   		};
-
+  
   		jsAudioMixinSetPitch(source);
-
+  
   		return source;
   	}
-
+  
   	return soundClip;
   }
-
+  
   function _JS_Sound_Load(ptr, length, decompress, fmodSoundType) {
   	if (WEBAudio.audioWebEnabled == 0)
   		return 0;
-
+  
       ptr = ptr;
   	var audioData = HEAPU8.buffer.slice(ptr, ptr + length);
-
+  
   	// We don't ever want to play back really small audio clips as compressed, the compressor has a startup CPU cost,
   	// and replaying the same audio clip multiple times (either individually or when looping) has an unwanted CPU
   	// overhead if the same data will be decompressed on demand again and again. Hence we want to play back small
   	// audio files always as fully uncompressed in memory.
-
+  
   	// However this will be a memory usage tradeoff.
-
+  
   	// Tests with aac audio sizes in a .m4a container shows:
   	// 2.11MB stereo 44.1kHz .m4a file containing 90 seconds of 196kbps aac audio decompresses to 30.3MB of float32 PCM data. (~14.3x size increase)
   	// 721KB stereo 44.1kHz .m4a file 29 seconds of 196kbps aac audio decompresses to 10.0MB of float32 PCM data. (~14x size increase)
   	// 6.07KB mono 44.1kHZ .m4a file containing 1 second of 101kbps aac audio decompresses to 72kB of float32 PCM data. (~11x size increase)
   	// -> overall AAC compression factor is ~10x-15x.
-
+  
   	// Based on above, take 128KB as a cutoff size: if we have a .m4a clip that is smaller than this,
   	// we always uncompress it up front, receiving at most ~1.8MB of raw audio data, which can hold about ~10 seconds of mono audio.
   	// In other words, heuristically all audio clips <= mono ~10 seconds (5 seconds if stereo) in duration will be always fully uncompressed in memory.
   	if (length < 131072) decompress = 1;
-
+  
   	var sound;
   	if (decompress) {
   		sound = jsAudioCreateUncompressedSoundClipFromCompressedAudio(audioData);
   	} else {
   		sound = jsAudioCreateCompressedSoundClip(audioData, fmodSoundType);
   	}
-
+  
   	WEBAudio.audioInstances[++WEBAudio.audioInstanceIdCounter] = sound;
-
+  
   	return WEBAudio.audioInstanceIdCounter;
   }
 
-
+  
   function jsAudioCreateUncompressedSoundClipFromPCM(channels, length, sampleRate, ptr) {
   	var buffer = WEBAudio.audioContext.createBuffer(channels, length, sampleRate);
   	var idx = (ptr >> 2)
-
+  
   	// Copy audio data to buffer
   	for (var i = 0; i < channels; i++) {
   		var offs = idx + length * i;
@@ -7340,16 +7340,16 @@ function dbg(text) {
   		};
   		copyToChannel.apply(buffer, [HEAPF32.subarray(offs, offs + length), i, 0]);
   	}
-
+  
   	return jsAudioCreateUncompressedSoundClip(buffer, false);
   }
-
+  
   function _JS_Sound_Load_PCM(channels, length, sampleRate, ptr) {
   	if (WEBAudio.audioWebEnabled == 0)
   		return 0;
-
+  
   	var sound = jsAudioCreateUncompressedSoundClipFromPCM(channels, length, sampleRate, ptr);
-
+  
   	WEBAudio.audioInstances[++WEBAudio.audioInstanceIdCounter] = sound;
   	return WEBAudio.audioInstanceIdCounter;
   }
@@ -7358,18 +7358,18 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	// stop sound clip which is currently playing in the channel.
   	_JS_Sound_Stop(channelInstance, 0);
-
+  
   	var soundClip = WEBAudio.audioInstances[bufferInstance];
   	var channel = WEBAudio.audioInstances[channelInstance];
-
+  
   	if (!soundClip) {
   		console.log("Trying to play sound which is not loaded.");
   		return;
   	}
-
+  
   	try {
   		if (WEBAudio.contextIsRunning) {
   			channel.playSoundClip(soundClip, WEBAudio.audioContext.currentTime + delay, offset);
@@ -7391,7 +7391,7 @@ function dbg(text) {
   	if (object) {
   		object.release();
   	}
-
+  
   	// Let the GC free up the audio object.
   	delete WEBAudio.audioInstances[instance];
   }
@@ -7400,12 +7400,12 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	if (WEBAudio.audioContext.state === 'suspended')
   		WEBAudio.audioContext.resume().catch(function (error) {
   			console.warn("Could not resume audio context. Exception: " + error);
   		});
-
+  
   }
 
   function _JS_Sound_Set3D(channelInstance, spatialBlendLevel)
@@ -7418,15 +7418,15 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	// Web Audio uses a RHS coordinate system, Unity uses LHS, causing orientations to be flipped.
   	// So we pass a negative direction here to compensate, otherwise channels will be flipped.
   	x = -x;
   	y = -y;
   	z = -z;
-
+  
   	var l = WEBAudio.audioContext.listener;
-
+  
   	// Do not re-set same values here if the orientation has not changed. This avoid unpredictable performance issues in Chrome
   	// and Safari Web Audio implementations.
   	if (l.forwardX) {
@@ -7434,7 +7434,7 @@ function dbg(text) {
   		if (l.forwardX.value !== x) l.forwardX.value = x;
   		if (l.forwardY.value !== y) l.forwardY.value = y;
   		if (l.forwardZ.value !== z) l.forwardZ.value = z;
-
+  
   		if (l.upX.value !== xUp) l.upX.value = xUp;
   		if (l.upY.value !== yUp) l.upY.value = yUp;
   		if (l.upZ.value !== zUp) l.upZ.value = zUp;
@@ -7454,10 +7454,10 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	try {
   		var l = WEBAudio.audioContext.listener;
-
+  
   		// Do not re-set same values here if the orientation has not changed. This avoid unpredictable performance issues in Chrome
   		// and Safari Web Audio implementations.
   		if (l.positionX) {
@@ -7481,7 +7481,7 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	var channel = WEBAudio.audioInstances[channelInstance];
   	channel.setLoop(loop);
   }
@@ -7509,7 +7509,7 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	try {
   		var channel = WEBAudio.audioInstances[channelInstance];
   		channel.setPitch(v);
@@ -7522,7 +7522,7 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	var channel = WEBAudio.audioInstances[channelInstance];
   	channel.setPosition(x, y, z);
   }
@@ -7531,7 +7531,7 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	try {
   		var channel = WEBAudio.audioInstances[channelInstance];
   		channel.setVolume(v);
@@ -7544,7 +7544,7 @@ function dbg(text) {
   {
   	if (WEBAudio.audioWebEnabled == 0)
   		return;
-
+  
   	var channel = WEBAudio.audioInstances[channelInstance];
   	channel.stop(delay);
   }
@@ -7553,7 +7553,7 @@ function dbg(text) {
   		return screenAnimationFrameRate;
   	}
 
-
+  
   function _JS_SystemInfo_GetBrowserName(buffer, bufferSize)
   	{
   		var browser = Module.SystemInfo.browser;
@@ -7562,7 +7562,7 @@ function dbg(text) {
   		return lengthBytesUTF8(browser);
   	}
 
-
+  
   function _JS_SystemInfo_GetBrowserVersionString(buffer, bufferSize)
   	{
   		var browserVer = Module.SystemInfo.browserVersion;
@@ -7571,7 +7571,7 @@ function dbg(text) {
   		return lengthBytesUTF8(browserVer);
   	}
 
-
+  
   function _JS_SystemInfo_GetCanvasClientSize(domElementSelector, outWidth, outHeight)
   	{
   		var selector = UTF8ToString(domElementSelector);
@@ -7588,7 +7588,7 @@ function dbg(text) {
   		HEAPF64[outHeight] = h;
   	}
 
-
+  
   function _JS_SystemInfo_GetDocumentURL(buffer, bufferSize)
   	{
   		if (buffer)
@@ -7596,7 +7596,7 @@ function dbg(text) {
   		return lengthBytesUTF8(document.URL);
   	}
 
-
+  
   function _JS_SystemInfo_GetGPUInfo(buffer, bufferSize)
   	{
   		var gpuinfo = Module.SystemInfo.gpu;
@@ -7613,7 +7613,7 @@ function dbg(text) {
   		return Module.matchWebGLToCanvasSize || Module.matchWebGLToCanvasSize === undefined;
   	}
 
-
+  
   function _JS_SystemInfo_GetOS(buffer, bufferSize)
   	{
   		var browser = Module.SystemInfo.os + " " + Module.SystemInfo.osVersion;
@@ -7635,7 +7635,7 @@ function dbg(text) {
   		HEAPF64[outHeight] = Module.SystemInfo.height;
   	}
 
-
+  
   function _JS_SystemInfo_GetStreamingAssetsURL(buffer, bufferSize)
   	{
   		if (buffer)
@@ -7728,7 +7728,7 @@ function dbg(text) {
   function utf8(ptr) {
       return UTF8ToString(ptr);
     }
-
+  
   function wgpu_checked_shift(ptr, shift) {
       assert(((ptr >>> shift) << shift) >>> 0 == (ptr >>> 0));
       return ptr >>> shift;
@@ -7755,55 +7755,55 @@ function dbg(text) {
 
   function ___syscall__newselect(nfds, readfds, writefds, exceptfds, timeout) {
   try {
-
+  
       // readfds are supported,
       // writefds checks socket open status
       // exceptfds not supported
       // timeout is always 0 - fully async
       assert(nfds <= 64, 'nfds must be less than or equal to 64');  // fd sets have 64 bits // TODO: this could be 1024 based on current musl headers
       assert(!exceptfds, 'exceptfds not supported');
-
+  
       var total = 0;
-
+  
       var srcReadLow = (readfds ? HEAP32[((readfds)>>2)] : 0),
           srcReadHigh = (readfds ? HEAP32[(((readfds)+(4))>>2)] : 0);
       var srcWriteLow = (writefds ? HEAP32[((writefds)>>2)] : 0),
           srcWriteHigh = (writefds ? HEAP32[(((writefds)+(4))>>2)] : 0);
       var srcExceptLow = (exceptfds ? HEAP32[((exceptfds)>>2)] : 0),
           srcExceptHigh = (exceptfds ? HEAP32[(((exceptfds)+(4))>>2)] : 0);
-
+  
       var dstReadLow = 0,
           dstReadHigh = 0;
       var dstWriteLow = 0,
           dstWriteHigh = 0;
       var dstExceptLow = 0,
           dstExceptHigh = 0;
-
+  
       var allLow = (readfds ? HEAP32[((readfds)>>2)] : 0) |
                    (writefds ? HEAP32[((writefds)>>2)] : 0) |
                    (exceptfds ? HEAP32[((exceptfds)>>2)] : 0);
       var allHigh = (readfds ? HEAP32[(((readfds)+(4))>>2)] : 0) |
                     (writefds ? HEAP32[(((writefds)+(4))>>2)] : 0) |
                     (exceptfds ? HEAP32[(((exceptfds)+(4))>>2)] : 0);
-
+  
       var check = function(fd, low, high, val) {
         return (fd < 32 ? (low & val) : (high & val));
       };
-
+  
       for (var fd = 0; fd < nfds; fd++) {
         var mask = 1 << (fd % 32);
         if (!(check(fd, allLow, allHigh, mask))) {
           continue;  // index isn't in the set
         }
-
+  
         var stream = SYSCALLS.getStreamFromFD(fd);
-
+  
         var flags = SYSCALLS.DEFAULT_POLLMASK;
-
+  
         if (stream.stream_ops.poll) {
           flags = stream.stream_ops.poll(stream);
         }
-
+  
         if ((flags & 1) && check(fd, srcReadLow, srcReadHigh, mask)) {
           fd < 32 ? (dstReadLow = dstReadLow | mask) : (dstReadHigh = dstReadHigh | mask);
           total++;
@@ -7817,7 +7817,7 @@ function dbg(text) {
           total++;
         }
       }
-
+  
       if (readfds) {
         HEAP32[((readfds)>>2)] = dstReadLow;
         HEAP32[(((readfds)+(4))>>2)] = dstReadHigh;
@@ -7830,7 +7830,7 @@ function dbg(text) {
         HEAP32[((exceptfds)>>2)] = dstExceptLow;
         HEAP32[(((exceptfds)+(4))>>2)] = dstExceptHigh;
       }
-
+  
       return total;
     } catch (e) {
     if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
@@ -7843,7 +7843,7 @@ function dbg(text) {
         // the subprotocol/url) use that, if not initialise it to a new object.
         Module['websocket'] = (Module['websocket'] &&
                                ('object' === typeof Module['websocket'])) ? Module['websocket'] : {};
-
+  
         // Add the Event registration mechanism to the exported websocket configuration
         // object so we can register network callbacks from native JavaScript too.
         // For more documentation see system/include/emscripten/emscripten.h
@@ -7854,15 +7854,15 @@ function dbg(text) {
           }
           return this;
         };
-
+  
         Module['websocket'].emit = /** @this{Object} */ function(event, param) {
           if ('function' === typeof this._callbacks[event]) {
             this._callbacks[event].call(this, param);
           }
         };
-
+  
         // If debug is enabled register simple default logging callbacks for each Event.
-
+  
         return FS.createNode(null, '/', 16384 | 511 /* 0777 */, 0);
       },createSocket:function(family, type, protocol) {
         type &= ~526336; // Some applications may pass it; it makes no sense for a single process.
@@ -7870,7 +7870,7 @@ function dbg(text) {
         if (streaming && protocol && protocol != 6) {
           throw new FS.ErrnoError(66); // if SOCK_STREAM, must be tcp or 0.
         }
-
+  
         // create our internal socket structure
         var sock = {
           family: family,
@@ -7883,12 +7883,12 @@ function dbg(text) {
           recv_queue: [],
           sock_ops: SOCKFS.websocket_sock_ops
         };
-
+  
         // create the filesystem node to store the socket structure
         var name = SOCKFS.nextname();
         var node = FS.createNode(SOCKFS.root, name, 49152, 0);
         node.sock = sock;
-
+  
         // and the wrapping stream that enables library functions such
         // as read and write to indirectly interact with the socket
         var stream = FS.createStream({
@@ -7898,11 +7898,11 @@ function dbg(text) {
           seekable: false,
           stream_ops: SOCKFS.stream_ops
         });
-
+  
         // map the new stream to the socket structure (sockets have a 1:1
         // relationship with a stream)
         sock.stream = stream;
-
+  
         return sock;
       },getSocket:function(fd) {
         var stream = FS.getStream(fd);
@@ -7938,13 +7938,13 @@ function dbg(text) {
         return 'socket[' + (SOCKFS.nextname.current++) + ']';
       },websocket_sock_ops:{createPeer:function(sock, addr, port) {
           var ws;
-
+  
           if (typeof addr == 'object') {
             ws = addr;
             addr = null;
             port = null;
           }
-
+  
           if (ws) {
             // for sockets that've already connected (e.g. we're the server)
             // we can inspect the _socket property for the address
@@ -7967,48 +7967,48 @@ function dbg(text) {
             try {
               // runtimeConfig gets set to true if WebSocket runtime configuration is available.
               var runtimeConfig = (Module['websocket'] && ('object' === typeof Module['websocket']));
-
+  
               // The default value is 'ws://' the replace is needed because the compiler replaces '//' comments with '#'
               // comments without checking context, so we'd end up with ws:#, the replace swaps the '#' for '//' again.
               var url = 'ws:#'.replace('#', '//');
-
+  
               if (runtimeConfig) {
                 if ('string' === typeof Module['websocket']['url']) {
                   url = Module['websocket']['url']; // Fetch runtime WebSocket URL config.
                 }
               }
-
+  
               if (url === 'ws://' || url === 'wss://') { // Is the supplied URL config just a prefix, if so complete it.
                 var parts = addr.split('/');
                 url = url + parts[0] + ":" + port + "/" + parts.slice(1).join('/');
               }
-
+  
               // Make the WebSocket subprotocol (Sec-WebSocket-Protocol) default to binary if no configuration is set.
               var subProtocols = 'binary'; // The default value is 'binary'
-
+  
               if (runtimeConfig) {
                 if ('string' === typeof Module['websocket']['subprotocol']) {
                   subProtocols = Module['websocket']['subprotocol']; // Fetch runtime WebSocket subprotocol config.
                 }
               }
-
+  
               // The default WebSocket options
               var opts = undefined;
-
+  
               if (subProtocols !== 'null') {
                 // The regex trims the string (removes spaces at the beginning and end, then splits the string by
                 // <any space>,<any space> into an Array. Whitespace removal is important for Websockify and ws.
                 subProtocols = subProtocols.replace(/^ +| +$/g,"").split(/ *, */);
-
+  
                 opts = subProtocols;
               }
-
+  
               // some webservers (azure) does not support subprotocol header
               if (runtimeConfig && null === Module['websocket']['subprotocol']) {
                 subProtocols = 'null';
                 opts = undefined;
               }
-
+  
               // If node we use the ws library.
               var WebSocketConstructor;
               {
@@ -8020,17 +8020,17 @@ function dbg(text) {
               throw new FS.ErrnoError(23);
             }
           }
-
+  
           var peer = {
             addr: addr,
             port: port,
             socket: ws,
             msg_send_queue: []
           };
-
+  
           SOCKFS.websocket_sock_ops.addPeer(sock, peer);
           SOCKFS.websocket_sock_ops.handlePeerEvents(sock, peer);
-
+  
           // if this is a bound dgram socket, send the port number first to allow
           // us to override the ephemeral port reported to us by remotePort on the
           // remote end.
@@ -8041,7 +8041,7 @@ function dbg(text) {
                 ((sock.sport & 0xff00) >> 8) , (sock.sport & 0xff)
             ]));
           }
-
+  
           return peer;
         },getPeer:function(sock, addr, port) {
           return sock.peers[addr + ':' + port];
@@ -8051,11 +8051,11 @@ function dbg(text) {
           delete sock.peers[peer.addr + ':' + peer.port];
         },handlePeerEvents:function(sock, peer) {
           var first = true;
-
+  
           var handleOpen = function () {
-
+  
             Module['websocket'].emit('open', sock.stream.fd);
-
+  
             try {
               var queued = peer.msg_send_queue.shift();
               while (queued) {
@@ -8068,7 +8068,7 @@ function dbg(text) {
               peer.socket.close();
             }
           };
-
+  
           function handleMessage(data) {
             if (typeof data == 'string') {
               var encoder = new TextEncoder(); // should be utf-8
@@ -8083,7 +8083,7 @@ function dbg(text) {
               }
               data = new Uint8Array(data); // make a typed array view on the array buffer
             }
-
+  
             // if this is the port message, override the peer's port with it
             var wasfirst = first;
             first = false;
@@ -8098,11 +8098,11 @@ function dbg(text) {
               SOCKFS.websocket_sock_ops.addPeer(sock, peer);
               return;
             }
-
+  
             sock.recv_queue.push({ addr: peer.addr, port: peer.port, data: data });
             Module['websocket'].emit('message', sock.stream.fd);
           };
-
+  
           if (ENVIRONMENT_IS_NODE) {
             peer.socket.on('open', handleOpen);
             peer.socket.on('message', function(data, isBinary) {
@@ -8144,29 +8144,29 @@ function dbg(text) {
             // if there are pending clients.
             return sock.pending.length ? (64 | 1) : 0;
           }
-
+  
           var mask = 0;
           var dest = sock.type === 1 ?  // we only care about the socket state for connection-based sockets
             SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport) :
             null;
-
+  
           if (sock.recv_queue.length ||
               !dest ||  // connection-less sockets are always ready to read
               (dest && dest.socket.readyState === dest.socket.CLOSING) ||
               (dest && dest.socket.readyState === dest.socket.CLOSED)) {  // let recv return 0 once closed
             mask |= (64 | 1);
           }
-
+  
           if (!dest ||  // connection-less sockets are always ready to write
               (dest && dest.socket.readyState === dest.socket.OPEN)) {
             mask |= 4;
           }
-
+  
           if ((dest && dest.socket.readyState === dest.socket.CLOSING) ||
               (dest && dest.socket.readyState === dest.socket.CLOSED)) {
             mask |= 16;
           }
-
+  
           return mask;
         },ioctl:function(sock, request, arg) {
           switch (request) {
@@ -8228,11 +8228,11 @@ function dbg(text) {
           if (sock.server) {
             throw new FS.ErrnoError(138);
           }
-
+  
           // TODO autobind
           // if (!sock.addr && sock.type == 2) {
           // }
-
+  
           // early out if we're already connected / in the middle of connecting
           if (typeof sock.daddr != 'undefined' && typeof sock.dport != 'undefined') {
             var dest = SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport);
@@ -8244,25 +8244,25 @@ function dbg(text) {
               }
             }
           }
-
+  
           // add the socket to our peer list and set our
           // destination address / port to match
           var peer = SOCKFS.websocket_sock_ops.createPeer(sock, addr, port);
           sock.daddr = peer.addr;
           sock.dport = peer.port;
-
+  
   // Local Cherry-pick PR https://github.com/emscripten-core/emscripten/pull/22630
   // to fix https://jira.unity3d.com/browse/UUM-79682 .
-
+  
   // old:
           // always "fail" in non-blocking mode
   //        throw new FS.ErrnoError(26);
-
+  
   // new:
           // because we cannot synchronously block to wait for the WebSocket
           // connection to complete, we return here pretending that the connection
           // was a success.
-
+  
         },listen:function(sock, backlog) {
           if (!ENVIRONMENT_IS_NODE) {
             throw new FS.ErrnoError(138);
@@ -8306,21 +8306,21 @@ function dbg(text) {
             addr = sock.daddr;
             port = sock.dport;
           }
-
+  
           // find the peer for the destination address
           var dest = SOCKFS.websocket_sock_ops.getPeer(sock, addr, port);
-
+  
           // early out if not connected with a connection-based socket
           if (sock.type === 1) {
             if (!dest || dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) {
               throw new FS.ErrnoError(53);
             }
-
+  
   // Local Cherry-pick PR https://github.com/emscripten-core/emscripten/pull/22630
   // to fix https://jira.unity3d.com/browse/UUM-79682 .
-
+  
           }
-
+  
           // create a copy of the incoming data to send, as the WebSocket API
           // doesn't work entirely with an ArrayBufferView, it'll just send
           // the entire underlying buffer
@@ -8328,13 +8328,13 @@ function dbg(text) {
             offset += buffer.byteOffset;
             buffer = buffer.buffer;
           }
-
+  
           var data;
             data = buffer.slice(offset, offset + length);
-
+  
   // XXX Emscripten cherrypicked patch for Unity 3.1.8-unity.
   // After Emscripten is updated next time, this file can be deleted.
-
+  
           // if we don't have a cached connectionless UDP datagram connection, or
           // the TCP socket is still connecting, queue the message to be sent upon
           // connect, and lie, saying the data was sent now.
@@ -8348,7 +8348,7 @@ function dbg(text) {
             dest.msg_send_queue.push(data);
             return length;
           }
-
+  
           try {
             // send the actual data
             dest.socket.send(data);
@@ -8362,12 +8362,12 @@ function dbg(text) {
             // tcp servers should not be recv()'ing on the listen socket
             throw new FS.ErrnoError(53);
           }
-
+  
           var queued = sock.recv_queue.shift();
           if (!queued) {
             if (sock.type === 1) {
               var dest = SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport);
-
+  
               if (!dest) {
                 // if we have a destination address but are not connected, error out
                 throw new FS.ErrnoError(53);
@@ -8381,7 +8381,7 @@ function dbg(text) {
             }
             throw new FS.ErrnoError(6);
           }
-
+  
           // queued.data will be an ArrayBuffer if it's unadulterated, but if it's
           // requeued TCP data it'll be an ArrayBufferView
           var queuedLength = queued.data.byteLength || queued.data.length;
@@ -8393,29 +8393,29 @@ function dbg(text) {
             addr: queued.addr,
             port: queued.port
           };
-
+  
           // push back any unread data for TCP connections
           if (sock.type === 1 && bytesRead < queuedLength) {
             var bytesRemaining = queuedLength - bytesRead;
             queued.data = new Uint8Array(queuedBuffer, queuedOffset + bytesRead, bytesRemaining);
             sock.recv_queue.unshift(queued);
           }
-
+  
           return res;
         }}};
-
+  
   function getSocketFromFD(fd) {
       var socket = SOCKFS.getSocket(fd);
       if (!socket) throw new FS.ErrnoError(8);
       return socket;
     }
-
+  
   function setErrNo(value) {
       HEAP32[((___errno_location())>>2)] = value;
       return value;
     }
   var Sockets = {BUFFER_SIZE:10240,MAX_BUFFER_SIZE:10485760,nextFd:1,fds:{},nextport:1,maxport:65535,peer:null,connections:{},portmap:{},localAddr:4261412874,addrPool:[33554442,50331658,67108874,83886090,100663306,117440522,134217738,150994954,167772170,184549386,201326602,218103818,234881034]};
-
+  
   function inetPton4(str) {
       var b = str.split('.');
       for (var i = 0; i < 4; i++) {
@@ -8425,8 +8425,8 @@ function dbg(text) {
       }
       return (b[0] | (b[1] << 8) | (b[2] << 16) | (b[3] << 24)) >>> 0;
     }
-
-
+  
+  
   /** @suppress {checkTypes} */
   function jstoi_q(str) {
       return parseInt(str);
@@ -8449,7 +8449,7 @@ function dbg(text) {
       } else {
         str = str.replace("::", ":Z:");
       }
-
+  
       if (str.indexOf(".") > 0) {
         // parse IPv4 embedded stress
         str = str.replace(new RegExp('[.]', 'g'), ":");
@@ -8460,7 +8460,7 @@ function dbg(text) {
       } else {
         words = str.split(":");
       }
-
+  
       offset = 0; z = 0;
       for (w=0; w < words.length; w++) {
         if (typeof words[w] == 'string') {
@@ -8486,8 +8486,8 @@ function dbg(text) {
         (parts[7] << 16) | parts[6]
       ];
     }
-
-
+  
+  
   /** @param {number=} addrlen */
   function writeSockaddr(sa, family, addr, port, addrlen) {
       switch (family) {
@@ -8519,8 +8519,8 @@ function dbg(text) {
       }
       return 0;
     }
-
-
+  
+  
   var DNS = {address_map:{id:1,addrs:{},names:{}},lookup_name:function (name) {
         // If the name is already a valid ipv4 / ipv6 address, don't generate a fake one.
         var res = inetPton4(name);
@@ -8531,34 +8531,34 @@ function dbg(text) {
         if (res !== null) {
           return name;
         }
-
+  
         // See if this name is already mapped.
         var addr;
-
+  
         if (DNS.address_map.addrs[name]) {
           addr = DNS.address_map.addrs[name];
         } else {
           var id = DNS.address_map.id++;
           assert(id < 65535, 'exceeded max address mappings of 65535');
-
+  
           addr = '172.29.' + (id & 0xff) + '.' + (id & 0xff00);
-
+  
           DNS.address_map.names[addr] = name;
           DNS.address_map.addrs[name] = addr;
         }
-
+  
         return addr;
       },lookup_addr:function (addr) {
         if (DNS.address_map.names[addr]) {
           return DNS.address_map.names[addr];
         }
-
+  
         return null;
       }};
-
+  
   function ___syscall_accept4(fd, addr, addrlen, flags, d1, d2) {
   try {
-
+  
       var sock = getSocketFromFD(fd);
       var newsock = sock.sock_ops.accept(sock);
       if (addr) {
@@ -8574,7 +8574,7 @@ function dbg(text) {
 
   function ___syscall_chmod(path, mode) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       FS.chmod(path, mode);
       return 0;
@@ -8584,13 +8584,13 @@ function dbg(text) {
   }
   }
 
-
-
+  
+  
   function inetNtop4(addr) {
       return (addr & 0xff) + '.' + ((addr >> 8) & 0xff) + '.' + ((addr >> 16) & 0xff) + '.' + ((addr >> 24) & 0xff)
     }
-
-
+  
+  
   function inetNtop6(ints) {
       //  ref:  http://www.ietf.org/rfc/rfc2373.txt - section 2.5.4
       //  Format for IPv4 compatible and mapped  128-bit IPv6 Addresses
@@ -8623,16 +8623,16 @@ function dbg(text) {
         ints[3] & 0xffff,
         (ints[3] >> 16)
       ];
-
+  
       // Handle IPv4-compatible, IPv4-mapped, loopback and any/unspecified addresses
-
+  
       var hasipv4 = true;
       var v4part = "";
       // check if the 10 high-order bytes are all zeros (first 5 words)
       for (i = 0; i < 5; i++) {
         if (parts[i] !== 0) { hasipv4 = false; break; }
       }
-
+  
       if (hasipv4) {
         // low-order 32-bits store an IPv4 address (bytes 13 to 16) (last 2 words)
         v4part = inetNtop4(parts[6] | (parts[7] << 16));
@@ -8652,9 +8652,9 @@ function dbg(text) {
           return str;
         }
       }
-
+  
       // Handle all other IPv6 addresses
-
+  
       // first run to find the longest contiguous zero words
       for (word = 0; word < 8; word++) {
         if (parts[word] === 0) {
@@ -8669,7 +8669,7 @@ function dbg(text) {
           zstart = word - longest + 1;
         }
       }
-
+  
       for (word = 0; word < 8; word++) {
         if (longest > 1) {
           // compress contiguous zeros - to produce "::"
@@ -8687,13 +8687,13 @@ function dbg(text) {
       }
       return str;
     }
-
+  
   function readSockaddr(sa, salen) {
       // family / port offsets are common to both sockaddr_in and sockaddr_in6
       var family = HEAP16[((sa)>>1)];
       var port = _ntohs(HEAPU16[(((sa)+(2))>>1)]);
       var addr;
-
+  
       switch (family) {
         case 2:
           if (salen !== 16) {
@@ -8717,11 +8717,11 @@ function dbg(text) {
         default:
           return { errno: 5 };
       }
-
+  
       return { family: family, addr: addr, port: port };
     }
-
-
+  
+  
   /** @param {boolean=} allowNull */
   function getSocketAddress(addrp, addrlen, allowNull) {
       if (allowNull && addrp === 0) return null;
@@ -8730,10 +8730,10 @@ function dbg(text) {
       info.addr = DNS.lookup_addr(info.addr) || info.addr;
       return info;
     }
-
+  
   function ___syscall_connect(fd, addr, addrlen, d1, d2, d3) {
   try {
-
+  
       var sock = getSocketFromFD(fd);
       var info = getSocketAddress(addr, addrlen);
       sock.sock_ops.connect(sock, info.addr, info.port);
@@ -8746,7 +8746,7 @@ function dbg(text) {
 
   function ___syscall_faccessat(dirfd, path, amode, flags) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       assert(flags === 0);
       path = SYSCALLS.calculateAt(dirfd, path);
@@ -8773,11 +8773,11 @@ function dbg(text) {
   }
   }
 
-
+  
   function ___syscall_fcntl64(fd, cmd, varargs) {
   SYSCALLS.varargs = varargs;
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd);
       switch (cmd) {
         case 0: {
@@ -8801,7 +8801,7 @@ function dbg(text) {
         }
         case 5:
         /* case 5: Currently in musl F_GETLK64 has same value as F_GETLK, so omitted to avoid duplicate case blocks. If that changes, uncomment this */ {
-
+          
           var arg = SYSCALLS.get();
           var offset = 0;
           // We're always unlocked.
@@ -8812,8 +8812,8 @@ function dbg(text) {
         case 7:
         /* case 6: Currently in musl F_SETLK64 has same value as F_SETLK, so omitted to avoid duplicate case blocks. If that changes, uncomment this */
         /* case 7: Currently in musl F_SETLKW64 has same value as F_SETLKW, so omitted to avoid duplicate case blocks. If that changes, uncomment this */
-
-
+          
+          
           return 0; // Pretend that the locking is successful.
         case 16:
         case 8:
@@ -8834,7 +8834,7 @@ function dbg(text) {
 
   function ___syscall_fstat64(fd, buf) {
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd);
       return SYSCALLS.doStat(FS.stat, stream.path, buf);
     } catch (e) {
@@ -8843,11 +8843,11 @@ function dbg(text) {
   }
   }
 
-
-
+  
+  
   function ___syscall_getcwd(buf, size) {
   try {
-
+  
       if (size === 0) return -28;
       var cwd = FS.cwd();
       var cwdLengthInBytes = lengthBytesUTF8(cwd) + 1;
@@ -8860,21 +8860,21 @@ function dbg(text) {
   }
   }
 
-
+  
   function ___syscall_getdents64(fd, dirp, count) {
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd)
       if (!stream.getdents) {
         stream.getdents = FS.readdir(stream.path);
       }
-
+  
       var struct_size = 280;
       var pos = 0;
       var off = FS.llseek(stream, 0, 1);
-
+  
       var idx = Math.floor(off / struct_size);
-
+  
       while (idx < stream.getdents.length && pos + struct_size <= count) {
         var id;
         var type;
@@ -8913,10 +8913,10 @@ function dbg(text) {
   }
   }
 
-
+  
   function ___syscall_getsockopt(fd, level, optname, optval, optlen, d1) {
   try {
-
+  
       var sock = getSocketFromFD(fd);
       // Minimal getsockopt aimed at resolving https://github.com/emscripten-core/emscripten/issues/2211
       // so only supports SOL_SOCKET with SO_ERROR.
@@ -8938,7 +8938,7 @@ function dbg(text) {
   function ___syscall_ioctl(fd, op, varargs) {
   SYSCALLS.varargs = varargs;
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd);
       switch (op) {
         case 21509:
@@ -8992,7 +8992,7 @@ function dbg(text) {
 
   function ___syscall_lstat64(path, buf) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       return SYSCALLS.doStat(FS.lstat, path, buf);
     } catch (e) {
@@ -9003,7 +9003,7 @@ function dbg(text) {
 
   function ___syscall_mkdirat(dirfd, path, mode) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       path = SYSCALLS.calculateAt(dirfd, path);
       // remove a trailing slash, if one - /a/b/ has basename of '', but
@@ -9020,7 +9020,7 @@ function dbg(text) {
 
   function ___syscall_newfstatat(dirfd, path, buf, flags) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       var nofollow = flags & 256;
       var allowEmpty = flags & 4096;
@@ -9037,7 +9037,7 @@ function dbg(text) {
   function ___syscall_openat(dirfd, path, flags, varargs) {
   SYSCALLS.varargs = varargs;
   try {
-
+  
       path = SYSCALLS.getStr(path);
       path = SYSCALLS.calculateAt(dirfd, path);
       var mode = varargs ? SYSCALLS.get() : 0;
@@ -9048,16 +9048,16 @@ function dbg(text) {
   }
   }
 
-
-
+  
+  
   function ___syscall_readlinkat(dirfd, path, buf, bufsize) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       path = SYSCALLS.calculateAt(dirfd, path);
       if (bufsize <= 0) return -28;
       var ret = FS.readlink(path);
-
+  
       var len = Math.min(bufsize, lengthBytesUTF8(ret));
       var endChar = HEAP8[buf+len];
       stringToUTF8(ret, buf, bufsize+1);
@@ -9071,12 +9071,12 @@ function dbg(text) {
   }
   }
 
-
-
-
+  
+  
+  
   function ___syscall_recvfrom(fd, buf, len, flags, addr, addrlen) {
   try {
-
+  
       var sock = getSocketFromFD(fd);
       var msg = sock.sock_ops.recvmsg(sock, len);
       if (!msg) return 0; // socket is closed
@@ -9094,7 +9094,7 @@ function dbg(text) {
 
   function ___syscall_renameat(olddirfd, oldpath, newdirfd, newpath) {
   try {
-
+  
       oldpath = SYSCALLS.getStr(oldpath);
       newpath = SYSCALLS.getStr(newpath);
       oldpath = SYSCALLS.calculateAt(olddirfd, oldpath);
@@ -9109,7 +9109,7 @@ function dbg(text) {
 
   function ___syscall_rmdir(path) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       FS.rmdir(path);
       return 0;
@@ -9119,11 +9119,11 @@ function dbg(text) {
   }
   }
 
-
-
+  
+  
   function ___syscall_sendto(fd, message, length, flags, addr, addr_len) {
   try {
-
+  
       var sock = getSocketFromFD(fd);
       var dest = getSocketAddress(addr, addr_len, true);
       if (!dest) {
@@ -9138,10 +9138,10 @@ function dbg(text) {
   }
   }
 
-
+  
   function ___syscall_socket(domain, type, protocol) {
   try {
-
+  
       var sock = SOCKFS.createSocket(domain, type, protocol);
       assert(sock.stream.fd < 64); // XXX ? select() assumes socket fd values are in 0..63
       return sock.stream.fd;
@@ -9153,7 +9153,7 @@ function dbg(text) {
 
   function ___syscall_stat64(path, buf) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       return SYSCALLS.doStat(FS.stat, path, buf);
     } catch (e) {
@@ -9164,7 +9164,7 @@ function dbg(text) {
 
   function ___syscall_statfs64(path, size, buf) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       assert(size === 64);
       // NOTE: None of the constants here are true. We're just returning safe and
@@ -9188,7 +9188,7 @@ function dbg(text) {
 
   function ___syscall_symlink(target, linkpath) {
   try {
-
+  
       target = SYSCALLS.getStr(target);
       linkpath = SYSCALLS.getStr(linkpath);
       FS.symlink(target, linkpath);
@@ -9200,18 +9200,18 @@ function dbg(text) {
   }
 
   var MAX_INT53 = 9007199254740992;
-
+  
   var MIN_INT53 = -9007199254740992;
   function bigintToI53Checked(num) {
       return (num < MIN_INT53 || num > MAX_INT53) ? NaN : Number(num);
     }
-
-
-
-
+  
+  
+  
+  
   function ___syscall_truncate64(path, length) {
   try {
-
+  
       length = bigintToI53Checked(length); if (isNaN(length)) return -61;
       path = SYSCALLS.getStr(path);
       FS.truncate(path, length);
@@ -9224,7 +9224,7 @@ function dbg(text) {
 
   function ___syscall_unlinkat(dirfd, path, flags) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       path = SYSCALLS.calculateAt(dirfd, path);
       if (flags === 0) {
@@ -9244,10 +9244,10 @@ function dbg(text) {
   function readI53FromI64(ptr) {
       return HEAPU32[ptr>>2] + HEAP32[ptr+4>>2] * 4294967296;
     }
-
+  
   function ___syscall_utimensat(dirfd, path, times, flags) {
   try {
-
+  
       path = SYSCALLS.getStr(path);
       assert(flags === 0);
       path = SYSCALLS.calculateAt(dirfd, path, true);
@@ -9271,7 +9271,7 @@ function dbg(text) {
   }
   }
 
-
+  
   function ___throw_exception_with_stack_trace(ex) {
       var e = new WebAssembly.Exception(getCppExceptionTag(), [ex], {traceStack: true});
       e.message = getExceptionMessage(e);
@@ -9311,19 +9311,19 @@ function dbg(text) {
       HEAP32[(((tmPtr)+(28))>>2)] = yday;
     }
 
-
+  
   function isLeapYear(year) {
         return year%4 === 0 && (year%100 !== 0 || year%400 === 0);
     }
-
+  
   var MONTH_DAYS_LEAP_CUMULATIVE = [0,31,60,91,121,152,182,213,244,274,305,335];
-
+  
   var MONTH_DAYS_REGULAR_CUMULATIVE = [0,31,59,90,120,151,181,212,243,273,304,334];
   function ydayFromDate(date) {
       var leap = isLeapYear(date.getFullYear());
       var monthDaysCumulative = (leap ? MONTH_DAYS_LEAP_CUMULATIVE : MONTH_DAYS_REGULAR_CUMULATIVE);
       var yday = monthDaysCumulative[date.getMonth()] + date.getDate() - 1; // -1 since it's days since Jan 1
-
+  
       return yday;
     }
   function __localtime_js(time, tmPtr) {
@@ -9335,11 +9335,11 @@ function dbg(text) {
       HEAP32[(((tmPtr)+(16))>>2)] = date.getMonth();
       HEAP32[(((tmPtr)+(20))>>2)] = date.getFullYear()-1900;
       HEAP32[(((tmPtr)+(24))>>2)] = date.getDay();
-
+  
       var yday = ydayFromDate(date)|0;
       HEAP32[(((tmPtr)+(28))>>2)] = yday;
       HEAP32[(((tmPtr)+(36))>>2)] = -(date.getTimezoneOffset() * 60);
-
+  
       // Attention: DST is in December in South, and some regions don't have DST at all.
       var start = new Date(date.getFullYear(), 0, 1);
       var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
@@ -9356,7 +9356,7 @@ function dbg(text) {
                           HEAP32[(((tmPtr)+(4))>>2)],
                           HEAP32[((tmPtr)>>2)],
                           0);
-
+  
       // There's an ambiguous hour when the time goes back; the tm_isdst field is
       // used to disambiguate it.  Date() basically guesses, so we fix it up if it
       // guessed wrong, or fill in tm_isdst with the guess if it's -1.
@@ -9375,7 +9375,7 @@ function dbg(text) {
         // Don't try setMinutes(date.getMinutes() + ...) -- it's messed up.
         date.setTime(date.getTime() + (trueOffset - guessedOffset)*60000);
       }
-
+  
       HEAP32[(((tmPtr)+(24))>>2)] = date.getDay();
       var yday = ydayFromDate(date)|0;
       HEAP32[(((tmPtr)+(28))>>2)] = yday;
@@ -9386,17 +9386,17 @@ function dbg(text) {
       HEAP32[(((tmPtr)+(12))>>2)] = date.getDate();
       HEAP32[(((tmPtr)+(16))>>2)] = date.getMonth();
       HEAP32[(((tmPtr)+(20))>>2)] = date.getYear();
-
+  
       return (date.getTime() / 1000)|0;
     }
 
-
-
-
-
+  
+  
+  
+  
   function __mmap_js(len, prot, flags, fd, off, allocated, addr) {
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd);
       var res = FS.mmap(stream, len, off, prot, flags);
       var ptr = res.ptr;
@@ -9409,11 +9409,11 @@ function dbg(text) {
   }
   }
 
-
-
+  
+  
   function __munmap_js(addr, len, prot, flags, fd, offset) {
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd);
       if (prot & 2) {
         SYSCALLS.doMsync(addr, stream, len, flags, offset);
@@ -9433,21 +9433,21 @@ function dbg(text) {
       var summer = new Date(currentYear, 6, 1);
       var winterOffset = winter.getTimezoneOffset();
       var summerOffset = summer.getTimezoneOffset();
-
+  
       // Local standard timezone offset. Local standard time is not adjusted for daylight savings.
       // This code uses the fact that getTimezoneOffset returns a greater value during Standard Time versus Daylight Saving Time (DST).
       // Thus it determines the expected output during Standard Time, and it compares whether the output of the given date the same (Standard) or less (DST).
       var stdTimezoneOffset = Math.max(winterOffset, summerOffset);
-
+  
       // timezone is specified as seconds west of UTC ("The external variable
       // `timezone` shall be set to the difference, in seconds, between
       // Coordinated Universal Time (UTC) and local standard time."), the same
       // as returned by stdTimezoneOffset.
       // See http://pubs.opengroup.org/onlinepubs/009695399/functions/tzset.html
       HEAPU32[((timezone)>>2)] = stdTimezoneOffset * 60;
-
+  
       HEAP32[((daylight)>>2)] = Number(winterOffset != summerOffset);
-
+  
       function extractZone(date) {
         var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
         return match ? match[1] : "GMT";
@@ -9480,7 +9480,7 @@ function dbg(text) {
     }
 
   function _emscripten_clear_interval(id) {
-
+      
       clearInterval(id);
     }
 
@@ -9511,7 +9511,7 @@ function dbg(text) {
       },deferredCalls:[],deferCall:function(targetFunction, precedence, argsList) {
         function arraysHaveEqualContent(arrA, arrB) {
           if (arrA.length != arrB.length) return false;
-
+  
           for (var i in arrA) {
             if (arrA[i] != arrB[i]) return false;
           }
@@ -9529,7 +9529,7 @@ function dbg(text) {
           precedence: precedence,
           argsList: argsList
         });
-
+  
         JSEvents.deferredCalls.sort(function(x,y) { return x.precedence < y.precedence; });
       },removeDeferredCalls:function(targetFunction) {
         for (var i = 0; i < JSEvents.deferredCalls.length; ++i) {
@@ -9552,7 +9552,7 @@ function dbg(text) {
         }
       },eventHandlers:[],removeAllHandlersOnTarget:function(target, eventTypeString) {
         for (var i = 0; i < JSEvents.eventHandlers.length; ++i) {
-          if (JSEvents.eventHandlers[i].target == target &&
+          if (JSEvents.eventHandlers[i].target == target && 
             (!eventTypeString || eventTypeString == JSEvents.eventHandlers[i].eventTypeString)) {
              JSEvents._removeHandler(i--);
            }
@@ -9580,7 +9580,7 @@ function dbg(text) {
           // Out of event handler - restore nesting count.
           --JSEvents.inEventHandler;
         };
-
+        
         if (eventHandler.callbackfunc) {
           eventHandler.eventListenerFunc = jsEventHandler;
           eventHandler.target.addEventListener(eventHandler.eventTypeString, jsEventHandler, eventHandler.useCapture);
@@ -9607,12 +9607,12 @@ function dbg(text) {
         || document.webkitFullscreenEnabled
          ;
       }};
-
+  
   var currentFullscreenStrategy = {};
-
-
-
-
+  
+  
+  
+  
   function maybeCStringToJsString(cString) {
       // "cString > 2" checks if the input is a number, and isn't of the special
       // values we accept here, EMSCRIPTEN_EVENT_TARGET_* (which map to 0, 1, 2).
@@ -9620,7 +9620,7 @@ function dbg(text) {
       // memory, and points to a C string.
       return cString > 2 ? UTF8ToString(cString) : cString;
     }
-
+  
   var specialHTMLTargets = [0, document, window];
   function findEventTarget(target) {
       target = maybeCStringToJsString(target);
@@ -9634,21 +9634,21 @@ function dbg(text) {
       HEAP32[((width)>>2)] = canvas.width;
       HEAP32[((height)>>2)] = canvas.height;
     }
-
-
+  
+  
   function getCanvasElementSize(target) {
       return withStackSave(function() {
         var w = stackAlloc(8);
         var h = w + 4;
-
+  
         var targetInt = stringToUTF8OnStack(target.id);
         var ret = _emscripten_get_canvas_element_size(targetInt, w, h);
         var size = [HEAP32[((w)>>2)], HEAP32[((h)>>2)]];
         return size;
       });
     }
-
-
+  
+  
   function _emscripten_set_canvas_element_size(target, width, height) {
       var canvas = findCanvasEventTarget(target);
       if (!canvas) return -4;
@@ -9656,8 +9656,8 @@ function dbg(text) {
       canvas.height = height;
       return 0;
     }
-
-
+  
+  
   function setCanvasElementSize(target, width, height) {
       if (!target.controlTransferredOffscreen) {
         target.width = width;
@@ -9671,7 +9671,7 @@ function dbg(text) {
         });
       }
     }
-
+  
   function registerRestoreOldStyle(canvas) {
       var canvasSize = getCanvasElementSize(canvas);
       var oldWidth = canvasSize[0];
@@ -9693,20 +9693,20 @@ function dbg(text) {
       var oldDocumentOverflow = document.documentElement.style.overflow; // Chrome, Firefox
       var oldDocumentScroll = document.body.scroll; // IE
       var oldImageRendering = canvas.style.imageRendering;
-
+  
       function restoreOldStyle() {
         var fullscreenElement = document.fullscreenElement
           || document.webkitFullscreenElement
           ;
         if (!fullscreenElement) {
           document.removeEventListener('fullscreenchange', restoreOldStyle);
-
+  
           // Unprefixed Fullscreen API shipped in Chromium 71 (https://bugs.chromium.org/p/chromium/issues/detail?id=383813)
           // As of Safari 13.0.3 on macOS Catalina 10.15.1 still ships with prefixed webkitfullscreenchange. TODO: revisit this check once Safari ships unprefixed version.
           document.removeEventListener('webkitfullscreenchange', restoreOldStyle);
-
+  
           setCanvasElementSize(canvas, oldWidth, oldHeight);
-
+  
           canvas.style.width = oldCssWidth;
           canvas.style.height = oldCssHeight;
           canvas.style.backgroundColor = oldBackgroundColor; // Chrome
@@ -9728,7 +9728,7 @@ function dbg(text) {
           document.body.scroll = oldDocumentScroll; // IE
           canvas.style.imageRendering = oldImageRendering;
           if (canvas.GLctxObject) canvas.GLctxObject.GLctx.viewport(0, 0, oldWidth, oldHeight);
-
+  
           if (currentFullscreenStrategy.canvasResizedCallback) {
             getWasmTableEntry(currentFullscreenStrategy.canvasResizedCallback)(37, 0, currentFullscreenStrategy.canvasResizedCallbackUserData);
           }
@@ -9740,15 +9740,15 @@ function dbg(text) {
       document.addEventListener('webkitfullscreenchange', restoreOldStyle);
       return restoreOldStyle;
     }
-
-
+  
+  
   function setLetterbox(element, topBottom, leftRight) {
         // Cannot use margin to specify letterboxes in FF or Chrome, since those ignore margins in fullscreen mode.
         element.style.paddingLeft = element.style.paddingRight = leftRight + 'px';
         element.style.paddingTop = element.style.paddingBottom = topBottom + 'px';
     }
-
-
+  
+  
   function getBoundingClientRect(e) {
       return specialHTMLTargets.indexOf(e) < 0 ? e.getBoundingClientRect() : {'left':0,'top':0};
     }
@@ -9762,7 +9762,7 @@ function dbg(text) {
       var canvasSize = getCanvasElementSize(target);
       var windowedRttWidth = canvasSize[0];
       var windowedRttHeight = canvasSize[1];
-
+  
       if (strategy.scaleMode == 3) {
         setLetterbox(target, (cssHeight - windowedCssHeight) / 2, (cssWidth - windowedCssWidth) / 2);
         cssWidth = windowedCssWidth;
@@ -9778,17 +9778,17 @@ function dbg(text) {
           cssWidth = desiredCssWidth;
         }
       }
-
+  
       // If we are adding padding, must choose a background color or otherwise Chrome will give the
       // padding a default white color. Do it only if user has not customized their own background color.
       if (!target.style.backgroundColor) target.style.backgroundColor = 'black';
       // IE11 does the same, but requires the color to be set in the document body.
       if (!document.body.style.backgroundColor) document.body.style.backgroundColor = 'black'; // IE11
       // Firefox always shows black letterboxes independent of style color.
-
+  
       target.style.width = cssWidth + 'px';
       target.style.height = cssHeight + 'px';
-
+  
       if (strategy.filteringMode == 1) {
         target.style.imageRendering = 'optimizeSpeed';
         target.style.imageRendering = '-moz-crisp-edges';
@@ -9798,7 +9798,7 @@ function dbg(text) {
         target.style.imageRendering = 'crisp-edges';
         target.style.imageRendering = 'pixelated';
       }
-
+  
       var dpiScale = (strategy.canvasResolutionScaleMode == 2) ? devicePixelRatio : 1;
       if (strategy.canvasResolutionScaleMode != 0) {
         var newWidth = (cssWidth * dpiScale)|0;
@@ -9808,13 +9808,13 @@ function dbg(text) {
       }
       return restoreOldStyle;
     }
-
+  
   function JSEvents_requestFullscreen(target, strategy) {
       // EMSCRIPTEN_FULLSCREEN_SCALE_DEFAULT + EMSCRIPTEN_FULLSCREEN_CANVAS_SCALE_NONE is a mode where no extra logic is performed to the DOM elements.
       if (strategy.scaleMode != 0 || strategy.canvasResolutionScaleMode != 0) {
         JSEvents_resizeCanvasForFullscreen(target, strategy);
       }
-
+  
       if (target.requestFullscreen) {
         target.requestFullscreen();
       } else if (target.webkitRequestFullscreen) {
@@ -9822,21 +9822,21 @@ function dbg(text) {
       } else {
         return JSEvents.fullscreenEnabled() ? -3 : -1;
       }
-
+  
       currentFullscreenStrategy = strategy;
-
+  
       if (strategy.canvasResizedCallback) {
         getWasmTableEntry(strategy.canvasResizedCallback)(37, 0, strategy.canvasResizedCallbackUserData);
       }
-
+  
       return 0;
     }
-
+  
   function _emscripten_exit_fullscreen() {
       if (!JSEvents.fullscreenEnabled()) return -1;
       // Make sure no queued up calls will fire after this.
       JSEvents.removeDeferredCalls(JSEvents_requestFullscreen);
-
+  
       var d = specialHTMLTargets[1];
       if (d.exitFullscreen) {
         d.fullscreenElement && d.exitFullscreen();
@@ -9845,11 +9845,11 @@ function dbg(text) {
       } else {
         return -1;
       }
-
+  
       return 0;
     }
 
-
+  
   function requestPointerLock(target) {
       if (target.requestPointerLock) {
         target.requestPointerLock();
@@ -9867,7 +9867,7 @@ function dbg(text) {
   function _emscripten_exit_pointerlock() {
       // Make sure no queued up calls will fire after this.
       JSEvents.removeDeferredCalls(requestPointerLock);
-
+  
       if (document.exitPointerLock) {
         document.exitPointerLock();
       } else {
@@ -9877,8 +9877,8 @@ function dbg(text) {
     }
 
 
-
-
+  
+  
   function fillFullscreenChangeEventData(eventStruct) {
       var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
       var isFullscreen = !!fullscreenElement;
@@ -9907,7 +9907,7 @@ function dbg(text) {
       return 0;
     }
 
-
+  
   function fillGamepadEventData(eventStruct, e) {
       HEAPF64[((eventStruct)>>3)] = e.timestamp;
       for (var i = 0; i < e.axes.length; ++i) {
@@ -9938,16 +9938,16 @@ function dbg(text) {
     }
   function _emscripten_get_gamepad_status(index, gamepadState) {
       if (!JSEvents.lastGamepadState) throw 'emscripten_get_gamepad_status() can only be called after having first called emscripten_sample_gamepad_data() and that function has returned EMSCRIPTEN_RESULT_SUCCESS!';
-
+  
       // INVALID_PARAM is returned on a Gamepad index that never was there.
       if (index < 0 || index >= JSEvents.lastGamepadState.length) return -5;
-
+  
       // NO_DATA is returned on a Gamepad index that was removed.
       // For previously disconnected gamepads there should be an empty slot (null/undefined/false) at the index.
       // This is because gamepads must keep their original position in the array.
       // For example, removing the first of two gamepads produces [null/undefined/false, gamepad].
       if (!JSEvents.lastGamepadState[index]) return -7;
-
+  
       fillGamepadEventData(gamepadState, JSEvents.lastGamepadState[index]);
       return 0;
     }
@@ -9990,7 +9990,7 @@ function dbg(text) {
         return 1;
       }
     }
-
+  
   function webgl_enable_OES_vertex_array_object(ctx) {
       // Extension available in WebGL 1 from Firefox 25 and WebKit 536.28/desktop Safari 6.0.3 onwards. Core feature in WebGL 2.
       var ext = ctx.getExtension('OES_vertex_array_object');
@@ -10002,7 +10002,7 @@ function dbg(text) {
         return 1;
       }
     }
-
+  
   function webgl_enable_WEBGL_draw_buffers(ctx) {
       // Extension available in WebGL 1 from Firefox 28 onwards. Core feature in WebGL 2.
       var ext = ctx.getExtension('WEBGL_draw_buffers');
@@ -10011,23 +10011,23 @@ function dbg(text) {
         return 1;
       }
     }
-
+  
   function webgl_enable_WEBGL_draw_instanced_base_vertex_base_instance(ctx) {
       // Closure is expected to be allowed to minify the '.dibvbi' property, so not accessing it quoted.
       return !!(ctx.dibvbi = ctx.getExtension('WEBGL_draw_instanced_base_vertex_base_instance'));
     }
-
+  
   function webgl_enable_WEBGL_multi_draw_instanced_base_vertex_base_instance(ctx) {
       // Closure is expected to be allowed to minify the '.mdibvbi' property, so not accessing it quoted.
       return !!(ctx.mdibvbi = ctx.getExtension('WEBGL_multi_draw_instanced_base_vertex_base_instance'));
     }
-
+  
   function webgl_enable_WEBGL_multi_draw(ctx) {
       // Closure is expected to be allowed to minify the '.multiDrawWebgl' property, so not accessing it quoted.
       return !!(ctx.multiDrawWebgl = ctx.getExtension('WEBGL_multi_draw'));
     }
-
-
+  
+  
   var GL = {counter:1,buffers:[],mappedBuffers:{},programs:[],framebuffers:[],renderbuffers:[],textures:[],shaders:[],vaos:[],contexts:[],offscreenCanvases:{},queries:[],samplers:[],transformFeedbacks:[],syncs:[],byteSizeByTypeRoot:5120,byteSizeByType:[1,1,2,2,4,4,4,2,3,4,8],stringCache:{},stringiCache:{},unpackAlignment:4,recordError:function recordError(errorCode) {
         if (!GL.lastError) {
           GL.lastError = errorCode;
@@ -10063,7 +10063,7 @@ function dbg(text) {
             ringbuffer1[j] = ringbuffer2[j] = null; // Created on-demand
           }
         }
-
+  
         if (quads) {
           // GL_QUAD indexes can be precalculated
           context.tempQuadIndexBuffer = GLctx.createBuffer();
@@ -10145,14 +10145,14 @@ function dbg(text) {
         return size * typeSize * count;
       },usedTempBuffers:[],preDrawHandleClientVertexAttribBindings:function preDrawHandleClientVertexAttribBindings(count) {
         GL.resetBufferBinding = false;
-
+  
         // TODO: initial pass to detect ranges we need to upload, might not need an upload per attrib
         for (var i = 0; i < GL.currentContext.maxVertexAttribs; ++i) {
           var cb = GL.currentContext.clientBuffers[i];
           if (!cb.clientside || !cb.enabled) continue;
-
+  
           GL.resetBufferBinding = true;
-
+  
           var size = GL.calcBufLength(cb.size, cb.type, cb.stride, count);
           var buf = GL.getTempVertexBuffer(size);
           GLctx.bindBuffer(0x8892 /*GL_ARRAY_BUFFER*/, buf);
@@ -10166,7 +10166,7 @@ function dbg(text) {
           GLctx.bindBuffer(0x8892 /*GL_ARRAY_BUFFER*/, GL.buffers[GLctx.currentArrayBufferBinding]);
         }
       },createContext:function(/** @type {HTMLCanvasElement} */ canvas, webGLContextAttributes) {
-
+  
         // BUG: Workaround Safari WebGL issue: After successfully acquiring WebGL context on a canvas,
         // calling .getContext() will always return that context independent of which 'webgl' or 'webgl2'
         // context version was passed. See https://bugs.webkit.org/show_bug.cgi?id=222758 and
@@ -10181,7 +10181,7 @@ function dbg(text) {
           }
           canvas.getContext = fixedGetContext;
         }
-
+  
         var ctx =
           (webGLContextAttributes.majorVersion > 1)
           ?
@@ -10190,41 +10190,41 @@ function dbg(text) {
           (canvas.getContext("webgl", webGLContextAttributes)
             // https://caniuse.com/#feat=webgl
             );
-
+  
         if (!ctx) return 0;
-
+  
         var handle = GL.registerContext(ctx, webGLContextAttributes);
-
+  
         return handle;
       },registerContext:function(ctx, webGLContextAttributes) {
         // without pthreads a context is just an integer ID
         var handle = GL.getNewId(GL.contexts);
-
+  
         var context = {
           handle: handle,
           attributes: webGLContextAttributes,
           version: webGLContextAttributes.majorVersion,
           GLctx: ctx
         };
-
+  
         // Store the created context object so that we can access the context given a canvas without having to pass the parameters again.
         if (ctx.canvas) ctx.canvas.GLctxObject = context;
         GL.contexts[handle] = context;
         if (typeof webGLContextAttributes.enableExtensionsByDefault == 'undefined' || webGLContextAttributes.enableExtensionsByDefault) {
           GL.initExtensions(context);
         }
-
+  
         context.maxVertexAttribs = context.GLctx.getParameter(0x8869 /*GL_MAX_VERTEX_ATTRIBS*/);
         context.clientBuffers = [];
         for (var i = 0; i < context.maxVertexAttribs; i++) {
           context.clientBuffers[i] = { enabled: false, clientside: false, size: 0, type: 0, normalized: 0, stride: 0, ptr: 0, vertexAttribPointerAdaptor: null };
         }
-
+  
         GL.generateTempBuffers(false, context);
-
+  
         return handle;
       },makeContextCurrent:function(contextHandle) {
-
+  
         GL.currentContext = GL.contexts[contextHandle]; // Active Emscripten GL layer context object.
         Module.ctx = GLctx = GL.currentContext && GL.currentContext.GLctx; // Active WebGL context object.
         return !(contextHandle && !GLctx);
@@ -10238,14 +10238,14 @@ function dbg(text) {
       },initExtensions:function(context) {
         // If this function is called without a specific context object, init the extensions of the currently active context.
         if (!context) context = GL.currentContext;
-
+  
         if (context.initExtensionsDone) return;
         context.initExtensionsDone = true;
-
+  
         var GLctx = context.GLctx;
-
+  
         // Detect the presence of a few extensions manually, this GL interop layer itself will need to know if they exist.
-
+  
         // Extensions that are only available in WebGL 1 (the calls will be no-ops if called on a WebGL 2 context active)
         webgl_enable_ANGLE_instanced_arrays(GLctx);
         webgl_enable_OES_vertex_array_object(GLctx);
@@ -10253,14 +10253,14 @@ function dbg(text) {
         // Extensions that are available from WebGL >= 2 (no-op if called on a WebGL 1 context active)
         webgl_enable_WEBGL_draw_instanced_base_vertex_base_instance(GLctx);
         webgl_enable_WEBGL_multi_draw_instanced_base_vertex_base_instance(GLctx);
-
+  
         // On WebGL 2, EXT_disjoint_timer_query is replaced with an alternative
         // that's based on core APIs, and exposes only the queryCounterEXT()
         // entrypoint.
         if (context.version >= 2) {
           GLctx.disjointTimerQueryExt = GLctx.getExtension("EXT_disjoint_timer_query_webgl2");
         }
-
+  
         // However, Firefox exposes the WebGL 1 version on WebGL 2 as well and
         // thus we look for the WebGL 1 version again if the WebGL 2 version
         // isn't present. https://bugzilla.mozilla.org/show_bug.cgi?id=1328882
@@ -10268,9 +10268,9 @@ function dbg(text) {
         {
           GLctx.disjointTimerQueryExt = GLctx.getExtension("EXT_disjoint_timer_query");
         }
-
+  
         webgl_enable_WEBGL_multi_draw(GLctx);
-
+  
         // .getSupportedExtensions() can return null if context is lost, so coerce to empty array.
         var exts = GLctx.getSupportedExtensions() || [];
         exts.forEach(function(ext) {
@@ -10288,7 +10288,7 @@ function dbg(text) {
   function reallyNegative(x) {
       return x < 0 || (x === 0 && (1/x) === -Infinity);
     }
-
+  
   function convertI32PairToI53(lo, hi) {
       // This function should not be getting called with too large unsigned numbers
       // in high part (if hi >= 0x7FFFFFFFF, one should have been calling
@@ -10296,11 +10296,11 @@ function dbg(text) {
       assert(hi === (hi|0));
       return (lo >>> 0) + hi * 4294967296;
     }
-
+  
   function convertU32PairToI53(lo, hi) {
       return (lo >>> 0) + (hi >>> 0) * 4294967296;
     }
-
+  
   function reSign(value, bits) {
       if (value <= 0) {
         return value;
@@ -10318,7 +10318,7 @@ function dbg(text) {
       }
       return value;
     }
-
+  
   function unSign(value, bits) {
       if (value >= 0) {
         return value;
@@ -10328,13 +10328,13 @@ function dbg(text) {
       return bits <= 32 ? 2*Math.abs(1 << (bits-1)) + value
                         : Math.pow(2, bits)         + value;
     }
-
+  
   function strLen(ptr) {
       var end = ptr;
       while (HEAPU8[end]) ++end;
       return end - ptr;
     }
-
+  
   function formatString(format, varargs) {
       assert((varargs & 3) === 0);
       var textIndex = format;
@@ -10373,7 +10373,7 @@ function dbg(text) {
         }
         return ret;
       }
-
+  
       var ret = [];
       var curr, next, currArg;
       while (1) {
@@ -10415,7 +10415,7 @@ function dbg(text) {
             textIndex++;
             next = HEAP8[((textIndex+1)>>0)];
           }
-
+  
           // Handle width.
           var width = 0;
           if (next == 42) {
@@ -10429,7 +10429,7 @@ function dbg(text) {
               next = HEAP8[((textIndex+1)>>0)];
             }
           }
-
+  
           // Handle precision.
           var precisionSet = false, precision = -1;
           if (next == 46) {
@@ -10455,7 +10455,7 @@ function dbg(text) {
             precision = 6; // Standard default.
             precisionSet = false;
           }
-
+  
           // Handle integer sizes. WARNING: These assume a 32-bit architecture!
           var argSize;
           switch (String.fromCharCode(next)) {
@@ -10492,7 +10492,7 @@ function dbg(text) {
           }
           if (argSize) textIndex++;
           next = HEAP8[((textIndex+1)>>0)];
-
+  
           // Handle type specifier.
           switch (String.fromCharCode(next)) {
             case 'd': case 'i': case 'u': case 'o': case 'x': case 'X': case 'p': {
@@ -10552,7 +10552,7 @@ function dbg(text) {
                   argText = '0' + argText;
                 }
               }
-
+  
               // Add sign if needed
               if (currArg >= 0) {
                 if (flagAlwaysSigned) {
@@ -10561,13 +10561,13 @@ function dbg(text) {
                   prefix = ' ' + prefix;
                 }
               }
-
+  
               // Move sign to prefix so we zero-pad after the sign
               if (argText.charAt(0) == '-') {
                 prefix = '-' + prefix;
                 argText = argText.substr(1);
               }
-
+  
               // Add padding.
               while (prefix.length + argText.length < width) {
                 if (flagLeftAlign) {
@@ -10580,7 +10580,7 @@ function dbg(text) {
                   }
                 }
               }
-
+  
               // Insert the result into the buffer.
               argText = prefix + argText;
               argText.split('').forEach(function(chr) {
@@ -10601,7 +10601,7 @@ function dbg(text) {
               } else {
                 var isGeneral = false;
                 var effectivePrecision = Math.min(precision, 20);
-
+  
                 // Convert g/G to f/F or e/E, as per:
                 // http://pubs.opengroup.org/onlinepubs/9699919799/functions/printf.html
                 if (next == 103 || next == 71) {
@@ -10617,7 +10617,7 @@ function dbg(text) {
                   }
                   effectivePrecision = Math.min(precision, 20);
                 }
-
+  
                 if (next == 101 || next == 69) {
                   argText = currArg.toExponential(effectivePrecision);
                   // Make sure the exponent has at least 2 digits.
@@ -10630,7 +10630,7 @@ function dbg(text) {
                     argText = '-' + argText;
                   }
                 }
-
+  
                 var parts = argText.split('e');
                 if (isGeneral && !flagAlternative) {
                   // Discard trailing zeros and periods.
@@ -10645,10 +10645,10 @@ function dbg(text) {
                   while (precision > effectivePrecision++) parts[0] += '0';
                 }
                 argText = parts[0] + (parts.length > 1 ? 'e' + parts[1] : '');
-
+  
                 // Capitalize 'E' if needed.
                 if (next == 69) argText = argText.toUpperCase();
-
+  
                 // Add sign.
                 if (currArg >= 0) {
                   if (flagAlwaysSigned) {
@@ -10658,7 +10658,7 @@ function dbg(text) {
                   }
                 }
               }
-
+  
               // Add padding.
               while (argText.length < width) {
                 if (flagLeftAlign) {
@@ -10671,10 +10671,10 @@ function dbg(text) {
                   }
                 }
               }
-
+  
               // Adjust case.
               if (next < 97) argText = argText.toUpperCase();
-
+  
               // Insert the result into the buffer.
               argText.split('').forEach(function(chr) {
                 ret.push(chr.charCodeAt(0));
@@ -10742,12 +10742,12 @@ function dbg(text) {
       }
       return ret;
     }
-
+  
   function traverseStack(args) {
       if (!args || !args.callee || !args.callee.name) {
         return [null, '', ''];
       }
-
+  
       var funstr = args.callee.toString();
       var funcname = args.callee.name;
       var str = '(';
@@ -10771,12 +10771,12 @@ function dbg(text) {
         str = '';
       return [args, funcname, str];
     }
-
-
+  
+  
   /** @param {number=} flags */
   function getCallstack(flags) {
       var callstack = jsStackTrace();
-
+  
       // Find the symbols in the callstack that corresponds to the functions that
       // report callstack information, and remove everything up to these from the
       // output.
@@ -10784,11 +10784,11 @@ function dbg(text) {
       var iThisFunc2 = callstack.lastIndexOf('_emscripten_get_callstack');
       var iNextLine = callstack.indexOf('\n', Math.max(iThisFunc, iThisFunc2))+1;
       callstack = callstack.slice(iNextLine);
-
+  
       if (flags & 32) {
         warnOnce('EM_LOG_DEMANGLE is deprecated; ignoring');
       }
-
+  
       // If user requested to see the original source stack, but no source map
       // information is available, just fall back to showing the JS stack.
       if (flags & 8 && typeof emscripten_source_map == 'undefined') {
@@ -10796,7 +10796,7 @@ function dbg(text) {
         flags ^= 8;
         flags |= 16;
       }
-
+  
       var stack_args = null;
       if (flags & 128) {
         // To get the actual parameters to the functions, traverse the stack via
@@ -10805,7 +10805,7 @@ function dbg(text) {
         while (stack_args[1].includes('_emscripten_'))
           stack_args = traverseStack(stack_args[0]);
       }
-
+  
       // Process all lines:
       var lines = callstack.split('\n');
       callstack = '';
@@ -10818,15 +10818,15 @@ function dbg(text) {
       // Extract components of form:
       // '    at Object._main (http://server.com/file.html:4324:12)'
       var chromeRe = new RegExp('\\s*at (.*?) \\\((.*):(.*):(.*)\\\)');
-
+  
       for (var l in lines) {
         var line = lines[l];
-
+  
         var symbolName = '';
         var file = '';
         var lineno = 0;
         var column = 0;
-
+  
         var parts = chromeRe.exec(line);
         if (parts && parts.length == 5) {
           symbolName = parts[1];
@@ -10850,9 +10850,9 @@ function dbg(text) {
             continue;
           }
         }
-
+  
         var haveSourceMap = false;
-
+  
         if (flags & 8) {
           var orig = emscripten_source_map.originalPositionFor({line: lineno, column: column});
           haveSourceMap = (orig && orig.source);
@@ -10869,7 +10869,7 @@ function dbg(text) {
           }
           callstack += (haveSourceMap ? (`     = ${symbolName}`) : (`    at ${symbolName}`)) + ` (${file}:${lineno}:${column})\n`;
         }
-
+  
         // If we are still keeping track with the callstack by traversing via
         // 'arguments.callee', print the function parameters as well.
         if (flags & 128 && stack_args[0]) {
@@ -10889,7 +10889,7 @@ function dbg(text) {
         str = str.replace(/\s+$/, ''); // Ensure the message and the callstack are joined cleanly with exactly one newline.
         str += (str.length > 0 ? '\n' : '') + getCallstack(flags);
       }
-
+  
       if (flags & 1) {
         if (flags & 4) {
           console.error(str);
@@ -10914,26 +10914,26 @@ function dbg(text) {
       emscriptenLog(flags, str);
     }
 
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
   function doRequestFullscreen(target, strategy) {
       if (!JSEvents.fullscreenEnabled()) return -1;
       target = findEventTarget(target);
       if (!target) return -4;
-
+  
       if (!target.requestFullscreen
         && !target.webkitRequestFullscreen
         ) {
         return -3;
       }
-
+  
       var canPerformRequests = JSEvents.canPerformEventHandlerRequests();
-
+  
       // Queue this function call if we're not currently in an event handler and the user saw it appropriate to do so.
       if (!canPerformRequests) {
         if (strategy.deferUntilInEventHandler) {
@@ -10942,7 +10942,7 @@ function dbg(text) {
         }
         return -2;
       }
-
+  
       return JSEvents_requestFullscreen(target, strategy);
     }
   function _emscripten_request_fullscreen(target, deferUntilInEventHandler) {
@@ -10957,8 +10957,8 @@ function dbg(text) {
       return doRequestFullscreen(target, strategy);
     }
 
-
-
+  
+  
   function _emscripten_request_pointerlock(target, deferUntilInEventHandler) {
       target = findEventTarget(target);
       if (!target) return -4;
@@ -10966,9 +10966,9 @@ function dbg(text) {
         ) {
         return -1;
       }
-
+  
       var canPerformRequests = JSEvents.canPerformEventHandlerRequests();
-
+  
       // Queue this function call if we're not currently in an event handler and the user saw it appropriate to do so.
       if (!canPerformRequests) {
         if (deferUntilInEventHandler) {
@@ -10977,15 +10977,15 @@ function dbg(text) {
         }
         return -2;
       }
-
+  
       return requestPointerLock(target);
     }
 
-
+  
   function abortOnCannotGrowMemory(requestedSize) {
       abort(`Cannot enlarge memory arrays to size ${requestedSize} bytes (OOM). If you want malloc to return NULL (0) instead of this abort, do not link with -sABORTING_MALLOC (that is, the default when growth is enabled is to not abort, but you have overridden that)`);
     }
-
+  
   function emscripten_realloc_buffer(size) {
       var b = wasmMemory.buffer;
       try {
@@ -11005,7 +11005,7 @@ function dbg(text) {
       // With multithreaded builds, races can happen (another thread might increase the size
       // in between), so return a failure, and let the caller retry.
       assert(requestedSize > oldSize);
-
+  
       // Memory resize rules:
       // 1.  Always increase heap size to at least the requested size, rounded up
       //     to next page multiple.
@@ -11022,7 +11022,7 @@ function dbg(text) {
       //     over-eager decision to excessively reserve due to (3) above.
       //     Hence if an allocation fails, cut down on the amount of excess
       //     growth, in an attempt to succeed to perform a smaller allocation.
-
+  
       // A limit is set for how much we can grow. We should not exceed that
       // (the wasm binary specifies it, so if we tried, we'd fail anyhow).
       var maxHeapSize = getHeapMax();
@@ -11030,9 +11030,9 @@ function dbg(text) {
         err(`Cannot enlarge memory, asked to go up to ${requestedSize} bytes, but the limit is ${maxHeapSize} bytes!`);
         abortOnCannotGrowMemory(requestedSize);
       }
-
+  
       var alignUp = (x, multiple) => x + (multiple - x % multiple) % multiple;
-
+  
       // Loop through potential heap size increases. If we attempt a too eager
       // reservation that fails, cut down on the attempted size and reserve a
       // smaller bump instead. (max 3 times, chosen somewhat arbitrarily)
@@ -11040,12 +11040,12 @@ function dbg(text) {
         var overGrownHeapSize = oldSize * (1 + 0.2 / cutDown); // ensure geometric growth
         // but limit overreserving (default to capping at +96MB overgrowth at most)
         overGrownHeapSize = Math.min(overGrownHeapSize, requestedSize + 100663296 );
-
+  
         var newSize = Math.min(maxHeapSize, alignUp(Math.max(requestedSize, overGrownHeapSize), 65536));
-
+  
         var replacement = emscripten_realloc_buffer(newSize);
         if (replacement) {
-
+  
           return true;
         }
       }
@@ -11065,24 +11065,24 @@ function dbg(text) {
       return -1;
     }
 
-
-
-
-
+  
+  
+  
+  
   function registerFocusEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.focusEvent) JSEvents.focusEvent = _malloc( 256 );
-
+  
       var focusEventHandlerFunc = function(e = event) {
         var nodeName = JSEvents.getNodeNameForTarget(e.target);
         var id = e.target.id ? e.target.id : '';
-
+  
         var focusEvent = JSEvents.focusEvent;
         stringToUTF8(nodeName, focusEvent + 0, 128);
         stringToUTF8(id, focusEvent + 128, 128);
-
+  
         if (getWasmTableEntry(callbackfunc)(eventTypeId, focusEvent, userData)) e.preventDefault();
       };
-
+  
       var eventHandler = {
         target: findEventTarget(target),
         eventTypeString: eventTypeString,
@@ -11101,22 +11101,22 @@ function dbg(text) {
       return registerFocusEventCallback(target, userData, useCapture, callbackfunc, 13, "focus", targetThread);
     }
 
-
-
-
-
-
+  
+  
+  
+  
+  
   function registerFullscreenChangeEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.fullscreenChangeEvent) JSEvents.fullscreenChangeEvent = _malloc( 280 );
-
+  
       var fullscreenChangeEventhandlerFunc = function(e = event) {
         var fullscreenChangeEvent = JSEvents.fullscreenChangeEvent;
-
+  
         fillFullscreenChangeEventData(fullscreenChangeEvent);
-
+  
         if (getWasmTableEntry(callbackfunc)(eventTypeId, fullscreenChangeEvent, userData)) e.preventDefault();
       };
-
+  
       var eventHandler = {
         target: target,
         eventTypeString: eventTypeString,
@@ -11126,34 +11126,34 @@ function dbg(text) {
       };
       return JSEvents.registerOrRemoveHandler(eventHandler);
     }
-
-
+  
+  
   function _emscripten_set_fullscreenchange_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
       if (!JSEvents.fullscreenEnabled()) return -1;
       target = findEventTarget(target);
       if (!target) return -4;
-
+  
       // Unprefixed Fullscreen API shipped in Chromium 71 (https://bugs.chromium.org/p/chromium/issues/detail?id=383813)
       // As of Safari 13.0.3 on macOS Catalina 10.15.1 still ships with prefixed webkitfullscreenchange. TODO: revisit this check once Safari ships unprefixed version.
       registerFullscreenChangeEventCallback(target, userData, useCapture, callbackfunc, 19, "webkitfullscreenchange", targetThread);
-
+  
       return registerFullscreenChangeEventCallback(target, userData, useCapture, callbackfunc, 19, "fullscreenchange", targetThread);
     }
 
-
-
-
-
+  
+  
+  
+  
   function registerGamepadEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.gamepadEvent) JSEvents.gamepadEvent = _malloc( 1432 );
-
+  
       var gamepadEventHandlerFunc = function(e = event) {
         var gamepadEvent = JSEvents.gamepadEvent;
         fillGamepadEventData(gamepadEvent, e["gamepad"]);
-
+  
         if (getWasmTableEntry(callbackfunc)(eventTypeId, gamepadEvent, userData)) e.preventDefault();
       };
-
+  
       var eventHandler = {
         target: findEventTarget(target),
         allowsDeferredCalls: true,
@@ -11164,21 +11164,21 @@ function dbg(text) {
       };
       return JSEvents.registerOrRemoveHandler(eventHandler);
     }
-
+  
   function _emscripten_set_gamepadconnected_callback_on_thread(userData, useCapture, callbackfunc, targetThread) {
       if (_emscripten_sample_gamepad_data()) return -1;
       return registerGamepadEventCallback(2, userData, useCapture, callbackfunc, 26, "gamepadconnected", targetThread);
     }
 
-
+  
   function _emscripten_set_gamepaddisconnected_callback_on_thread(userData, useCapture, callbackfunc, targetThread) {
       if (_emscripten_sample_gamepad_data()) return -1;
       return registerGamepadEventCallback(2, userData, useCapture, callbackfunc, 27, "gamepaddisconnected", targetThread);
     }
 
-
+  
   function _emscripten_set_interval(cb, msecs, userData) {
-
+      
       return setInterval(function() {
         callUserCallback(function() {
           getWasmTableEntry(cb)(userData)
@@ -11186,23 +11186,23 @@ function dbg(text) {
       }, msecs);
     }
 
-
-
-
-
+  
+  
+  
+  
   function registerKeyEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.keyEvent) JSEvents.keyEvent = _malloc( 176 );
-
+  
       var keyEventHandlerFunc = function(e) {
         assert(e);
-
+  
         var keyEventData = JSEvents.keyEvent;
         keyEventData = keyEventData;
-
+  
         HEAPF64[((keyEventData)>>3)] = e.timeStamp;
-
+  
         var idx = keyEventData >> 2;
-
+  
         HEAP32[idx + 2] = e.location;
         HEAP32[idx + 3] = e.ctrlKey;
         HEAP32[idx + 4] = e.shiftKey;
@@ -11216,10 +11216,10 @@ function dbg(text) {
         stringToUTF8(e.code || '', keyEventData + 76, 32);
         stringToUTF8(e.char || '', keyEventData + 108, 32);
         stringToUTF8(e.locale || '', keyEventData + 140, 32);
-
+  
         if (getWasmTableEntry(callbackfunc)(eventTypeId, keyEventData, userData)) e.preventDefault();
       };
-
+  
       var eventHandler = {
         target: findEventTarget(target),
         allowsDeferredCalls: true,
@@ -11243,9 +11243,9 @@ function dbg(text) {
     }
 
 
-
-
-
+  
+  
+  
   function fillMouseEventData(eventStruct, e, target) {
       assert(eventStruct % 4 == 0);
       HEAPF64[((eventStruct)>>3)] = e.timeStamp;
@@ -11260,32 +11260,32 @@ function dbg(text) {
       HEAP32[idx + 9] = e.metaKey;
       HEAP16[idx*2 + 20] = e.button;
       HEAP16[idx*2 + 21] = e.buttons;
-
+  
       HEAP32[idx + 11] = e["movementX"]
         ;
-
+  
       HEAP32[idx + 12] = e["movementY"]
         ;
-
+  
       var rect = getBoundingClientRect(target);
       HEAP32[idx + 13] = e.clientX - rect.left;
       HEAP32[idx + 14] = e.clientY - rect.top;
-
+  
     }
-
-
-
+  
+  
+  
   function registerMouseEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.mouseEvent) JSEvents.mouseEvent = _malloc( 72 );
       target = findEventTarget(target);
-
+  
       var mouseEventHandlerFunc = function(e = event) {
         // TODO: Make this access thread safe, or this could update live while app is reading it.
         fillMouseEventData(JSEvents.mouseEvent, e, target);
-
+  
         if (getWasmTableEntry(callbackfunc)(eventTypeId, JSEvents.mouseEvent, userData)) e.preventDefault();
       };
-
+  
       var eventHandler = {
         target: target,
         allowsDeferredCalls: eventTypeString != 'mousemove' && eventTypeString != 'mouseenter' && eventTypeString != 'mouseleave', // Mouse move events do not allow fullscreen/pointer lock requests to be handled in them!
@@ -11308,9 +11308,9 @@ function dbg(text) {
       return registerMouseEventCallback(target, userData, useCapture, callbackfunc, 6, "mouseup", targetThread);
     }
 
-
-
-
+  
+  
+  
   function fillPointerlockChangeEventData(eventStruct) {
       var pointerLockElement = document.pointerLockElement || document.mozPointerLockElement || document.webkitPointerLockElement || document.msPointerLockElement;
       var isPointerlocked = !!pointerLockElement;
@@ -11322,19 +11322,19 @@ function dbg(text) {
       stringToUTF8(nodeName, eventStruct + 4, 128);
       stringToUTF8(id, eventStruct + 132, 128);
     }
-
-
-
+  
+  
+  
   function registerPointerlockChangeEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.pointerlockChangeEvent) JSEvents.pointerlockChangeEvent = _malloc( 260 );
-
+  
       var pointerlockChangeEventHandlerFunc = function(e = event) {
         var pointerlockChangeEvent = JSEvents.pointerlockChangeEvent;
         fillPointerlockChangeEventData(pointerlockChangeEvent);
-
+  
         if (getWasmTableEntry(callbackfunc)(eventTypeId, pointerlockChangeEvent, userData)) e.preventDefault();
       };
-
+  
       var eventHandler = {
         target: target,
         eventTypeString: eventTypeString,
@@ -11344,15 +11344,15 @@ function dbg(text) {
       };
       return JSEvents.registerOrRemoveHandler(eventHandler);
     }
-
-
+  
+  
   /** @suppress {missingProperties} */
   function _emscripten_set_pointerlockchange_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
       // TODO: Currently not supported in pthreads or in --proxy-to-worker mode. (In pthreads mode, document object is not defined)
       if (!document || !document.body || (!document.body.requestPointerLock && !document.body.mozRequestPointerLock && !document.body.webkitRequestPointerLock && !document.body.msRequestPointerLock)) {
         return -1;
       }
-
+  
       target = findEventTarget(target);
       if (!target) return -4;
       registerPointerlockChangeEventCallback(target, userData, useCapture, callbackfunc, 20, "mozpointerlockchange", targetThread);
@@ -11361,22 +11361,22 @@ function dbg(text) {
       return registerPointerlockChangeEventCallback(target, userData, useCapture, callbackfunc, 20, "pointerlockchange", targetThread);
     }
 
-
-
-
-
+  
+  
+  
+  
   function registerTouchEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.touchEvent) JSEvents.touchEvent = _malloc( 1696 );
-
+  
       target = findEventTarget(target);
-
+  
       var touchEventHandlerFunc = function(e) {
         assert(e);
         var t, touches = {}, et = e.touches;
-        // To ease marshalling different kinds of touches that browser reports (all touches are listed in e.touches,
+        // To ease marshalling different kinds of touches that browser reports (all touches are listed in e.touches, 
         // only changed touches in e.changedTouches, and touches on target at a.targetTouches), mark a boolean in
         // each Touch object so that we can later loop only once over all touches we see to marshall over to Wasm.
-
+  
         for (var i = 0; i < et.length; ++i) {
           t = et[i];
           // Browser might recycle the generated Touch objects between each frame (Firefox on Android), so reset any
@@ -11394,7 +11394,7 @@ function dbg(text) {
         for (var i = 0; i < e.targetTouches.length; ++i) {
           touches[e.targetTouches[i].identifier].onTarget = 1;
         }
-
+  
         var touchEvent = JSEvents.touchEvent;
         HEAPF64[((touchEvent)>>3)] = e.timeStamp;
         var idx = touchEvent>>2; // Pre-shift the ptr to index to HEAP32 to save code size
@@ -11418,18 +11418,18 @@ function dbg(text) {
           HEAP32[idx + 8] = t.onTarget;
           HEAP32[idx + 9] = t.clientX - targetRect.left;
           HEAP32[idx + 10] = t.clientY - targetRect.top;
-
+  
           idx += 13;
-
+  
           if (++numTouches > 31) {
             break;
           }
         }
         HEAP32[(((touchEvent)+(8))>>2)] = numTouches;
-
+  
         if (getWasmTableEntry(callbackfunc)(eventTypeId, touchEvent, userData)) e.preventDefault();
       };
-
+  
       var eventHandler = {
         target: target,
         allowsDeferredCalls: eventTypeString == 'touchstart' || eventTypeString == 'touchend',
@@ -11456,14 +11456,14 @@ function dbg(text) {
       return registerTouchEventCallback(target, userData, useCapture, callbackfunc, 22, "touchstart", targetThread);
     }
 
-
-
-
-
-
+  
+  
+  
+  
+  
   function registerWheelEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
       if (!JSEvents.wheelEvent) JSEvents.wheelEvent = _malloc( 104 );
-
+  
       // The DOM Level 3 events spec event 'wheel'
       var wheelHandlerFunc = function(e = event) {
         var wheelEvent = JSEvents.wheelEvent;
@@ -11474,7 +11474,7 @@ function dbg(text) {
         HEAP32[(((wheelEvent)+(96))>>2)] = e["deltaMode"];
         if (getWasmTableEntry(callbackfunc)(eventTypeId, wheelEvent, userData)) e.preventDefault();
       };
-
+  
       var eventHandler = {
         target: target,
         allowsDeferredCalls: true,
@@ -11485,7 +11485,7 @@ function dbg(text) {
       };
       return JSEvents.registerOrRemoveHandler(eventHandler);
     }
-
+  
   function _emscripten_set_wheel_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
       target = findEventTarget(target);
       if (!target) return -4;
@@ -11496,12 +11496,12 @@ function dbg(text) {
       }
     }
 
-
-
+  
+  
   var emscripten_webgl_power_preferences = ['default', 'low-power', 'high-performance'];
-
-
-
+  
+  
+  
   /** @suppress {duplicate } */
   function _emscripten_webgl_do_create_context(target, attributes) {
       assert(attributes);
@@ -11524,58 +11524,58 @@ function dbg(text) {
         proxyContextToMainThread: HEAP32[a + (48>>2)],
         renderViaOffscreenBackBuffer: HEAP32[a + (52>>2)]
       };
-
+  
       var canvas = findCanvasEventTarget(target);
-
+  
       if (!canvas) {
         return 0;
       }
-
+  
       if (contextAttributes.explicitSwapControl) {
         return 0;
       }
-
+  
       var contextHandle = GL.createContext(canvas, contextAttributes);
       return contextHandle;
     }
   var _emscripten_webgl_create_context = _emscripten_webgl_do_create_context;
 
-
+  
   function _emscripten_webgl_destroy_context(contextHandle) {
       if (GL.currentContext == contextHandle) GL.currentContext = 0;
       GL.deleteContext(contextHandle);
     }
 
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
   function _emscripten_webgl_enable_extension(contextHandle, extension) {
       var context = GL.getContext(contextHandle);
       var extString = UTF8ToString(extension);
       if (extString.startsWith('GL_')) extString = extString.substr(3); // Allow enabling extensions both with "GL_" prefix and without.
-
+  
       // Switch-board that pulls in code for all GL extensions, even if those are not used :/
       // Build with -sGL_SUPPORT_SIMPLE_ENABLE_EXTENSIONS=0 to avoid this.
-
+  
       // Obtain function entry points to WebGL 1 extension related functions.
       if (extString == 'ANGLE_instanced_arrays') webgl_enable_ANGLE_instanced_arrays(GLctx);
       if (extString == 'OES_vertex_array_object') webgl_enable_OES_vertex_array_object(GLctx);
       if (extString == 'WEBGL_draw_buffers') webgl_enable_WEBGL_draw_buffers(GLctx);
-
+  
       if (extString == 'WEBGL_draw_instanced_base_vertex_base_instance') webgl_enable_WEBGL_draw_instanced_base_vertex_base_instance(GLctx);
       if (extString == 'WEBGL_multi_draw_instanced_base_vertex_base_instance') webgl_enable_WEBGL_multi_draw_instanced_base_vertex_base_instance(GLctx);
-
+  
       if (extString == 'WEBGL_multi_draw') webgl_enable_WEBGL_multi_draw(GLctx);
-
+  
       var ext = context.GLctx.getExtension(extString);
       return !!ext;
     }
 
-
+  
   /** @suppress {duplicate } */
   function _emscripten_webgl_do_get_current_context() {
       return GL.currentContext ? GL.currentContext.handle : 0;
@@ -11588,14 +11588,14 @@ function dbg(text) {
       for (var i = 0; i < (56>>2); ++i) {
         HEAP32[a+i] = 0;
       }
-
+  
       HEAP32[a + (0>>2)] =
-      HEAP32[a + (4>>2)] =
-      HEAP32[a + (12>>2)] =
-      HEAP32[a + (16>>2)] =
-      HEAP32[a + (32>>2)] =
+      HEAP32[a + (4>>2)] = 
+      HEAP32[a + (12>>2)] = 
+      HEAP32[a + (16>>2)] = 
+      HEAP32[a + (32>>2)] = 
       HEAP32[a + (40>>2)] = 1;
-
+  
     }
 
   function _emscripten_webgl_make_context_current(contextHandle) {
@@ -11604,7 +11604,7 @@ function dbg(text) {
     }
 
   var ENV = {};
-
+  
   function getExecutableName() {
       return thisProgram || './this.program';
     }
@@ -11638,7 +11638,7 @@ function dbg(text) {
       }
       return getEnvStrings.strings;
     }
-
+  
   function stringToAscii(str, buffer) {
       for (var i = 0; i < str.length; ++i) {
         assert(str.charCodeAt(i) === (str.charCodeAt(i) & 0xff));
@@ -11647,7 +11647,7 @@ function dbg(text) {
       // Null-terminate the string
       HEAP8[((buffer)>>0)] = 0;
     }
-
+  
   function _environ_get(__environ, environ_buf) {
       var bufSize = 0;
       getEnvStrings().forEach(function(string, i) {
@@ -11659,7 +11659,7 @@ function dbg(text) {
       return 0;
     }
 
-
+  
   function _environ_sizes_get(penviron_count, penviron_buf_size) {
       var strings = getEnvStrings();
       HEAPU32[((penviron_count)>>2)] = strings.length;
@@ -11674,7 +11674,7 @@ function dbg(text) {
 
   function _fd_close(fd) {
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd);
       FS.close(stream);
       return 0;
@@ -11686,7 +11686,7 @@ function dbg(text) {
 
   function _fd_fdstat_get(fd, pbuf) {
   try {
-
+  
       var rightsBase = 0;
       var rightsInheriting = 0;
       var flags = 0;
@@ -11727,10 +11727,10 @@ function dbg(text) {
       }
       return ret;
     }
-
+  
   function _fd_read(fd, iov, iovcnt, pnum) {
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd);
       var num = doReadv(stream, iov, iovcnt);
       HEAPU32[((pnum)>>2)] = num;
@@ -11741,13 +11741,13 @@ function dbg(text) {
   }
   }
 
-
-
-
-
+  
+  
+  
+  
   function _fd_seek(fd, offset, whence, newOffset) {
   try {
-
+  
       offset = bigintToI53Checked(offset); if (isNaN(offset)) return 61;
       var stream = SYSCALLS.getStreamFromFD(fd);
       FS.llseek(stream, offset, whence);
@@ -11776,10 +11776,10 @@ function dbg(text) {
       }
       return ret;
     }
-
+  
   function _fd_write(fd, iov, iovcnt, pnum) {
   try {
-
+  
       var stream = SYSCALLS.getStreamFromFD(fd);
       var num = doWritev(stream, iov, iovcnt);
       HEAPU32[((pnum)>>2)] = num;
@@ -11790,10 +11790,10 @@ function dbg(text) {
   }
   }
 
-
-
-
-
+  
+  
+  
+  
   function getHostByName(name) {
       // generate hostent
       var ret = _malloc(20); // XXX possibly leaked, as are others here
@@ -11812,8 +11812,8 @@ function dbg(text) {
       HEAPU32[(((ret)+(16))>>2)] = addrListBuf;
       return ret;
     }
-
-
+  
+  
   function _gethostbyaddr(addr, addrlen, type) {
       if (type !== 2) {
         setErrNo(5);
@@ -11829,7 +11829,7 @@ function dbg(text) {
       return getHostByName(host);
     }
 
-
+  
   function _gethostbyname(name) {
       return getHostByName(UTF8ToString(name));
     }
@@ -11847,7 +11847,7 @@ function dbg(text) {
       GLctx.beginQuery(target, GL.queries[id]);
     }
 
-
+  
   function _glBindAttribLocation(program, index, name) {
       GLctx.bindAttribLocation(GL.programs[program], index, UTF8ToString(name));
     }
@@ -11858,7 +11858,7 @@ function dbg(text) {
       } else if (target == 0x8893 /*GL_ELEMENT_ARRAY_BUFFER*/) {
         GLctx.currentElementArrayBufferBinding = buffer;
       }
-
+  
       if (target == 0x88EB /*GL_PIXEL_PACK_BUFFER*/) {
         // In WebGL 2 glReadPixels entry point, we need to use a different WebGL 2 API function call when a buffer is bound to
         // GL_PIXEL_PACK_BUFFER_BINDING point, so must keep track whether that binding point is non-null to know what is
@@ -11884,9 +11884,9 @@ function dbg(text) {
     }
 
   function _glBindFramebuffer(target, framebuffer) {
-
+  
       GLctx.bindFramebuffer(target, GL.framebuffers[framebuffer]);
-
+  
     }
 
   function _glBindRenderbuffer(target, renderbuffer) {
@@ -12060,10 +12060,10 @@ function dbg(text) {
   function _glCreateShader(shaderType) {
       var id = GL.getNewId(GL.shaders);
       GL.shaders[id] = GLctx.createShader(shaderType);
-
+  
       // GL_VERTEX_SHADER = 0x8B31, GL_FRAGMENT_SHADER = 0x8B30
       GL.shaders[id].shaderType = shaderType&1?'vs':'fs';
-
+  
       return id;
     }
 
@@ -12073,15 +12073,15 @@ function dbg(text) {
       for (var i = 0; i < n; i++) {
         var id = HEAP32[(((buffers)+(i*4))>>2)];
         var buffer = GL.buffers[id];
-
+  
         // From spec: "glDeleteBuffers silently ignores 0's and names that do not
         // correspond to existing buffer objects."
         if (!buffer) continue;
-
+  
         GLctx.deleteBuffer(buffer);
         buffer.name = 0;
         GL.buffers[id] = null;
-
+  
         if (id == GLctx.currentArrayBufferBinding) GLctx.currentArrayBufferBinding = 0;
         if (id == GLctx.currentElementArrayBufferBinding) GLctx.currentElementArrayBufferBinding = 0;
         if (id == GLctx.currentPixelPackBufferBinding) GLctx.currentPixelPackBufferBinding = 0;
@@ -12207,9 +12207,9 @@ function dbg(text) {
   function _glDrawArrays(mode, first, count) {
       // bind any client-side buffers
       GL.preDrawHandleClientVertexAttribBindings(first + count);
-
+  
       GLctx.drawArrays(mode, first, count);
-
+  
       GL.postDrawHandleClientVertexAttribBindings();
     }
 
@@ -12218,14 +12218,14 @@ function dbg(text) {
     }
 
   var tempFixedLengthArray = [];
-
+  
   function _glDrawBuffers(n, bufs) {
-
+  
       var bufArray = tempFixedLengthArray[n];
       for (var i = 0; i < n; i++) {
         bufArray[i] = HEAP32[(((bufs)+(i*4))>>2)];
       }
-
+  
       GLctx.drawBuffers(bufArray);
     }
 
@@ -12241,14 +12241,14 @@ function dbg(text) {
         // the index is now 0
         indices = 0;
       }
-
+  
       // bind any client-side buffers
       GL.preDrawHandleClientVertexAttribBindings(count);
-
+  
       GLctx.drawElements(mode, count, type, indices);
-
+  
       GL.postDrawHandleClientVertexAttribBindings(count);
-
+  
       if (!GLctx.currentElementArrayBufferBinding) {
         GLctx.bindBuffer(0x8893 /*GL_ELEMENT_ARRAY_BUFFER*/, null);
       }
@@ -12299,7 +12299,7 @@ function dbg(text) {
       if (buffer) return buffer.name|0;
       else return 0;
     }
-
+  
   function emscriptenWebGLValidateMapBufferTarget(target) {
       switch (target) {
         case 0x8892: // GL_ARRAY_BUFFER
@@ -12320,20 +12320,20 @@ function dbg(text) {
           // Force offset and length to uint
           offset >>>= 0;
           length >>>= 0;
-
+  
           if (!emscriptenWebGLValidateMapBufferTarget(target)) {
               GL.recordError(0x500/*GL_INVALID_ENUM*/);
               err('GL_INVALID_ENUM in glFlushMappedBufferRange');
               return;
           }
-
+  
           var mapping = GL.mappedBuffers[emscriptenWebGLGetBufferBinding(target)];
           if (!mapping) {
               GL.recordError(0x502 /* GL_INVALID_OPERATION */);
               err('buffer was never mapped in glFlushMappedBufferRange');
               return;
           }
-
+  
           if (!(mapping.access & 0x10)) {
               GL.recordError(0x502 /* GL_INVALID_OPERATION */);
               err('buffer was not mapped with GL_MAP_FLUSH_EXPLICIT_BIT in glFlushMappedBufferRange');
@@ -12344,7 +12344,7 @@ function dbg(text) {
               err('invalid range in glFlushMappedBufferRange');
               return;
           }
-
+  
           GLctx.bufferSubData(
               target,
               mapping.offset,
@@ -12382,13 +12382,13 @@ function dbg(text) {
         HEAP32[(((buffers)+(i*4))>>2)] = id;
       }
     }
-
+  
   function _glGenBuffers(n, buffers) {
       __glGenObject(n, buffers, 'createBuffer', GL.buffers
         );
     }
 
-
+  
   function _glGenFramebuffers(n, ids) {
       __glGenObject(n, ids, 'createFramebuffer', GL.framebuffers
         );
@@ -12399,7 +12399,7 @@ function dbg(text) {
         );
     }
 
-
+  
   function _glGenRenderbuffers(n, renderbuffers) {
       __glGenObject(n, renderbuffers, 'createRenderbuffer', GL.renderbuffers
         );
@@ -12410,13 +12410,13 @@ function dbg(text) {
         );
     }
 
-
+  
   function _glGenTextures(n, textures) {
       __glGenObject(n, textures, 'createTexture', GL.textures
         );
     }
 
-
+  
   function _glGenVertexArrays(n, arrays) {
       __glGenObject(n, arrays, 'createVertexArray', GL.vaos
         );
@@ -12424,7 +12424,7 @@ function dbg(text) {
 
   function _glGenerateMipmap(x0) { GLctx.generateMipmap(x0) }
 
-
+  
   function __glGetActiveAttribOrUniform(funcName, program, index, bufSize, length, size, type, name) {
       program = GL.programs[program];
       var info = GLctx[funcName](program, index);
@@ -12435,19 +12435,19 @@ function dbg(text) {
         if (type) HEAP32[((type)>>2)] = info.type;
       }
     }
-
+  
   function _glGetActiveAttrib(program, index, bufSize, length, size, type, name) {
       __glGetActiveAttribOrUniform('getActiveAttrib', program, index, bufSize, length, size, type, name);
     }
 
-
+  
   function _glGetActiveUniform(program, index, bufSize, length, size, type, name) {
       __glGetActiveAttribOrUniform('getActiveUniform', program, index, bufSize, length, size, type, name);
     }
 
   function _glGetActiveUniformBlockName(program, uniformBlockIndex, bufSize, length, uniformBlockName) {
       program = GL.programs[program];
-
+  
       var result = GLctx.getActiveUniformBlockName(program, uniformBlockIndex);
       if (!result) return; // If an error occurs, nothing will be written to uniformBlockName or length.
       if (uniformBlockName && bufSize > 0) {
@@ -12466,13 +12466,13 @@ function dbg(text) {
         return;
       }
       program = GL.programs[program];
-
+  
       if (pname == 0x8A41 /* GL_UNIFORM_BLOCK_NAME_LENGTH */) {
         var name = GLctx.getActiveUniformBlockName(program, uniformBlockIndex);
         HEAP32[((params)>>2)] = name.length+1;
         return;
       }
-
+  
       var result = GLctx.getActiveUniformBlockParameter(program, uniformBlockIndex, pname);
       if (result === null) return; // If an error occurs, nothing should be written to params.
       if (pname == 0x8A43 /*GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES*/) {
@@ -12500,17 +12500,17 @@ function dbg(text) {
       for (var i = 0; i < uniformCount; i++) {
         ids.push(HEAP32[(((uniformIndices)+(i*4))>>2)]);
       }
-
+  
       var result = GLctx.getActiveUniforms(program, ids, pname);
       if (!result) return; // GL spec: If an error is generated, nothing is written out to params.
-
+  
       var len = result.length;
       for (var i = 0; i < len; i++) {
         HEAP32[(((params)+(i*4))>>2)] = result[i];
       }
     }
 
-
+  
   function _glGetAttribLocation(program, name) {
       return GLctx.getAttribLocation(GL.programs[program], UTF8ToString(name));
     }
@@ -12544,7 +12544,7 @@ function dbg(text) {
       HEAP32[((params)>>2)] = result;
     }
 
-
+  
   function readI53FromU64(ptr) {
       return HEAPU32[ptr>>2] + HEAPU32[ptr+4>>2] * 4294967296;
     }
@@ -12593,7 +12593,7 @@ function dbg(text) {
           GL.recordError(0x500); // GL_INVALID_ENUM
           return;
       }
-
+  
       switch (type) {
         case 1: writeI53ToI64(data, ret); break;
         case 0: HEAP32[((data)>>2)] = ret; break;
@@ -12606,7 +12606,7 @@ function dbg(text) {
       emscriptenWebGLGetIndexed(target, index, data, 0);
     }
 
-
+  
   function emscriptenWebGLGet(name_, p, type) {
       // Guard against user passing a null pointer.
       // Note that GLES2 spec does not say anything about how passing a null pointer should be treated.
@@ -12642,7 +12642,7 @@ function dbg(text) {
           // locations, which get assigned numbers larger than this.
           ret = 1048576;
           break;
-
+  
         case 0x821D: // GL_NUM_EXTENSIONS
           if (GL.currentContext.version < 2) {
             GL.recordError(0x502 /* GL_INVALID_OPERATION */); // Calling GLES3/WebGL2 function with a GLES2/WebGL1 context
@@ -12661,7 +12661,7 @@ function dbg(text) {
           ret = name_ == 0x821B ? 3 : 0; // return version 3.0
           break;
       }
-
+  
       if (ret === undefined) {
         var result = GLctx.getParameter(name_);
         switch (typeof result) {
@@ -12734,7 +12734,7 @@ function dbg(text) {
             return;
         }
       }
-
+  
       switch (type) {
         case 1: writeI53ToI64(p, ret); break;
         case 0: HEAP32[((p)>>2)] = ret; break;
@@ -12742,7 +12742,7 @@ function dbg(text) {
         case 4: HEAP8[((p)>>0)] = ret ? 1 : 0; break;
       }
     }
-
+  
   function _glGetIntegerv(name_, p) {
       emscriptenWebGLGet(name_, p, 0);
     }
@@ -12783,14 +12783,14 @@ function dbg(text) {
         GL.recordError(0x501 /* GL_INVALID_VALUE */);
         return;
       }
-
+  
       if (program >= GL.counter) {
         GL.recordError(0x501 /* GL_INVALID_VALUE */);
         return;
       }
-
+  
       program = GL.programs[program];
-
+  
       if (pname == 0x8B84) { // GL_INFO_LOG_LENGTH
         var log = GLctx.getProgramInfoLog(program);
         if (log === null) log = '(unknown error)';
@@ -12859,7 +12859,7 @@ function dbg(text) {
       HEAP32[((params)>>2)] = GLctx.getRenderbufferParameter(target, pname);
     }
 
-
+  
   function _glGetShaderInfoLog(shader, maxLength, length, infoLog) {
       var log = GLctx.getShaderInfoLog(GL.shaders[shader]);
       if (log === null) log = '(unknown error)';
@@ -12908,7 +12908,7 @@ function dbg(text) {
       }
     }
 
-
+  
   function _glGetString(name_) {
       var ret = GL.stringCache[name_];
       if (!ret) {
@@ -12928,7 +12928,7 @@ function dbg(text) {
             }
             ret = s && stringToNewUTF8(s);
             break;
-
+  
           case 0x1F02 /* GL_VERSION */:
             var glVersion = GLctx.getParameter(0x1F02 /*GL_VERSION*/);
             // return GLES version string corresponding to the version of the WebGL context
@@ -12977,7 +12977,7 @@ function dbg(text) {
           var exts = GLctx.getSupportedExtensions() || []; // .getSupportedExtensions() can return null if context is lost, so coerce to empty array.
           exts = exts.concat(exts.map(function(e) { return "GL_" + e; }));
           exts = exts.map(function(e) { return stringToNewUTF8(e); });
-
+  
           stringiCache = GL.stringiCache[name] = exts;
           if (index < 0 || index >= stringiCache.length) {
             GL.recordError(0x501/*GL_INVALID_VALUE*/);
@@ -13019,27 +13019,27 @@ function dbg(text) {
       var names = [];
       for (var i = 0; i < uniformCount; i++)
         names.push(UTF8ToString(HEAP32[(((uniformNames)+(i*4))>>2)]));
-
+  
       var result = GLctx.getUniformIndices(program, names);
       if (!result) return; // GL spec: If an error is generated, nothing is written out to uniformIndices.
-
+  
       var len = result.length;
       for (var i = 0; i < len; i++) {
         HEAP32[(((uniformIndices)+(i*4))>>2)] = result[i];
       }
     }
 
-
+  
   /** @noinline */
   function webglGetLeftBracePos(name) {
       return name.slice(-1) == ']' && name.lastIndexOf('[');
     }
-
+  
   function webglPrepareUniformLocationsBeforeFirstUse(program) {
       var uniformLocsById = program.uniformLocsById, // Maps GLuint -> WebGLUniformLocation
         uniformSizeAndIdsByName = program.uniformSizeAndIdsByName, // Maps name -> [uniform array length, GLuint]
         i, j;
-
+  
       // On the first time invocation of glGetUniformLocation on this shader program:
       // initialize cache data structures and discover which uniforms are arrays.
       if (!uniformLocsById) {
@@ -13047,14 +13047,14 @@ function dbg(text) {
         program.uniformLocsById = uniformLocsById = {};
         // maps integer locations back to uniform name strings, so that we can lazily fetch uniform array locations
         program.uniformArrayNamesById = {};
-
+  
         for (i = 0; i < GLctx.getProgramParameter(program, 0x8B86/*GL_ACTIVE_UNIFORMS*/); ++i) {
           var u = GLctx.getActiveUniform(program, i);
           var nm = u.name;
           var sz = u.size;
           var lb = webglGetLeftBracePos(nm);
           var arrayName = lb > 0 ? nm.slice(0, lb) : nm;
-
+  
           // Acquire the preset location from the explicit uniform location if one was specified, or
           // programmatically assign a new one if not.
           var id = uniformSizeAndIdsByName[arrayName] ? uniformSizeAndIdsByName[arrayName][1] : program.uniformIdCounter;
@@ -13065,7 +13065,7 @@ function dbg(text) {
           // application fills arrays always in full starting from the first
           // element of the array.
           uniformSizeAndIdsByName[arrayName] = [sz, id];
-
+  
           // Store placeholder integers in place that highlight that these
           // >0 index locations are array indices pending population.
           for(j = 0; j < sz; ++j) {
@@ -13075,35 +13075,35 @@ function dbg(text) {
         }
       }
     }
-
-
-
+  
+  
+  
   function _glGetUniformLocation(program, name) {
-
+  
       name = UTF8ToString(name);
-
+  
       if (program = GL.programs[program]) {
         webglPrepareUniformLocationsBeforeFirstUse(program);
         var uniformLocsById = program.uniformLocsById; // Maps GLuint -> WebGLUniformLocation
         var arrayIndex = 0;
         var uniformBaseName = name;
-
+  
         // Invariant: when populating integer IDs for uniform locations, we must maintain the precondition that
         // arrays reside in contiguous addresses, i.e. for a 'vec4 colors[10];', colors[4] must be at location colors[0]+4.
         // However, user might call glGetUniformLocation(program, "colors") for an array, so we cannot discover based on the user
         // input arguments whether the uniform we are dealing with is an array. The only way to discover which uniforms are arrays
         // is to enumerate over all the active uniforms in the program.
         var leftBrace = webglGetLeftBracePos(name);
-
+  
         // If user passed an array accessor "[index]", parse the array index off the accessor.
         if (leftBrace > 0) {
           arrayIndex = jstoi_q(name.slice(leftBrace + 1)) >>> 0; // "index]", coerce parseInt(']') with >>>0 to treat "foo[]" as "foo[0]" and foo[-1] as unsigned out-of-bounds.
           uniformBaseName = name.slice(0, leftBrace);
         }
-
+  
         // Have we cached the location of this uniform before?
         var sizeAndId = program.uniformSizeAndIdsByName[uniformBaseName]; // A pair [array length, GLint of the uniform location]
-
+  
         // If an uniform with this name exists, and if its index is within the array limits (if it's even an array),
         // query the WebGLlocation, or return an existing cached location.
         if (sizeAndId && arrayIndex < sizeAndId[0]) {
@@ -13123,11 +13123,11 @@ function dbg(text) {
 
   function webglGetUniformLocation(location) {
       var p = GLctx.currentProgram;
-
+  
       if (p) {
         var webglLoc = p.uniformLocsById[location];
         // p.uniformLocsById[location] stores either an integer, or a WebGLUniformLocation.
-
+  
         // If an integer, we have not yet bound the location, so do it now. The integer value specifies the array index
         // we should bind to.
         if (typeof webglLoc == 'number') {
@@ -13139,8 +13139,8 @@ function dbg(text) {
         GL.recordError(0x502/*GL_INVALID_OPERATION*/);
       }
     }
-
-
+  
+  
   /** @suppress{checkTypes} */
   function emscriptenWebGLGetUniform(program, location, params, type) {
       if (!params) {
@@ -13166,7 +13166,7 @@ function dbg(text) {
         }
       }
     }
-
+  
   function _glGetUniformiv(program, location, params) {
       emscriptenWebGLGetUniform(program, location, params, 0);
     }
@@ -13201,7 +13201,7 @@ function dbg(text) {
         }
       }
     }
-
+  
   function _glGetVertexAttribiv(index, pname, params) {
       // N.B. This function may only be called if the vertex attribute was specified using the function glVertexAttrib*f(),
       // otherwise the results are undefined. (GLES3 spec 6.1.12)
@@ -13213,14 +13213,14 @@ function dbg(text) {
       for (var i = 0; i < numAttachments; i++) {
         list[i] = HEAP32[(((attachments)+(i*4))>>2)];
       }
-
+  
       GLctx.invalidateFramebuffer(target, list);
     }
 
   function _glIsEnabled(x0) { return GLctx.isEnabled(x0) }
 
   function _glIsVertexArray(array) {
-
+  
       var vao = GL.vaos[array];
       if (!vao) return 0;
       return GLctx.isVertexArray(vao);
@@ -13232,7 +13232,7 @@ function dbg(text) {
       // Invalidate earlier computed uniform->ID mappings, those have now become stale
       program.uniformLocsById = 0; // Mark as null-like so that glGetUniformLocation() knows to populate this again.
       program.uniformSizeAndIdsByName = {};
-
+  
       // Collect explicit uniform locations from the vertex and fragment shaders.
       [program['vs'], program['fs']].forEach(function(s) {
         Object.keys(s.explicitUniformLocations).forEach(function(shaderLocation) {
@@ -13241,13 +13241,13 @@ function dbg(text) {
           // with size=1. This is not true, but on the first glGetUniformLocation() call
           // the array sizes will get populated to correct sizes.
           program.uniformSizeAndIdsByName[shaderLocation] = [1, loc];
-
+  
           // Make sure we will never automatically assign locations within the range
           // used for explicit layout(location=x) variables.
           program.uniformIdCounter = Math.max(program.uniformIdCounter, loc + 1);
         });
       });
-
+  
       function copyKeys(dst, src) {
         Object.keys(src).forEach(function(key) {
           dst[key] = src[key];
@@ -13265,34 +13265,34 @@ function dbg(text) {
       program.explicitProgramBindingsApplied = 0;
     }
 
-
-
-
+  
+  
+  
   function _glMapBufferRange(target, offset, length, access) {
       if ((access & (0x1/*GL_MAP_READ_BIT*/ | 0x20/*GL_MAP_UNSYNCHRONIZED_BIT*/)) != 0) {
         err("glMapBufferRange access does not support MAP_READ or MAP_UNSYNCHRONIZED");
         return 0;
       }
-
+  
       if ((access & 0x2/*GL_MAP_WRITE_BIT*/) == 0) {
         err("glMapBufferRange access must include MAP_WRITE");
         return 0;
       }
-
+  
       if ((access & (0x4/*GL_MAP_INVALIDATE_BUFFER_BIT*/ | 0x8/*GL_MAP_INVALIDATE_RANGE_BIT*/)) == 0) {
         err("glMapBufferRange access must include INVALIDATE_BUFFER or INVALIDATE_RANGE");
         return 0;
       }
-
+  
       if (!emscriptenWebGLValidateMapBufferTarget(target)) {
         GL.recordError(0x500/*GL_INVALID_ENUM*/);
         err('GL_INVALID_ENUM in glMapBufferRange');
         return 0;
       }
-
+  
       var mem = _malloc(length);
       if (!mem) return 0;
-
+  
       GL.mappedBuffers[emscriptenWebGLGetBufferBinding(target)] = {
         offset: offset,
         length: length,
@@ -13329,7 +13329,7 @@ function dbg(text) {
       var alignedRowSize = roundedToNextMultipleOf(plainRowSize, alignment);
       return height * alignedRowSize;
     }
-
+  
   function colorChannelsInGlTextureFormat(format) {
       // Micro-optimizations for size: map format to size by subtracting smallest enum value (0x1902) from all values first.
       // Also omit the most common size value (1) from the list, which is assumed by formats not on the list.
@@ -13351,7 +13351,7 @@ function dbg(text) {
       };
       return colorChannels[format - 0x1902]||1;
     }
-
+  
   function heapObjectForWebGLType(type) {
       // Micro-optimization for size: Subtract lowest GL enum number (0x1400/* GL_BYTE */) from type to compare
       // smaller values for the heap, for shorter generated code size.
@@ -13359,15 +13359,15 @@ function dbg(text) {
       // (since most types are HEAPU16)
       type -= 0x1400;
       if (type == 0) return HEAP8;
-
+  
       if (type == 1) return HEAPU8;
-
+  
       if (type == 2) return HEAP16;
-
+  
       if (type == 4) return HEAP32;
-
+  
       if (type == 6) return HEAPF32;
-
+  
       if (type == 5
         || type == 28922
         || type == 28520
@@ -13375,14 +13375,14 @@ function dbg(text) {
         || type == 30782
         )
         return HEAPU32;
-
+  
       return HEAPU16;
     }
-
+  
   function heapAccessShiftForWebGLHeap(heap) {
       return 31 - Math.clz32(heap.BYTES_PER_ELEMENT);
     }
-
+  
   function emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, internalFormat) {
       var heap = heapObjectForWebGLType(type);
       var shift = heapAccessShiftForWebGLHeap(heap);
@@ -13390,9 +13390,9 @@ function dbg(text) {
       var bytes = (computeUnpackAlignedImageSize(width, height, sizePerPixel, GL.unpackAlignment));
       return heap.subarray((pixels >> shift), ((pixels + bytes) >> shift));
     }
-
-
-
+  
+  
+  
   function _glReadPixels(x, y, width, height, format, type, pixels) {
           if (GLctx.currentPixelPackBufferBinding) {
               GLctx.readPixels(x, y, width, height, format, type, pixels);
@@ -13421,7 +13421,7 @@ function dbg(text) {
 
   function _glScissor(x0, x1, x2, x3) { GLctx.scissor(x0, x1, x2, x3) }
 
-
+  
   function find_closing_parens_index(arr, i, opening='(', closing=')') {
       for(var nesting = 0; i < arr.length; ++i) {
         if (arr[i] == opening) ++nesting;
@@ -13441,18 +13441,18 @@ function dbg(text) {
         assert(/^[A-Za-z0-9_$]+$/.test(args[0].trim())); // Test that a C preprocessor identifier contains only valid characters (we likely parsed wrong if this fails)
         return defs[args[0].trim()] ? 1 : 0;
       };
-
+  
       // Returns true if str[i] is whitespace.
       function isWhitespace(str, i) {
         return !(str.charCodeAt(i) > 32); // Compare as negation to treat end-of-string undefined as whitespace
       }
-
+  
       // Returns index to the next whitespace character starting at str[i].
       function nextWhitespace(str, i) {
         while(!isWhitespace(str, i)) ++i;
         return i;
       }
-
+  
       // Returns an integer ID classification of the character at str[idx], used for tokenization purposes.
       function classifyChar(str, idx) {
         var cc = str.charCodeAt(idx);
@@ -13468,7 +13468,7 @@ function dbg(text) {
         }
         return cc < 33 ? 0 : 4; // 0=whitespace, 4=end-of-string
       }
-
+  
       // Returns a tokenized array of the given string expression, i.e. "FOO > BAR && BAZ" -> ["FOO", ">", "BAR", "&&", "BAZ"]
       // Optionally keeps whitespace as tokens to be able to reconstruct the original input string.
       function tokenize(exprString, keepWhitespace) {
@@ -13497,7 +13497,7 @@ function dbg(text) {
         }
         return out;
       }
-
+  
       // Expands preprocessing macros on substring str[lineStart...lineEnd]
       function expandMacros(str, lineStart, lineEnd) {
         if (lineEnd === undefined) lineEnd = str.length;
@@ -13540,7 +13540,7 @@ function dbg(text) {
         }
         return out;
       }
-
+  
       // Given a token list e.g. ['2', '>', '1'], returns a function that evaluates that token list.
       function buildExprTree(tokens) {
         // Consume tokens array into a function tree until the tokens array is exhausted
@@ -13555,7 +13555,7 @@ function dbg(text) {
                 operatorAndPriority = p;
               }
             }
-
+  
             if (operatorAndPriority == 13 /* parens '(' */) {
               // Find the closing parens position
               var j = find_closing_parens_index(tokens, i);
@@ -13564,7 +13564,7 @@ function dbg(text) {
                 return tokens;
               }
             }
-
+  
             if (operatorAndPriority == 4 /* unary ! */) {
               // Special case: the unary operator ! needs to evaluate right-to-left.
               i = tokens.lastIndexOf('!');
@@ -13572,7 +13572,7 @@ function dbg(text) {
               tokens.splice(i, 2, function() { return !innerExpr(); })
               return tokens;
             }
-
+  
             // A binary operator:
             if (operatorAndPriority >= 0) {
               var left = buildExprTree(tokens.slice(0, i));
@@ -13601,19 +13601,19 @@ function dbg(text) {
         }
         return tokens[0];
       }
-
+  
       // Preprocess the input one line at a time.
       for(; i < len; ++i) {
         // Find the start of the current line.
         var lineStart = i;
-
+  
         // Seek iterator to end of current line.
         i = code.indexOf('\n', i);
         if (i < 0) i = len;
-
+  
         // Find the first non-whitespace character on the line.
         for(var j = lineStart; j < i && isWhitespace(code, j); ++j);
-
+  
         // Is this a non-preprocessor directive line?
         var thisLineIsInActivePreprocessingBlock = stack[stack.length-1];
         if (code[j] != '#') { // non-preprocessor line?
@@ -13623,7 +13623,7 @@ function dbg(text) {
           continue;
         }
         // This is a preprocessor directive line, e.g. #ifdef or #define.
-
+  
         // Parse the line as #<directive> <expression>
         var space = nextWhitespace(code, j);
         var directive = code.substring(j+1, space);
@@ -13669,14 +13669,14 @@ function dbg(text) {
           if (directive != 'version' && directive != 'pragma' && directive != 'extension' && directive != 'line') { // GLSL shader compiler specific #directives.
             err('Unrecognized preprocessor directive #' + directive + '!');
           }
-
+  
           // Unknown preprocessor macro, just pass through the line to output.
           out += expandMacros(code, lineStart, i) + '\n';
         }
       }
       return out;
     }
-
+  
   function remove_cpp_comments_in_shaders(code) {
       var i = 0, out = '', ch, next, len = code.length;
       for(; i < len; ++i) {
@@ -13696,12 +13696,12 @@ function dbg(text) {
       }
       return out;
     }
-
-
-
+  
+  
+  
   function _glShaderSource(shader, count, string, length) {
       var source = GL.getSource(shader, count, string, length);
-
+  
       // These are not expected to be meaningful in WebGL, but issue a warning if they are present, to give some diagnostics about if they are present.
       if (source.includes('__FILE__')) warnOnce(`When compiling shader: ${source}: Preprocessor variable __FILE__ is not handled by -sGL_EXPLICIT_UNIFORM_LOCATION/-sGL_EXPLICIT_UNIFORM_BINDING options!`);
       if (source.includes('__LINE__')) warnOnce(`When compiling shader: ${source}: Preprocessor variable __LINE__ is not handled by -sGL_EXPLICIT_UNIFORM_LOCATION/-sGL_EXPLICIT_UNIFORM_BINDING options!`);
@@ -13712,7 +13712,7 @@ function dbg(text) {
         'GL_ES': () => 1,
         '__VERSION__': () => source.includes('#version 300') ? 300 : 100
       });
-
+  
       // Extract the layout(location = x) directives.
       var regex = /layout\s*\(\s*location\s*=\s*(-?\d+)\s*\)\s*(uniform\s+((lowp|mediump|highp)\s+)?\w+\s+(\w+))/g, explicitUniformLocations = {}, match;
       while(match = regex.exec(source)) {
@@ -13723,14 +13723,14 @@ function dbg(text) {
           return;
         }
       }
-
+  
       // Remove all the layout(location = x) directives so that they do not make
       // their way to the actual WebGL shader compiler.
       source = source.replace(regex, '$2');
-
+  
       // Remember all the directives to be handled after glLinkProgram is called.
       GL.shaders[shader].explicitUniformLocations = explicitUniformLocations;
-
+  
       // Extract the layout(binding = x) directives. Four types we need to handle:
       // layout(binding = 3) uniform sampler2D mainTexture;
       // layout(binding = 1, std140) uniform MainBlock { ... };
@@ -13765,18 +13765,18 @@ function dbg(text) {
           return;
         }
       }
-
+  
       // Remove all the layout(binding = x) directives so that they do not make
       // their way to the actual WebGL shader compiler. These regexes get quite hairy, check against
       // https://regex101.com/ when working on these.
       source = source.replace(/layout\s*\(.*?binding\s*=\s*([-\d]+).*?\)/g, ''); // "layout(binding = 3)" -> ""
       source = source.replace(/(layout\s*\((.*?)),\s*binding\s*=\s*([-\d]+)\)/g, '$1)'); // "layout(std140, binding = 1)" -> "layout(std140)"
       source = source.replace(/layout\s*\(\s*binding\s*=\s*([-\d]+)\s*,(.*?)\)/g, 'layout($2)'); // "layout(binding = 1, std140)" -> "layout(std140)"
-
+  
       // Remember all the directives to be handled after glLinkProgram is called.
       GL.shaders[shader].explicitSamplerBindings = samplerBindings;
       GL.shaders[shader].explicitUniformBindings = uniformBindings;
-
+  
       GLctx.shaderSource(GL.shaders[shader], source);
     }
 
@@ -13786,8 +13786,8 @@ function dbg(text) {
 
   function _glStencilOpSeparate(x0, x1, x2, x3) { GLctx.stencilOpSeparate(x0, x1, x2, x3) }
 
-
-
+  
+  
   function _glTexImage2D(target, level, internalFormat, width, height, border, format, type, pixels) {
           if (GLctx.currentPixelUnpackBufferBinding) {
               GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels);
@@ -13812,9 +13812,9 @@ function dbg(text) {
           var alignedRowSize = roundedToNextMultipleOf(plainRowSize, alignment);
           return depth * height * alignedRowSize;
       }
-
-
-
+  
+  
+  
   function emscriptenWebGLGetTexPixelData3D(type, format, width, height, depth, pixels, internalFormat) {
           var heap = heapObjectForWebGLType(type);
           var shift = heapAccessShiftForWebGLHeap(heap);
@@ -13822,8 +13822,8 @@ function dbg(text) {
           var bytes = (computeUnpackAlignedImageSize3D(width, height, depth, sizePerPixel, GL.unpackAlignment));
           return heap.subarray((pixels >> shift), ((pixels + bytes) >> shift));
       }
-
-
+  
+  
   function _glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels) {
           if (GLctx.currentPixelUnpackBufferBinding) {
               GLctx.texImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels);
@@ -13853,8 +13853,8 @@ function dbg(text) {
 
   function _glTexStorage3D(x0, x1, x2, x3, x4, x5) { GLctx.texStorage3D(x0, x1, x2, x3, x4, x5) }
 
-
-
+  
+  
   function _glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) {
           if (GLctx.currentPixelUnpackBufferBinding) {
               GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
@@ -13871,8 +13871,8 @@ function dbg(text) {
           }
       }
 
-
-
+  
+  
   function _glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels) {
           if (GLctx.currentPixelUnpackBufferBinding) {
               GLctx.texSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
@@ -13889,10 +13889,10 @@ function dbg(text) {
           }
       }
 
-
+  
   var miniTempWebGLFloatBuffers = [];
   function _glUniform1fv(location, count, value) {
-
+  
           if (count <= 288) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLFloatBuffers[count-1];
@@ -13905,15 +13905,15 @@ function dbg(text) {
           GLctx.uniform1fv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform1i(location, v0) {
       GLctx.uniform1i(webglGetUniformLocation(location), v0);
     }
 
-
+  
   var miniTempWebGLIntBuffers = [];
   function _glUniform1iv(location, count, value) {
-
+  
           if (count <= 288) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLIntBuffers[count-1];
@@ -13926,10 +13926,10 @@ function dbg(text) {
           GLctx.uniform1iv(webglGetUniformLocation(location), view);
       }
 
-
+  
   var miniTempWebGLUIntBuffers = [];
   function _glUniform1uiv(location, count, value) {
-
+  
           if (count <= 288) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLUIntBuffers[count-1];
@@ -13942,9 +13942,9 @@ function dbg(text) {
           GLctx.uniform1uiv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform2fv(location, count, value) {
-
+  
           if (count <= 144) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLFloatBuffers[2*count-1];
@@ -13958,9 +13958,9 @@ function dbg(text) {
           GLctx.uniform2fv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform2iv(location, count, value) {
-
+  
           if (count <= 144) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLIntBuffers[2*count-1];
@@ -13974,7 +13974,7 @@ function dbg(text) {
           GLctx.uniform2iv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform2uiv(location, count, value) {
           if (count <= 144) {
               // avoid allocation when uploading few enough uniforms
@@ -13989,9 +13989,9 @@ function dbg(text) {
           GLctx.uniform2uiv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform3fv(location, count, value) {
-
+  
           if (count <= 96) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLFloatBuffers[3*count-1];
@@ -14006,9 +14006,9 @@ function dbg(text) {
           GLctx.uniform3fv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform3iv(location, count, value) {
-
+  
           if (count <= 96) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLIntBuffers[3*count-1];
@@ -14023,9 +14023,9 @@ function dbg(text) {
           GLctx.uniform3iv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform3uiv(location, count, value) {
-
+  
           if (count <= 96) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLUIntBuffers[3*count-1];
@@ -14040,9 +14040,9 @@ function dbg(text) {
           GLctx.uniform3uiv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform4fv(location, count, value) {
-
+  
           if (count <= 72) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLFloatBuffers[4*count-1];
@@ -14061,9 +14061,9 @@ function dbg(text) {
           GLctx.uniform4fv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform4iv(location, count, value) {
-
+  
           if (count <= 72) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLIntBuffers[4*count-1];
@@ -14075,14 +14075,14 @@ function dbg(text) {
               }
           } else {
               var view = HEAP32.subarray((value)>>2, (value+count*16)>>2);
-
+  
           }
           GLctx.uniform4iv(webglGetUniformLocation(location), view);
       }
 
-
+  
   function _glUniform4uiv(location, count, value) {
-
+  
           if (count <= 72) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLUIntBuffers[4*count-1];
@@ -14094,20 +14094,20 @@ function dbg(text) {
               }
           } else {
               var view = HEAPU32.subarray((value)>>2, (value+count*16)>>2);
-
+  
           }
           GLctx.uniform4uiv(webglGetUniformLocation(location), view);
       }
 
   function _glUniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding) {
       program = GL.programs[program];
-
+  
       GLctx.uniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding);
     }
 
-
+  
   function _glUniformMatrix3fv(location, count, transpose, value) {
-
+  
           if (count <= 32) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLFloatBuffers[9*count-1];
@@ -14128,9 +14128,9 @@ function dbg(text) {
           GLctx.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, view);
       }
 
-
+  
   function _glUniformMatrix4fv(location, count, transpose, value) {
-
+  
           if (count <= 18) {
               // avoid allocation when uploading few enough uniforms
               var view = miniTempWebGLFloatBuffers[16*count-1];
@@ -14161,15 +14161,15 @@ function dbg(text) {
           GLctx.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, view);
       }
 
-
-
+  
+  
   function _glUnmapBuffer(target) {
           if (!emscriptenWebGLValidateMapBufferTarget(target)) {
               GL.recordError(0x500/*GL_INVALID_ENUM*/);
               err('GL_INVALID_ENUM in glUnmapBuffer');
               return 0;
           }
-
+  
           var buffer = emscriptenWebGLGetBufferBinding(target);
           var mapping = GL.mappedBuffers[buffer];
           if (!mapping) {
@@ -14178,7 +14178,7 @@ function dbg(text) {
               return 0;
           }
           GL.mappedBuffers[buffer] = null;
-
+  
           if (!(mapping.access & 0x10)) /* GL_MAP_FLUSH_EXPLICIT_BIT */
               if (GL.currentContext.version >= 2 && HEAPU8.length <= 2147483648) { // WebGL 2 provides new garbage-free entry points to call to WebGL. Use those always when possible.
                   GLctx.bufferSubData(target, mapping.offset, HEAPU8, mapping.mem, mapping.length);
@@ -14210,7 +14210,7 @@ function dbg(text) {
         p.explicitProgramBindingsApplied = 1;
       }
     }
-
+  
   function _glUseProgram(program) {
       program = GL.programs[program];
       GLctx.useProgram(program);
@@ -14228,7 +14228,7 @@ function dbg(text) {
   function _glVertexAttrib4f(x0, x1, x2, x3, x4) { GLctx.vertexAttrib4f(x0, x1, x2, x3, x4) }
 
   function _glVertexAttrib4fv(index, v) {
-
+  
       v = (v >> 2);
       GLctx.vertexAttrib4f(index, HEAPF32[v], HEAPF32[v+1], HEAPF32[v+2], HEAPF32[v+3]);
     }
@@ -14279,14 +14279,14 @@ function dbg(text) {
     }
   var GPUTextureAndVertexFormats = wgpuDecodeStrings('r8YN8Sr8UN8TNRYNRSrRUNRTNRWNg8YNg8Srg8UNg8TNKUNKTNKWNgRYNgRSrgRUNgRTNgRW V8Y V8Z V8SV8U V8T bgra8Y bgra8ZNgb9e5uWNgbJa2UNgbJa2YNg11bJuWNgKUNgKTNgKW VRY VRSVRU VRT VRW VKU VKT VKW FLRYL24plusL24plus-FLKWLKW-FM1-V-YM1-V-ZM2-V-YM2-V-ZM3-V-YM3-V-ZM4-r-YM4-r-Sbc5B-YM5B-Sbc6hBb-uWM6hBb-WM7-V-YM7-V-ZQYQZQa1YQa1Z etc2-V8Y etc2-V8ZC11YC11SeacB11YCg11snormX4G-YX4G-ZX5G-YX5G-ZX5A-YX5A-ZX6A-YX6A-ZX6x6-YX6x6-ZX8A-YX8A-ZX8x6-YX8x6-ZX8x8-YX8x8-ZXJA-YXJA-ZXJx6-YXJx6-ZXJx8-YXJx8-ZXJxJ-YXJxJ-ZX12xJ-YX12xJ-ZX12x12-YX12x12-Z U8 U8HU8G T8 T8HT8G Y8 Y8HY8GP8P8x2P8G UR URHURG TR TRHTRG YR YRHYRGPRPRx2PRG WR WRHWRG WK WKHWKx3 WKG UK UKHUKx3 UKG TK TKHTKx3 TKG YJ-J-J-2 Y8G-bgra', 'unorm-srgb|unorm| astc-|float|rgba|uint|sint|snorm |16| etc2-rgb8| snorm|-BC| r| bc| depth|32|10|-AC|x2 |x4|stencil8|-E-|Mg| eac-r|-rg|x5');
   function _navigator_gpu_get_preferred_canvas_format() {
-
+      
       assert(navigator["gpu"], "Your browser does not support WebGPU!", "assert(navigator['gpu'], 'Your browser does not support WebGPU!') failed!");
-
+  
       assert(GPUTextureAndVertexFormats.includes(navigator["gpu"]["getPreferredCanvasFormat"]()), "assert(GPUTextureAndVertexFormats.includes(navigator['gpu']['getPreferredCanvasFormat']())) failed!");
       return GPUTextureAndVertexFormats.indexOf(navigator['gpu']['getPreferredCanvasFormat']());
     }
 
-
+  
   var wgpuIdCounter = 2;
   function wgpuStore(object) {
       if (object) {
@@ -14299,54 +14299,54 @@ function dbg(text) {
         // stay open for that long. Therefore handle wraparound of the ID counter generation,
         // and find free gaps in the object IDs for new objects.
         while(wgpu[wgpuIdCounter]) wgpuIdCounter = wgpuIdCounter < 2147483647 ? wgpuIdCounter + 1 : 2;
-
+  
         wgpu[wgpuIdCounter] = object;
-
+  
         // Each persisted objects gets a custom 'wid' field (wasm ID) which stores the ID that
         // this object is known by on Wasm side.
         object.wid = wgpuIdCounter;
-
+  
         ;
-
+  
         return wgpuIdCounter++;
       }
       // Implicit return undefined to marshal ID 0 over to Wasm.
     }
-
+  
   function _wgpuMuteJsExceptions(fn) {
       return (p) => { // only support one argument to function fn (we could do ...params, but we only ever need one arg so that's fine)
         try {
           return fn(p);
         } catch(e) {
-
+          
         }
       }
     }
-
+  
   /** @suppress{checkTypes} */
   function _navigator_gpu_request_adapter_async(options, adapterCallback, userData) {
-
+      
       assert(adapterCallback, "must pass a callback function to navigator_gpu_request_adapter_async!", "assert(adapterCallback, 'must pass a callback function to navigator_gpu_request_adapter_async!') failed!");
       assert(navigator["gpu"], "Your browser does not support WebGPU!", "assert(navigator['gpu'], 'Your browser does not support WebGPU!') failed!");
       assert(options != 0, "assert(options != 0) failed!");
-
+  
       assert((options >> 2) << 2 == options);
   options >>= 2;
-
+  
       let gpu = navigator['gpu'],
         powerPreference = [, 'low-power', 'high-performance'][HEAPU32[options]],
         opts = {};
-
+  
       if (gpu) {
         if (options) {
           opts['forceFallbackAdapter'] = !!HEAPU32[options+1];
           opts['xrCompatible'] = !!HEAPU32[options+2];
           if (powerPreference) opts['powerPreference'] = powerPreference;
         }
-
-
+  
+        
         function cb(adapter) {
-
+          
           getWasmTableEntry(adapterCallback)(wgpuStore(adapter), userData);
         }
         gpu['requestAdapter'](opts)
@@ -14356,11 +14356,11 @@ function dbg(text) {
         );
         return 1/*WGPU_TRUE*/;
       }
-
+      
       // Implicit return WGPU_FALSE, WebGPU is not supported.
     }
 
-
+  
   function arraySum(array, index) {
       var sum = 0;
       for (var i = 0; i <= index; sum += array[i++]) {
@@ -14368,10 +14368,10 @@ function dbg(text) {
       }
       return sum;
     }
-
-
+  
+  
   var MONTH_DAYS_LEAP = [31,29,31,30,31,30,31,31,30,31,30,31];
-
+  
   var MONTH_DAYS_REGULAR = [31,28,31,30,31,30,31,31,30,31,30,31];
   function addDays(date, days) {
       var newDate = new Date(date.getTime());
@@ -14379,7 +14379,7 @@ function dbg(text) {
         var leap = isLeapYear(newDate.getFullYear());
         var currentMonth = newDate.getMonth();
         var daysInCurrentMonth = (leap ? MONTH_DAYS_LEAP : MONTH_DAYS_REGULAR)[currentMonth];
-
+  
         if (days > daysInCurrentMonth-newDate.getDate()) {
           // we spill over to next month
           days -= (daysInCurrentMonth-newDate.getDate()+1);
@@ -14396,24 +14396,24 @@ function dbg(text) {
           return newDate;
         }
       }
-
+  
       return newDate;
     }
-
-
-
-
+  
+  
+  
+  
   function writeArrayToMemory(array, buffer) {
       assert(array.length >= 0, 'writeArrayToMemory array must have a length (should be an array or typed array)')
       HEAP8.set(array, buffer);
     }
-
+  
   function _strftime(s, maxsize, format, tm) {
       // size_t strftime(char *restrict s, size_t maxsize, const char *restrict format, const struct tm *restrict timeptr);
       // http://pubs.opengroup.org/onlinepubs/009695399/functions/strftime.html
-
+  
       var tm_zone = HEAP32[(((tm)+(40))>>2)];
-
+  
       var date = {
         tm_sec: HEAP32[((tm)>>2)],
         tm_min: HEAP32[(((tm)+(4))>>2)],
@@ -14427,9 +14427,9 @@ function dbg(text) {
         tm_gmtoff: HEAP32[(((tm)+(36))>>2)],
         tm_zone: tm_zone ? UTF8ToString(tm_zone) : ''
       };
-
+  
       var pattern = UTF8ToString(format);
-
+  
       // expand format
       var EXPANSION_RULES_1 = {
         '%c': '%a %b %d %H:%M:%S %Y',     // Replaced by the locale's appropriate date and time representation - e.g., Mon Aug  3 14:02:01 2013
@@ -14465,10 +14465,10 @@ function dbg(text) {
       for (var rule in EXPANSION_RULES_1) {
         pattern = pattern.replace(new RegExp(rule, 'g'), EXPANSION_RULES_1[rule]);
       }
-
+  
       var WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
+  
       function leadingSomething(value, digits, character) {
         var str = typeof value == 'number' ? value.toString() : (value || '');
         while (str.length < digits) {
@@ -14476,16 +14476,16 @@ function dbg(text) {
         }
         return str;
       }
-
+  
       function leadingNulls(value, digits) {
         return leadingSomething(value, digits, '0');
       }
-
+  
       function compareByDay(date1, date2) {
         function sgn(value) {
           return value < 0 ? -1 : (value > 0 ? 1 : 0);
         }
-
+  
         var compare;
         if ((compare = sgn(date1.getFullYear()-date2.getFullYear())) === 0) {
           if ((compare = sgn(date1.getMonth()-date2.getMonth())) === 0) {
@@ -14494,7 +14494,7 @@ function dbg(text) {
         }
         return compare;
       }
-
+  
       function getFirstWeekStartDate(janFourth) {
           switch (janFourth.getDay()) {
             case 0: // Sunday
@@ -14513,16 +14513,16 @@ function dbg(text) {
               return new Date(janFourth.getFullYear()-1, 11, 30);
           }
       }
-
+  
       function getWeekBasedYear(date) {
           var thisDate = addDays(new Date(date.tm_year+1900, 0, 1), date.tm_yday);
-
+  
           var janFourthThisYear = new Date(thisDate.getFullYear(), 0, 4);
           var janFourthNextYear = new Date(thisDate.getFullYear()+1, 0, 4);
-
+  
           var firstWeekStartThisYear = getFirstWeekStartDate(janFourthThisYear);
           var firstWeekStartNextYear = getFirstWeekStartDate(janFourthNextYear);
-
+  
           if (compareByDay(firstWeekStartThisYear, thisDate) <= 0) {
             // this date is after the start of the first week of this year
             if (compareByDay(firstWeekStartNextYear, thisDate) <= 0) {
@@ -14532,7 +14532,7 @@ function dbg(text) {
           }
           return thisDate.getFullYear()-1;
       }
-
+  
       var EXPANSION_RULES_2 = {
         '%a': function(date) {
           return WEEKDAYS[date.tm_wday].substring(0,3);
@@ -14566,7 +14566,7 @@ function dbg(text) {
           // %G is replaced by 1998 and %V is replaced by 53. If December 29th, 30th,
           // or 31st is a Monday, it and any following days are part of week 1 of the following year.
           // Thus, for Tuesday 30th December 1997, %G is replaced by 1998 and %V is replaced by 01.
-
+  
           return getWeekBasedYear(date).toString().substring(2);
         },
         '%G': function(date) {
@@ -14674,7 +14674,7 @@ function dbg(text) {
           return '%';
         }
       };
-
+  
       // Replace %% with a pair of NULLs (which cannot occur in a C string), then
       // re-inject them after processing.
       pattern = pattern.replace(/%%/g, '\0\0')
@@ -14684,12 +14684,12 @@ function dbg(text) {
         }
       }
       pattern = pattern.replace(/\0\0/g, '%')
-
+  
       var bytes = intArrayFromString(pattern, false);
       if (bytes.length > maxsize) {
         return 0;
       }
-
+  
       writeArrayToMemory(bytes, s);
       return bytes.length-1;
     }
@@ -14700,18 +14700,18 @@ function dbg(text) {
 
   var _wgpuFeatures = wgpuDecodeStrings('coAEeatuAs-aH-lBsF-GcontrolF32M-Iencil8ObcObLOetc2OaIcOaIL timeIamp-quDy iHiActEirI-inJ shadDE16 rg11b10uM-AHDKbgra8unorm-Iorage M32EiltDKM32CKGdiJs dual-sourceCing subgroupsN1N2 prBive-iHex', ' texture-compression-| texture-formats-tier|float|c-sliced-3d|able |stance|st|nd|clip-| depth|-f|er|-bleH|imit|re').slice(1);
   function _wgpu_adapter_or_device_get_features(adapterOrDevice) {
-
+      
       assert(adapterOrDevice != 0, "assert(adapterOrDevice != 0) failed!");
       assert(wgpu[adapterOrDevice], "assert(wgpu[adapterOrDevice]) failed!");
       assert(wgpu[adapterOrDevice] instanceof GPUAdapter || wgpu[adapterOrDevice] instanceof GPUDevice, "assert(wgpu[adapterOrDevice] instanceof GPUAdapter || wgpu[adapterOrDevice] instanceof GPUDevice) failed!");
       let id = 1,
         featuresBitMask = 0;
-
-
-
+  
+      
+  
       for(let feature of _wgpuFeatures) {
         if (wgpu[adapterOrDevice]['features'].has(feature)) {
-
+          
           featuresBitMask |= id;
         }
         id *= 2;
@@ -14720,23 +14720,23 @@ function dbg(text) {
     }
 
   var _wgpu32BitLimitNames = wgpuDecodeStrings('>1D >2D >3D<5eArrayLayers<9s<9sPlus7;s<BindingsPer9<Dynamic4m=Dynamic:=Sampled5e?axSampler?ax:;?ax:5e?ax4m;?in4m;6 min:;6<7;s<7Attributes<7;ArrayStride<InterStageShaderVariables<ColorAttachments<ColorAttachmentBytesPerSample@p:Size<ComputeInvocationsPerWorkgroup@pSizeX@pSizeY@pSizeZ@psPerDimension', ' maxComputeWorkgrou|sPerShaderStage m|maxTextureDimension|BuffersPerPipelineLayout max| max|Buffer|Storage|BindGroup|s8ColorAttachmen|Vertex|OffsetAlignment|Textur|Unifor', 52).slice(1);
-
+  
   var _wgpu64BitLimitNames = wgpuDecodeStrings('maxUniform4Storage4BufferSize', 'BufferBindingSize max', 52).slice(1);
-
+  
   function wgpuWriteI53ToU64HeapIdx(heap32Idx, number) {
       assert(heap32Idx != 0, "assert(heap32Idx != 0) failed!");
       assert(heap32Idx % 2 == 0, "assert(heap32Idx % 2 == 0) failed!");
       HEAPU64[heap32Idx >>> 1] = BigInt(number);
     }
   function _wgpu_adapter_or_device_get_limits(adapterOrDevice, limits) {
-
+      
       assert(limits != 0, "passed a null limits struct pointer", "assert(limits != 0, 'passed a null limits struct pointer') failed!");
       assert(adapterOrDevice != 0, "assert(adapterOrDevice != 0) failed!");
       assert(wgpu[adapterOrDevice], "assert(wgpu[adapterOrDevice]) failed!");
       assert(wgpu[adapterOrDevice] instanceof GPUAdapter || wgpu[adapterOrDevice] instanceof GPUDevice, "assert(wgpu[adapterOrDevice] instanceof GPUAdapter || wgpu[adapterOrDevice] instanceof GPUDevice) failed!");
-
+  
       let l = wgpu[adapterOrDevice]['limits'];
-
+  
       assert((limits >> 2) << 2 == limits);
   limits >>= 2;
       for(let limitName of _wgpu64BitLimitNames) {
@@ -14744,16 +14744,16 @@ function dbg(text) {
         wgpuWriteI53ToU64HeapIdx(limits, l[limitName]);
         limits += 2;
       }
-
+  
       for(let limitName of _wgpu32BitLimitNames) {
         HEAPU32[limits++] = l[limitName];
       }
     }
 
-
-
-
-
+  
+  
+  
+  
   function wgpuReadI53FromU64HeapIdx(heap32Idx) {
       assert(heap32Idx != 0, "assert(heap32Idx != 0) failed!");
       assert(heap32Idx % 2 == 0, "assert(heap32Idx % 2 == 0) failed!");
@@ -14761,67 +14761,67 @@ function dbg(text) {
     }
   function wgpuReadSupportedLimits(heap32Idx) {
       let requiredLimits = {}, v;
-
+  
       // Marshal all the complex 64-bit quantities first ..
       for(let limitName of _wgpu64BitLimitNames) {
         if ((v = wgpuReadI53FromU64HeapIdx(heap32Idx))) requiredLimits[limitName] = v;
         heap32Idx += 2;
       }
-
+  
       // .. followed by the 32-bit quantities.
       for(let limitName of _wgpu32BitLimitNames) {
         if ((v = HEAPU32[heap32Idx++])) requiredLimits[limitName] = v;
       }
       return requiredLimits;
     }
-
+  
   function wgpuReadQueueDescriptor(heap32Idx) {
       return HEAPU32[heap32Idx] ? { 'label': utf8(HEAPU32[heap32Idx]) } : void 0;
     }
-
+  
   function wgpuReadFeaturesBitfield(heap32Idx) {
       let requiredFeatures = [], v = HEAPU32[heap32Idx];
-
+  
       assert(_wgpuFeatures.length == 21, "assert(_wgpuFeatures.length == 21) failed!");
       assert(_wgpuFeatures.length <= 30, "assert(_wgpuFeatures.length <= 30) failed!"); // We can only do up to 30 distinct feature bits here with the current code.
-
+      
       for(let i = 0; i < 21/*_wgpuFeatures.length*/; ++i) {
         if (v & (1 << i)) requiredFeatures.push(_wgpuFeatures[i]);
-      }
+      } 
       return requiredFeatures;
     }
   function wgpuReadDeviceDescriptor(descriptor) {
       assert(descriptor != 0, "assert(descriptor != 0) failed!");
       assert((descriptor >> 2) << 2 == descriptor);
   descriptor >>= 2;
-
+  
       return {
         'requiredLimits': wgpuReadSupportedLimits(descriptor),
         'defaultQueue': wgpuReadQueueDescriptor(descriptor+34/*sizeof(WGpuSupportedLimits)*/),
         'requiredFeatures': wgpuReadFeaturesBitfield(descriptor+36/*sizeof(WGpuSupportedLimits)+sizeof(WGpuQueueDescriptor)*/)
       };
     }
-
+  
   /** @suppress{checkTypes} */
   function _wgpu_adapter_request_device_async(adapter, descriptor, deviceCallback, userData) {
-
+      
       assert(adapter != 0, "assert(adapter != 0) failed!");
       assert(wgpu[adapter], "assert(wgpu[adapter]) failed!");
       assert(wgpu[adapter] instanceof GPUAdapter, "assert(wgpu[adapter] instanceof GPUAdapter) failed!");
-
+  
       function cb(device) {
         // If device is non-null, initialization succeeded.
-
+        
         if (device) {
           // Register an ID for the queue of this newly created device
           wgpuStore(device['queue']);
         }
-
+  
         getWasmTableEntry(deviceCallback)(wgpuStore(device), userData);
       }
-
+  
       let desc = wgpuReadDeviceDescriptor(descriptor);
-
+  
       ;
       wgpu[adapter]['requestDevice'](desc)
         .then(_wgpuMuteJsExceptions(cb))
@@ -14831,7 +14831,7 @@ function dbg(text) {
     }
 
   function _wgpu_buffer_get_mapped_range(gpuBuffer, offset, size) {
-
+      
       assert(gpuBuffer != 0, "assert(gpuBuffer != 0) failed!");
       assert(wgpu[gpuBuffer], "assert(wgpu[gpuBuffer]) failed!");
       assert(wgpu[gpuBuffer] instanceof GPUBuffer, "assert(wgpu[gpuBuffer] instanceof GPUBuffer) failed!");
@@ -14839,22 +14839,22 @@ function dbg(text) {
       assert(offset >= 0, "assert(offset >= 0) failed!");
       assert(Number.isSafeInteger(size), "assert(Number.isSafeInteger(size)) failed!");
       assert(size >= -1, "assert(size >= -1) failed!");
-
-
+  
+      
       gpuBuffer = wgpu[gpuBuffer];
       try {
         gpuBuffer.mappedRanges[offset] = gpuBuffer['getMappedRange'](offset, size < 0 ? void 0 : size);
       } catch(e) {
-        // E.g. if the GPU ran out of memory when creating a new buffer, this can fail.
-
+        // E.g. if the GPU ran out of memory when creating a new buffer, this can fail. 
+        
         return -1;
       }
-
+      
       return offset;
     }
 
   function _wgpu_buffer_map_async(buffer, callback, userData, mode, offset, size) {
-
+      
       assert(buffer != 0, "assert(buffer != 0) failed!");
       assert(wgpu[buffer], "assert(wgpu[buffer]) failed!");
       assert(wgpu[buffer] instanceof GPUBuffer, "assert(wgpu[buffer] instanceof GPUBuffer) failed!");
@@ -14862,14 +14862,14 @@ function dbg(text) {
       assert(offset >= 0, "assert(offset >= 0) failed!");
       assert(Number.isSafeInteger(size), "assert(Number.isSafeInteger(size)) failed!");
       assert(size >= -1, "assert(size >= -1) failed!");
-
+  
       wgpu[buffer]['mapAsync'](mode, offset, size < 0 ? void 0 : size).then(() => {
         getWasmTableEntry(callback)(buffer, userData, mode, offset, size);
       });
     }
 
   function _wgpu_buffer_read_mapped_range(gpuBuffer, startOffset, subOffset, dst, size) {
-
+      
       assert(gpuBuffer != 0, "assert(gpuBuffer != 0) failed!");
       assert(wgpu[gpuBuffer], "assert(wgpu[gpuBuffer]) failed!");
       assert(wgpu[gpuBuffer] instanceof GPUBuffer, "assert(wgpu[gpuBuffer] instanceof GPUBuffer) failed!");
@@ -14881,33 +14881,33 @@ function dbg(text) {
       assert(Number.isSafeInteger(size), "assert(Number.isSafeInteger(size)) failed!");
       assert(size >= 0, "assert(size >= 0) failed!");
       assert(dst || size == 0, "assert(dst || size == 0) failed!");
-
+  
       // N.b. this generates garbage because JavaScript does not allow ArrayBufferView.set(ArrayBuffer, offset, size, dst)
       // but must create a dummy view.
       HEAPU8.set(new Uint8Array(wgpu[gpuBuffer].mappedRanges[startOffset], subOffset, size), wgpu_checked_shift(dst, 0) );
     }
 
   function _wgpu_buffer_unmap(gpuBuffer) {
-
+      
       assert(gpuBuffer != 0, "assert(gpuBuffer != 0) failed!");
       assert(wgpu[gpuBuffer], "assert(wgpu[gpuBuffer]) failed!");
       assert(wgpu[gpuBuffer] instanceof GPUBuffer, "assert(wgpu[gpuBuffer] instanceof GPUBuffer) failed!");
       gpuBuffer = wgpu[gpuBuffer];
       gpuBuffer['unmap']();
-
+  
       // Let GC reclaim all previous getMappedRange()s for this buffer.
       gpuBuffer.mappedRanges = {};
     }
 
-
+  
   var HTMLPredefinedColorSpaces = [,"srgb","display-p3"];
-
+  
   function wgpuReadArrayOfItemsMaybeNull(itemDict, ptr, numItems) {
       assert(numItems >= 0, "assert(numItems >= 0) failed!");
       assert(ptr != 0 || numItems == 0, "assert(ptr != 0 || numItems == 0) failed!"); // Must be non-null pointer
       assert((ptr >> 2) << 2 == ptr);
   ptr >>= 2;
-
+  
       var arrayOfItems = new Array(numItems);
       for(var i = 0; i < numItems;) {
         arrayOfItems[i++] = itemDict[HEAPU32[ptr++]];
@@ -14922,21 +14922,21 @@ function dbg(text) {
       }
       return wgpuReadArrayOfItemsMaybeNull(itemDict, ptr, numItems);
     }
-
-
+  
+  
   var GPUCanvasToneMappingModes = [,"standard","extended"];
-
+  
   var GPUCanvasAlphaModes = [,"opaque","premultiplied"];
   function _wgpu_canvas_context_configure(canvasContext, config) {
-
+      
       assert(canvasContext != 0, "assert(canvasContext != 0) failed!");
       assert(wgpu[canvasContext], "assert(wgpu[canvasContext]) failed!");
       assert(wgpu[canvasContext] instanceof GPUCanvasContext, "assert(wgpu[canvasContext] instanceof GPUCanvasContext) failed!");
       assert(config != 0, "assert(config != 0) failed!"); // Must be non-null
-
+  
       assert((config >> 2) << 2 == config);
   config >>= 2;
-
+  
       let desc = {
         'device': wgpu[HEAPU32[config]],
         'format': GPUTextureAndVertexFormats[HEAPU32[config+1]],
@@ -14948,7 +14948,7 @@ function dbg(text) {
         },
         'alphaMode': GPUCanvasAlphaModes[HEAPU32[config+8]]
       };
-
+  
       ;
       wgpu[canvasContext]['configure'](desc);
     }
@@ -14971,10 +14971,10 @@ function dbg(text) {
       }
       assert(!wgpu.hasOwnProperty(object), 'object should have gotten deleted', "assert(!wgpu.hasOwnProperty(object), 'object should have gotten deleted') failed!");
     }
-
+  
   function wgpuLinkParentAndChild(parent, childId, child) {
       child.parentObject = parent; // Link child->parent
-
+  
       // WebGPU objects form an object hierarchy, and deleting an object (adapter, device, texture, etc.) will
       // destroy all child objects in the hierarchy)
       // N.b. Chrome has been observed to exhibit really poor performance (~100-1000x slower) if a {} is used
@@ -14984,16 +14984,16 @@ function dbg(text) {
       parent.derivedObjects.set(childId, child); // Link parent->child
     }
   function _wgpu_canvas_context_get_current_texture(canvasContext) {
-
+      
       assert(canvasContext != 0, "assert(canvasContext != 0) failed!");
       assert(wgpu[canvasContext], "assert(wgpu[canvasContext]) failed!");
       assert(wgpu[canvasContext] instanceof GPUCanvasContext, "assert(wgpu[canvasContext] instanceof GPUCanvasContext) failed!");
-
+  
       canvasContext = wgpu[canvasContext];
       // The canvas context texture is a special texture that automatically invalidates itself after the current rAF()
       // callback if over. Therefore when a new swap chain texture is produced, we need to delete the old one to avoid
       // accumulating references to stale textures from each frame.
-
+  
       // Acquire the new canvas context texture..
       var canvasTexture = canvasContext['getCurrentTexture']();
       assert(canvasTexture, "assert(canvasTexture) failed!");
@@ -15009,18 +15009,18 @@ function dbg(text) {
     }
 
   function _wgpu_canvas_get_webgpu_context(canvasSelector) {
-
+      
       assert(canvasSelector, "assert(canvasSelector) failed!");
-
+  
       // Search Canvas elements in DOM.
       let canvas = document.querySelector(utf8(canvasSelector));
       ;
-
+  
       let ctx = canvas.getContext('webgpu');
       ;
-
+  
       if (ctx.wid) return ctx.wid;
-
+  
       return wgpuStore(ctx);
     }
 
@@ -15034,29 +15034,29 @@ function dbg(text) {
       }
     }
   function _wgpu_command_encoder_begin_compute_pass(commandEncoder, descriptor) {
-
+      
       assert(commandEncoder != 0, "assert(commandEncoder != 0) failed!");
       assert(wgpu[commandEncoder], "assert(wgpu[commandEncoder]) failed!");
       assert(wgpu[commandEncoder] instanceof GPUCommandEncoder, "assert(wgpu[commandEncoder] instanceof GPUCommandEncoder) failed!");
       // descriptor may be a null pointer
-
+  
       commandEncoder = wgpu[commandEncoder];
       assert((descriptor >> 2) << 2 == descriptor);
   descriptor >>= 2;
-
+  
       let desc = descriptor ? {
         'timestampWrites': wgpuReadTimestampWrites(descriptor)
       } : void 0;
-
-
+  
+      
       return wgpuStore(commandEncoder['beginComputePass'](desc));
     }
 
   var GPULoadOps = [,"load","clear"];
-
+  
   var GPUStoreOps = [,"store","discard"];
-
-
+  
+  
   function wgpuReadRenderPassDepthStencilAttachment(heap32Idx) {
       return HEAPU32[heap32Idx] ? {
           'view': wgpu[HEAPU32[heap32Idx]],
@@ -15071,28 +15071,28 @@ function dbg(text) {
         } : void 0;
     }
   function _wgpu_command_encoder_begin_render_pass(commandEncoder, descriptor) {
-
+      
       assert(commandEncoder != 0, "assert(commandEncoder != 0) failed!");
       assert(wgpu[commandEncoder], "assert(wgpu[commandEncoder]) failed!");
       assert(wgpu[commandEncoder] instanceof GPUCommandEncoder, "assert(wgpu[commandEncoder] instanceof GPUCommandEncoder) failed!");
       assert(descriptor != 0, "assert(descriptor != 0) failed!");
-
+  
       assert((descriptor >> 2) << 2 == descriptor);
   descriptor >>= 2;
-
+  
       let colorAttachments = [],
         numColorAttachments = HEAP32[descriptor+4],
         colorAttachmentsIdx = wgpu_checked_shift(HEAPU32[descriptor+2], 2),
         colorAttachmentsIdxDbl = colorAttachmentsIdx + 6 >> 1, // Alias the view for HEAPF64.
         maxDrawCount = HEAPF64[descriptor >> 1],
         depthStencilAttachment = HEAPU32[descriptor+5];
-
+  
       assert(Number.isSafeInteger(maxDrawCount), "assert(Number.isSafeInteger(maxDrawCount)) failed!"); // 'maxDrawCount' is a double_int53_t
       assert(maxDrawCount >= 0, "assert(maxDrawCount >= 0) failed!");
-
+  
       assert(colorAttachmentsIdx % 2 == 0, "assert(colorAttachmentsIdx % 2 == 0) failed!"); // Must be aligned at double boundary
       assert(depthStencilAttachment == 0 || wgpu[depthStencilAttachment] instanceof GPUTextureView, "assert(depthStencilAttachment == 0 || wgpu[depthStencilAttachment] instanceof GPUTextureView) failed!"); // Must point to a valid WebGPU texture view object if nonzero
-
+  
       assert(numColorAttachments >= 0, "assert(numColorAttachments >= 0) failed!");
       while(numColorAttachments--) {
         // If view is 0, then this attachment is to be sparse.
@@ -15105,11 +15105,11 @@ function dbg(text) {
           'clearValue': [HEAPF64[colorAttachmentsIdxDbl  ], HEAPF64[colorAttachmentsIdxDbl+1],
                          HEAPF64[colorAttachmentsIdxDbl+2], HEAPF64[colorAttachmentsIdxDbl+3]]
         } : null);
-
+  
         colorAttachmentsIdx += 14; // sizeof(WGpuRenderPassColorAttachment)
         colorAttachmentsIdxDbl += 7; // sizeof(WGpuRenderPassColorAttachment)/2
       }
-
+  
       let desc = {
         'colorAttachments': colorAttachments,
         // Awkward polymorphism: cannot specify 'view': undefined if no depth-stencil attachment
@@ -15126,7 +15126,7 @@ function dbg(text) {
     }
 
   function _wgpu_command_encoder_copy_buffer_to_buffer(commandEncoder, source, sourceOffset, destination, destinationOffset, size) {
-
+      
       assert(commandEncoder != 0, "assert(commandEncoder != 0) failed!");
       assert(wgpu[commandEncoder], "assert(wgpu[commandEncoder]) failed!");
       assert(wgpu[commandEncoder] instanceof GPUCommandEncoder, "assert(wgpu[commandEncoder] instanceof GPUCommandEncoder) failed!");
@@ -15153,7 +15153,7 @@ function dbg(text) {
         'aspect': GPUTextureAspects[HEAPU32[ptr+5]]
       };
     }
-
+  
   function wgpuReadGpuTexelCopyBufferInfo(ptr) {
       assert(ptr != 0, "assert(ptr != 0) failed!");
       assert((ptr >> 2) << 2 == ptr);
@@ -15166,7 +15166,7 @@ function dbg(text) {
       };
     }
   function _wgpu_command_encoder_copy_texture_to_buffer(commandEncoder, source, destination, copyWidth, copyHeight, copyDepthOrArrayLayers) {
-
+      
       assert(commandEncoder != 0, "assert(commandEncoder != 0) failed!");
       assert(wgpu[commandEncoder], "assert(wgpu[commandEncoder]) failed!");
       assert(wgpu[commandEncoder] instanceof GPUCommandEncoder, "assert(wgpu[commandEncoder] instanceof GPUCommandEncoder) failed!");
@@ -15176,7 +15176,7 @@ function dbg(text) {
     }
 
   function _wgpu_command_encoder_copy_texture_to_texture(commandEncoder, source, destination, copyWidth, copyHeight, copyDepthOrArrayLayers) {
-
+      
       assert(commandEncoder != 0, "assert(commandEncoder != 0) failed!");
       assert(wgpu[commandEncoder], "assert(wgpu[commandEncoder]) failed!");
       assert(wgpu[commandEncoder] instanceof GPUCommandEncoder, "assert(wgpu[commandEncoder] instanceof GPUCommandEncoder) failed!");
@@ -15186,7 +15186,7 @@ function dbg(text) {
     }
 
   function _wgpu_compute_pass_encoder_dispatch_workgroups(encoder, workgroupCountX, workgroupCountY, workgroupCountZ) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPUComputePassEncoder, "assert(wgpu[encoder] instanceof GPUComputePassEncoder) failed!");
@@ -15194,7 +15194,7 @@ function dbg(text) {
     }
 
   function _wgpu_compute_pass_encoder_dispatch_workgroups_indirect(encoder, indirectBuffer, indirectOffset) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPUComputePassEncoder, "assert(wgpu[encoder] instanceof GPUComputePassEncoder) failed!");
@@ -15206,7 +15206,7 @@ function dbg(text) {
       wgpu[encoder]['dispatchWorkgroupsIndirect'](wgpu[indirectBuffer], indirectOffset);
     }
 
-
+  
   function wgpuStoreAndSetParent(object, parent) {
       if (object) {
         var objectId = wgpuStore(object);
@@ -15214,9 +15214,9 @@ function dbg(text) {
         return objectId;
       }
     }
-
+  
   function _wgpu_device_create_bind_group(device, layout, entries, numEntries) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
@@ -15243,7 +15243,7 @@ function dbg(text) {
         });
         entries += 6;
       }
-
+  
       let desc = {
         'layout': wgpu[layout],
         'entries': e
@@ -15252,22 +15252,22 @@ function dbg(text) {
       return wgpuStoreAndSetParent(device['createBindGroup'](desc), device);
     }
 
-
+  
   var GPUBufferBindingTypes = wgpuDecodeStrings('uniform A read-only-A', 'storage');
-
-
+  
+  
   var GPUSamplerBindingTypes = wgpuDecodeStrings('Anon-Acomparison', 'filtering ');
-
+  
   var GPUTextureSampleTypes = wgpuDecodeStrings('Aunfilterable-Adepth sint uint', 'float ');
-
+  
   var GPUTextureViewDimensions = wgpuDecodeStrings('1B 2dCA AC3d', '-array |d 2d|cube');
-
-
+  
+  
   var GPUStorageTextureSampleTypes = wgpuDecodeStrings('A-BBA', 'only read-|write');
   function wgpuReadBindGroupLayoutDescriptor(entries, numEntries) {
       assert(numEntries >= 0, "assert(numEntries >= 0) failed!");
       assert(entries != 0 || numEntries == 0, "assert(entries != 0 || numEntries == 0) failed!"); // Must be non-null pointer
-
+  
       assert((entries >> 2) << 2 == entries);
   entries >>= 2;
       let e = [];
@@ -15311,20 +15311,20 @@ function dbg(text) {
       }
     }
   function _wgpu_device_create_bind_group_layout(device, entries, numEntries) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
       device = wgpu[device];
-
+  
       let desc = wgpuReadBindGroupLayoutDescriptor(entries, numEntries);
-
+      
       return wgpuStoreAndSetParent(device['createBindGroupLayout'](desc), device);
     }
 
-
+  
   function _wgpu_device_create_buffer(device, descriptor) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
@@ -15332,7 +15332,7 @@ function dbg(text) {
       device = wgpu[device];
       assert((descriptor >> 2) << 2 == descriptor);
   descriptor >>= 2;
-
+  
       let desc = {
         'size': wgpuReadI53FromU64HeapIdx(descriptor),
         'usage': HEAPU32[descriptor+2],
@@ -15340,7 +15340,7 @@ function dbg(text) {
       };
       ;
       let buffer = device['createBuffer'](desc);
-
+  
       // Add tracking space for mapped ranges
       buffer.mappedRanges = {};
       // Mark this object to be of type GPUBuffer for wgpu_device_create_bind_group().
@@ -15349,12 +15349,12 @@ function dbg(text) {
     }
 
   function _wgpu_device_create_command_encoder(device, descriptor) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
       assert(descriptor == 0 && "TODO: passing non-zero descriptor to wgpu_device_create_command_encoder() not yet implemented!", "assert(descriptor == 0 && 'TODO: passing non-zero descriptor to wgpu_device_create_command_encoder() not yet implemented!') failed!");
-
+  
       let desc = void 0;
       ;
       return wgpuStoreAndSetParent(wgpu[device]['createCommandEncoder'](desc), wgpu[device]);
@@ -15364,23 +15364,23 @@ function dbg(text) {
       return wgpuStoreAndSetParent(wgpu[device]['createCommandEncoder'](), wgpu[device]);
     }
 
-
+  
   function wgpuReadConstants(constants, numConstants) {
       assert(numConstants >= 0, "assert(numConstants >= 0) failed!");
       assert(constants != 0 || numConstants == 0, "assert(constants != 0 || numConstants == 0) failed!");
-
+  
       let c = {};
       while(numConstants--) {
-        c[utf8(HEAPU32[constants  + 3 >> 2])] =
+        c[utf8(HEAPU32[constants  + 3 >> 2])] = 
           HEAPF64[wgpu_checked_shift(constants + 8, 3)];
         constants += 16;
       }
       return c;
     }
-
+  
   var GPUAutoLayoutMode = "auto";
   function _wgpu_device_create_compute_pipeline(device, computeModule, entryPoint, layout, constants, numConstants) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
@@ -15393,7 +15393,7 @@ function dbg(text) {
       assert(numConstants == 0 || constants, "assert(numConstants == 0 || constants) failed!");
       assert(!entryPoint || utf8(entryPoint).length > 0, "assert(!entryPoint || utf8(entryPoint).length > 0) failed!"); // If entry point string is provided, it must be a nonempty JS string
       device = wgpu[device];
-
+  
       let desc = {
         'layout': layout > 1 ? wgpu[layout] : GPUAutoLayoutMode,
         'compute': {
@@ -15406,14 +15406,14 @@ function dbg(text) {
       return wgpuStoreAndSetParent(device['createComputePipeline'](desc), device);
     }
 
-
+  
   function _wgpu_device_create_pipeline_layout(device, layouts, numLayouts) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
       device = wgpu[device];
-
+  
       let desc = {
         'bindGroupLayouts': wgpuReadArrayOfItemsMaybeNull(wgpu, layouts, numLayouts)
       };
@@ -15422,7 +15422,7 @@ function dbg(text) {
     }
 
   var GPUCompareFunctions = wgpuDecodeStrings('neverA equalACB notCBCalways', '-equal |greater| less');
-
+  
   var GPUStencilOperations = wgpuDecodeStrings('keep zero replace invert inCBdeCBinCA deCA', 'crement-|clamp |wrap');
   function wgpuReadGpuStencilFaceState(idx) {
       assert(idx != 0, "assert(idx != 0) failed!");
@@ -15433,9 +15433,9 @@ function dbg(text) {
         'passOp': GPUStencilOperations[HEAPU32[idx+3]]
       };
     }
-
+  
   var GPUBlendOperations = wgpuDecodeStrings('add Areverse-Amin max', 'subtract ');
-
+  
   var GPUBlendFactors = wgpuDecodeStrings('zero one CFC CEFCE AFA AEFAE CE-saturated BFB DFD DEFDE', ' one-minus-|-alpha|src1|src|constant|dst');
   function wgpuReadGpuBlendComponent(idx) {
       assert(idx != 0, "assert(idx != 0) failed!");
@@ -15448,20 +15448,20 @@ function dbg(text) {
         'dstFactor': GPUBlendFactors[HEAPU32[idx+2]]
       };
     }
-
-
-
+  
+  
+  
   var GPUIndexFormats = wgpuDecodeStrings('A16 A32', 'uint');
-
-
-
+  
+  
+  
   var GPUPrimitiveTopologys = wgpuDecodeStrings('pointDADAB CDCB', '-list |triangle|-strip|line');
-
+  
   function wgpuReadRenderPipelineDescriptor(descriptor) {
       assert(descriptor != 0, "assert(descriptor != 0) failed!");
       assert((descriptor >> 2) << 2 == descriptor);
   descriptor >>= 2;
-
+  
       let vertexBuffers = [],
           targets = [],
           vertexIdx = descriptor,
@@ -15478,10 +15478,10 @@ function dbg(text) {
           fragmentModule = HEAPU32[fragmentIdx+6],
           pipelineLayoutId = HEAPU32[fragmentIdx+10], // sizeof(WGpuFragmentState)
           desc;
-
+  
       assert(pipelineLayoutId <= 1/*"auto"*/ || wgpu[pipelineLayoutId], "assert(pipelineLayoutId <= 1/*'auto'*/ || wgpu[pipelineLayoutId]) failed!");
       assert(pipelineLayoutId <= 1/*"auto"*/ || wgpu[pipelineLayoutId] instanceof GPUPipelineLayout, "assert(pipelineLayoutId <= 1/*'auto'*/ || wgpu[pipelineLayoutId] instanceof GPUPipelineLayout) failed!");
-
+  
       // Read GPUVertexState
       assert(numVertexBuffers >= 0, "assert(numVertexBuffers >= 0) failed!");
       while(numVertexBuffers--) {
@@ -15504,11 +15504,11 @@ function dbg(text) {
         });
         vertexBuffersIdx += 6; // sizeof(WGpuVertexBufferLayout)
       }
-
+  
       assert(numTargets >= 0, "assert(numTargets >= 0) failed!");
       while(numTargets--) {
         // If target format is 0 (WGPU_TEXTURE_FORMAT_INVALID), then this target
-        // is sparse and specified as 'null'.
+        // is sparse and specified as 'null'. 
         targets.push(HEAPU32[targetsIdx] ? {
           'format': GPUTextureAndVertexFormats[HEAPU32[targetsIdx]],
           'blend': HEAPU32[targetsIdx+1] ? {
@@ -15519,7 +15519,7 @@ function dbg(text) {
         } : null);
         targetsIdx += 8;
       }
-
+  
       desc = {
         'vertex': {
           'module': wgpu[HEAPU32[vertexIdx+6]],
@@ -15562,36 +15562,36 @@ function dbg(text) {
         } : void 0,
         'layout': pipelineLayoutId > 1 ? wgpu[pipelineLayoutId] : GPUAutoLayoutMode
       };
-
+  
       return desc;
     }
-
+  
   function _wgpu_device_create_render_pipeline(device, descriptor) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
       assert(descriptor, "assert(descriptor) failed!");
-
+  
       let desc = wgpuReadRenderPipelineDescriptor(descriptor);
       ;
       return wgpuStoreAndSetParent(wgpu[device]['createRenderPipeline'](desc), wgpu[device]);
     }
 
-
+  
   var GPUAddressModes = wgpuDecodeStrings('clamp-to-edge A mirror-A', 'repeat');
-
+  
   var GPUFilterModes = wgpuDecodeStrings('Aest liA', 'near');
-
+  
   var GPUMipmapFilterModes = wgpuDecodeStrings('Aest liA', 'near');
-
+  
   function _wgpu_device_create_sampler(device, descriptor) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
       device = wgpu[device];
-
+  
       assert((descriptor >> 2) << 2 == descriptor);
   descriptor >>= 2;
       let desc = descriptor ? {
@@ -15606,12 +15606,12 @@ function dbg(text) {
         'compare': GPUCompareFunctions[HEAPU32[descriptor+8]],
         'maxAnisotropy': HEAPU32[descriptor+9]
       } : void 0;
-
-
+      
+  
       return wgpuStoreAndSetParent(device['createSampler'](desc), device);
     }
 
-
+  
   function wgpuReadShaderModuleCompilationHints(index) {
       let numHints = HEAP32[index+2],
         hints = [],
@@ -15644,32 +15644,32 @@ function dbg(text) {
       }
     }
   function _wgpu_device_create_shader_module(device, descriptor) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
-
+  
       let desc = wgpuReadShaderModuleDescriptor(descriptor);
       ;
       return wgpuStoreAndSetParent(wgpu[device]['createShaderModule'](desc), wgpu[device]);
     }
 
-
-
-
+  
+  
+  
   function _wgpu_device_create_texture(device, descriptor) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
       assert(descriptor != 0, "assert(descriptor != 0) failed!"); // Must be non-null
       device = wgpu[device];
-
+  
       assert((descriptor >> 2) << 2 == descriptor);
   descriptor >>= 2;
       assert(HEAPU32[descriptor+8] >= 1, "assert(HEAPU32[descriptor+8] >= 1) failed!"); // 'dimension' must be one of 1d, 2d or 3d.
       assert(HEAPU32[descriptor+8] <= 3, "assert(HEAPU32[descriptor+8] <= 3) failed!"); // 'dimension' must be one of 1d, 2d or 3d.
-
+      
       let desc = {
         'viewFormats': wgpuReadArrayOfItems(GPUTextureAndVertexFormats, HEAPU32[descriptor ], HEAPU32[descriptor+2]),
         'size': [HEAP32[descriptor+3], HEAP32[descriptor+4], HEAP32[descriptor+5]],
@@ -15679,14 +15679,14 @@ function dbg(text) {
         'format': GPUTextureAndVertexFormats[HEAPU32[descriptor+9]],
         'usage': HEAPU32[descriptor+10]
       };
-
+      
       let texture = device['createTexture'](desc);
-
+  
       return wgpuStoreAndSetParent(texture, device);
     }
 
   function _wgpu_device_get_queue(device) {
-
+      
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
@@ -15695,8 +15695,8 @@ function dbg(text) {
       return wgpu[device]['queue'].wid;
     }
 
-
-
+  
+  
   function _wgpuReportErrorCodeAndMessage(device, callback, errorCode, stringMessage, userData) {
       if (stringMessage) {
         // n.b. these variables deliberately rely on 'var' scope.
@@ -15708,7 +15708,7 @@ function dbg(text) {
       getWasmTableEntry(callback)(device, errorCode, errorMessage, userData);
       if (stackTop) stackRestore(stackTop);
     }
-
+  
   function _wgpuErrorObjectToErrorType(error) {
       return error
           ? (error instanceof GPUInternalError    ? 3/*WGPU_ERROR_TYPE_INTERNAL*/
@@ -15730,17 +15730,17 @@ function dbg(text) {
         error && error['message'],
         userData);
     }
-
+  
   function _wgpu_device_pop_error_scope_async(device, callback, userData) {
       assert(device != 0, "assert(device != 0) failed!");
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
       assert(callback, "assert(callback) failed!");
-
+  
       function dispatchErrorCallback(error) {
         _wgpuDispatchWebGpuErrorEvent(device, callback, error, userData);
       }
-
+  
       wgpu[device]['popErrorScope']()
         .then(_wgpuMuteJsExceptions(dispatchErrorCallback))
         .catch(dispatchErrorCallback);
@@ -15758,24 +15758,24 @@ function dbg(text) {
       assert(wgpu[device], "assert(wgpu[device]) failed!");
       assert(wgpu[device] instanceof GPUDevice, "assert(wgpu[device] instanceof GPUDevice) failed!");
       wgpu[device]['onuncapturederror'] = callback ? function(uncapturedError) {
-
+        
         _wgpuDispatchWebGpuErrorEvent(device, callback, uncapturedError['error'], userData);
       } : null;
     }
 
   function _wgpu_encoder_end(encoder) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder, "assert(wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder) failed!");
-
+  
       wgpu[encoder]['end']();
-
+  
       /* https://gpuweb.github.io/gpuweb/#render-pass-encoder-finalization:
         "The render pass encoder can be ended by calling end() once the user has
         finished recording commands for the pass. Once end() has been called the
         render pass encoder can no longer be used."
-
+  
         Hence to help make C/C++ side code read easier, immediately release all references
         to the pass encoder after end() occurs, so that C/C++ side code does not need
         to release references manually. */
@@ -15783,29 +15783,29 @@ function dbg(text) {
     }
 
   function _wgpu_encoder_finish(encoder) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPUCommandEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder, "assert(wgpu[encoder] instanceof GPUCommandEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder) failed!");
-
-
+  
+      
       let cmdBuffer = wgpu[encoder]['finish']();
-
+  
       /* https://gpuweb.github.io/gpuweb/#command-encoder-finalization:
         "A GPUCommandBuffer containing the commands recorded by the GPUCommandEncoder can be
         created by calling finish(). Once finish() has been called the command encoder can no
         longer be used."
-
+  
         Hence to help make C/C++ side code read easier, immediately release all references to
         the command encoder after finish() occurs, so that C/C++ side code does not need to
         release references manually. */
       _wgpu_object_destroy(encoder);
-
+  
       return wgpuStore(cmdBuffer);
     }
 
   function _wgpu_encoder_pop_debug_group(encoder) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPUCommandEncoder || wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder, "assert(wgpu[encoder] instanceof GPUCommandEncoder || wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder) failed!");
@@ -15813,7 +15813,7 @@ function dbg(text) {
     }
 
   function _wgpu_encoder_push_debug_group(encoder, groupLabel) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPUCommandEncoder || wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder, "assert(wgpu[encoder] instanceof GPUCommandEncoder || wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder) failed!");
@@ -15822,7 +15822,7 @@ function dbg(text) {
     }
 
   function _wgpu_encoder_set_bind_group(encoder, index, /*nullable*/ bindGroup, dynamicOffsets, numDynamicOffsets) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder, "assert(wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder) failed!");
@@ -15834,7 +15834,7 @@ function dbg(text) {
     }
 
   function _wgpu_encoder_set_pipeline(encoder, pipeline) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder, "assert(wgpu[encoder] instanceof GPUComputePassEncoder || wgpu[encoder] instanceof GPURenderPassEncoder || wgpu[encoder] instanceof GPURenderBundleEncoder) failed!");
@@ -15852,28 +15852,28 @@ function dbg(text) {
     }
 
   function _wgpu_pipeline_get_bind_group_layout(pipelineBase, index) {
-
+      
       assert(pipelineBase != 0, "assert(pipelineBase != 0) failed!");
       assert(wgpu[pipelineBase], "assert(wgpu[pipelineBase]) failed!");
       assert(wgpu[pipelineBase] instanceof GPURenderPipeline || wgpu[pipelineBase] instanceof GPUComputePipeline, "assert(wgpu[pipelineBase] instanceof GPURenderPipeline || wgpu[pipelineBase] instanceof GPUComputePipeline) failed!");
       return wgpuStore(wgpu[pipelineBase]['getBindGroupLayout'](index));
     }
 
-
+  
   function _wgpu_queue_submit_multiple_and_destroy(queue, commandBuffers, numCommandBuffers) {
-
+      
       assert(queue != 0, "assert(queue != 0) failed!");
       assert(wgpu[queue], "assert(wgpu[queue]) failed!");
       assert(wgpu[queue] instanceof GPUQueue, "assert(wgpu[queue] instanceof GPUQueue) failed!");
       wgpu[queue]['submit'](wgpuReadArrayOfItems(wgpu, commandBuffers, numCommandBuffers));
-
+  
       assert((commandBuffers >> 2) << 2 == commandBuffers);
   commandBuffers >>= 2;
       while(numCommandBuffers--) _wgpu_object_destroy(HEAPU32[commandBuffers++]);
     }
 
   function _wgpu_queue_submit_one_and_destroy(queue, commandBuffer) {
-
+      
       assert(queue != 0, "assert(queue != 0) failed!");
       assert(wgpu[queue], "assert(wgpu[queue]) failed!");
       assert(wgpu[queue] instanceof GPUQueue, "assert(wgpu[queue] instanceof GPUQueue) failed!");
@@ -15885,7 +15885,7 @@ function dbg(text) {
     }
 
   function _wgpu_queue_write_buffer(queue, buffer, bufferOffset, data, size) {
-
+      
       assert(queue != 0, "assert(queue != 0) failed!");
       assert(wgpu[queue], "assert(wgpu[queue]) failed!");
       assert(wgpu[queue] instanceof GPUQueue, "assert(wgpu[queue] instanceof GPUQueue) failed!");
@@ -15896,7 +15896,7 @@ function dbg(text) {
     }
 
   function _wgpu_queue_write_texture(queue, destination, data, bytesPerBlockRow, blockRowsPerImage, writeWidth, writeHeight, writeDepthOrArrayLayers) {
-
+      
       assert(queue != 0, "assert(queue != 0) failed!");
       assert(wgpu[queue], "assert(wgpu[queue]) failed!");
       assert(wgpu[queue] instanceof GPUQueue, "assert(wgpu[queue] instanceof GPUQueue) failed!");
@@ -15905,49 +15905,49 @@ function dbg(text) {
     }
 
   function _wgpu_render_commands_mixin_draw(passEncoder, vertexCount, instanceCount, firstVertex, firstInstance) {
-
+      
       assert(passEncoder != 0, "assert(passEncoder != 0) failed!");
       assert(wgpu[passEncoder], "assert(wgpu[passEncoder]) failed!");
       assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder, "assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder) failed!");
-
+  
       wgpu[passEncoder]['draw'](vertexCount, instanceCount, firstVertex, firstInstance);
     }
 
   function _wgpu_render_commands_mixin_draw_indexed(passEncoder, indexCount, instanceCount, firstVertex, baseVertex, firstInstance) {
-
+      
       assert(passEncoder != 0, "assert(passEncoder != 0) failed!");
       assert(wgpu[passEncoder], "assert(wgpu[passEncoder]) failed!");
       assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder, "assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder) failed!");
-
+  
       wgpu[passEncoder]['drawIndexed'](indexCount, instanceCount, firstVertex, baseVertex, firstInstance);
     }
 
   function _wgpu_render_commands_mixin_draw_indexed_indirect(passEncoder, indirectBuffer, indirectOffset) {
-
+      
       assert(passEncoder != 0, "assert(passEncoder != 0) failed!");
       assert(wgpu[passEncoder], "assert(wgpu[passEncoder]) failed!");
       assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder, "assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder) failed!");
       assert(wgpu[indirectBuffer] instanceof GPUBuffer, "assert(wgpu[indirectBuffer] instanceof GPUBuffer) failed!");
       assert(Number.isSafeInteger(indirectOffset), "assert(Number.isSafeInteger(indirectOffset)) failed!");
       assert(indirectOffset >= 0, "assert(indirectOffset >= 0) failed!");
-
+  
       wgpu[passEncoder]['drawIndexedIndirect'](wgpu[indirectBuffer], indirectOffset);
     }
 
   function _wgpu_render_commands_mixin_draw_indirect(passEncoder, indirectBuffer, indirectOffset) {
-
+      
       assert(passEncoder != 0, "assert(passEncoder != 0) failed!");
       assert(wgpu[passEncoder], "assert(wgpu[passEncoder]) failed!");
       assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder, "assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder) failed!");
       assert(wgpu[indirectBuffer] instanceof GPUBuffer, "assert(wgpu[indirectBuffer] instanceof GPUBuffer) failed!");
       assert(Number.isSafeInteger(indirectOffset), "assert(Number.isSafeInteger(indirectOffset)) failed!");
       assert(indirectOffset >= 0, "assert(indirectOffset >= 0) failed!");
-
+  
       wgpu[passEncoder]['drawIndirect'](wgpu[indirectBuffer], indirectOffset);
     }
 
   function _wgpu_render_commands_mixin_set_index_buffer(passEncoder, buffer, indexFormat, offset, size) {
-
+      
       assert(passEncoder != 0, "assert(passEncoder != 0) failed!");
       assert(wgpu[passEncoder], "assert(wgpu[passEncoder]) failed!");
       assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder, "assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder) failed!");
@@ -15956,12 +15956,12 @@ function dbg(text) {
       assert(offset >= 0, "assert(offset >= 0) failed!");
       assert(Number.isSafeInteger(size), "assert(Number.isSafeInteger(size)) failed!");
       assert(size >= -1, "assert(size >= -1) failed!");
-
+  
       wgpu[passEncoder]['setIndexBuffer'](wgpu[buffer], GPUIndexFormats[indexFormat], offset, size < 0 ? void 0 : size);
     }
 
   function _wgpu_render_commands_mixin_set_vertex_buffer(passEncoder, slot, buffer, offset, size) {
-
+      
       assert(passEncoder != 0, "assert(passEncoder != 0) failed!");
       assert(wgpu[passEncoder], "assert(wgpu[passEncoder]) failed!");
       assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder, "assert(wgpu[passEncoder] instanceof GPURenderPassEncoder || wgpu[passEncoder] instanceof GPURenderBundleEncoder) failed!");
@@ -15972,12 +15972,12 @@ function dbg(text) {
       assert(offset >= 0, "assert(offset >= 0) failed!");
       assert(Number.isSafeInteger(size), "assert(Number.isSafeInteger(size)) failed!");
       assert(size >= -1, "assert(size >= -1) failed!");
-
+  
       wgpu[passEncoder]['setVertexBuffer'](slot, wgpu[buffer], offset, size < 0 ? void 0 : size);
     }
 
   function _wgpu_render_pass_encoder_set_scissor_rect(encoder, x, y, width, height) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPURenderPassEncoder, "assert(wgpu[encoder] instanceof GPURenderPassEncoder) failed!");
@@ -15985,7 +15985,7 @@ function dbg(text) {
     }
 
   function _wgpu_render_pass_encoder_set_stencil_reference(encoder, stencilValue) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPURenderPassEncoder, "assert(wgpu[encoder] instanceof GPURenderPassEncoder) failed!");
@@ -15993,25 +15993,25 @@ function dbg(text) {
     }
 
   function _wgpu_render_pass_encoder_set_viewport(encoder, x, y, width, height, minDepth, maxDepth) {
-
+      
       assert(encoder != 0, "assert(encoder != 0) failed!");
       assert(wgpu[encoder], "assert(wgpu[encoder]) failed!");
       assert(wgpu[encoder] instanceof GPURenderPassEncoder, "assert(wgpu[encoder] instanceof GPURenderPassEncoder) failed!");
       wgpu[encoder]['setViewport'](x, y, width, height, minDepth, maxDepth);
     }
 
-
-
-
+  
+  
+  
   function _wgpu_texture_create_view(texture, descriptor) {
-
+      
       assert(texture != 0, "assert(texture != 0) failed!");
       assert(wgpu[texture], "assert(wgpu[texture]) failed!");
       assert(wgpu[texture] instanceof GPUTexture, "assert(wgpu[texture] instanceof GPUTexture) failed!");
-
+  
       assert((descriptor >> 2) << 2 == descriptor);
   descriptor >>= 2;
-
+  
       let desc = descriptor ? {
         'format': GPUTextureAndVertexFormats[HEAPU32[descriptor]],
         'dimension': GPUTextureViewDimensions[HEAPU32[descriptor+1]],
@@ -16027,7 +16027,7 @@ function dbg(text) {
     }
 
   function _wgpu_texture_create_view_simple(texture) {
-
+      
       assert(texture != 0, "assert(texture != 0) failed!");
       assert(wgpu[texture], "assert(wgpu[texture]) failed!");
       assert(wgpu[texture] instanceof GPUTexture, "assert(wgpu[texture] instanceof GPUTexture) failed!");
@@ -16042,10 +16042,10 @@ function dbg(text) {
       assert(func, 'Cannot call unknown function ' + ident + ', make sure it is exported');
       return func;
     }
-
-
-
-
+  
+  
+  
+  
     /**
      * @param {string|null=} returnType
      * @param {Array=} argTypes
@@ -16069,7 +16069,7 @@ function dbg(text) {
           return ret;
         }
       };
-
+  
       function convertReturnValue(ret) {
         if (returnType === 'string') {
           return UTF8ToString(ret);
@@ -16077,7 +16077,7 @@ function dbg(text) {
         if (returnType === 'boolean') return Boolean(ret);
         return ret;
       }
-
+  
       var func = getCFunc(ident);
       var cArgs = [];
       var stack = 0;
@@ -16098,13 +16098,13 @@ function dbg(text) {
         if (stack !== 0) stackRestore(stack);
         return convertReturnValue(ret);
       }
-
+  
       ret = onDone(ret);
       return ret;
     }
 
-
-
+  
+  
     /**
      * @param {string=} returnType
      * @param {Array=} argTypes
