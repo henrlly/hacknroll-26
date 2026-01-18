@@ -18,7 +18,7 @@
         {:else}
             <div class="flex flex-col gap-12 items-center">
                 {#each data.videos as video}
-                    <div class="w-full max-w-sm bg-black rounded-xl overflow-hidden shadow-lg">
+                    <div class="w-full max-w-xl bg-black rounded-xl overflow-hidden shadow-lg">
                         <video src="/examples/{video}" autoplay controls loop muted class="w-full"></video>
                     </div>
                 {/each}
