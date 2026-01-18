@@ -9830,6 +9830,8 @@ MonoBehaviour:
   trumpSfxCharacter: {fileID: 1155190363}
   obamaSfxCharacter: {fileID: 1731515871}
   textParticleTemplate: {fileID: 8262769087728548765, guid: 027102c35d2d64a3f85fe9f75088f3b5, type: 3}
+  trumpScrollingCharacter: {fileID: 426534841575926178}
+  obamaScrollingCharacter: {fileID: 569652437876424094}
 --- !u!4 &227239457
 Transform:
   m_ObjectHideFlags: 0

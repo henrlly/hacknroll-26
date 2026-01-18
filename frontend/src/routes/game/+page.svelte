@@ -13,6 +13,10 @@
                 setInterval(() => {
                     unityPlayer?.startTyping("Hello, this is a test of the Unity Svelte integration!");
                 }, 50);
+                unityPlayer?.startScrolling(JSON.stringify([
+                    {liked: true, desc: "A beautiful sunrise over the mountains.", url: "https://example.com/image1.jpg"},
+                    {liked: false, desc: "A cup of coffee on a wooden table.", url: "https://example.com/image2.jpg"}
+                ]))
                 // setTimeout(() => {
                 //     unityPlayer?.startNarration("Hello, this is a test of the Unity Svelte integration!");
                 //     setTimeout(() => {
