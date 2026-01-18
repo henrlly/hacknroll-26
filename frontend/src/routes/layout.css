@@ -1,5 +1,6 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
 
 @import "tw-animate-css";
 
@@ -121,6 +122,7 @@
   }
   :root {
     --font-anthropic: "Instrument Serif", serif;
+    --font-anthropic-sans: "Inter", sans-serif;
   }
 }
 
@@ -131,5 +133,10 @@
     /* Anthropic's style is usually very tight and elegant */
     letter-spacing: -0.02em; 
     font-weight: 400;
+  }
+  .font-anthropic-2 {
+    font-family: var(--font-anthropic-sans);
+    letter-spacing: -0.011em; /* Inter looks better slightly tightened */
+    font-feature-settings: 'cv05', 'cv08', 'ss01'; /* High-quality Inter features */
   }
 }

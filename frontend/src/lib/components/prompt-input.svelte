@@ -24,7 +24,7 @@
 
 <div class="flex w-full justify-center items-center">
     <div class="w-2/5">
-            <h1 class="mb-4 text-2xl font-anthropic">What ponders the curious cat today?</h1>
+            <h1 class="mb-4 text-4xl font-anthropic">What ponders the curious cat today?</h1>
             <form class="flex flex-col items-start" onsubmit={handleSubmit}>
                 <Textarea
                         class="mb-4 hover:shadow-primary hover:shadow-md focus:shadow-primary focus:shadow-md + {className}"

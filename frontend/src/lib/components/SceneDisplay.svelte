@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
 	import type { SceneLoadingType } from '$lib/types/sceneTypes';
-
-	export let scene: SceneLoadingType;
+	import { Button } from './ui/button/index.js';
+	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
+	let { scene, currentScene=$bindable() } : { scene: SceneLoadingType, currentScene: number } = $props();
 
 	// Parse the scene structure into an ordered list
 	function parseSceneStructure(structureText: string): string[] {
@@ -53,13 +54,13 @@
 		});
 	}
 
-	$: sceneStructureList = parseSceneStructure(scene.scene_structure);
-	$: soundEffects = parseSoundEffects(scene.sound_description);
+	let sceneStructureList = $derived(parseSceneStructure(scene.scene_structure));
+	let soundEffects = $derived(parseSoundEffects(scene.sound_description));
 </script>
 
 <div class="mx-auto w-full max-w-4xl p-4">
-	<div class="mb-4">
-		<div>
+	<div class="mb-4 flex justify-between">
+		<div class="flex flex-col gap-2">
 			<h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">
 				Scene {scene.scene_number+1}
 			</h2>
@@ -68,8 +69,14 @@
 					Duration: {scene.duration_seconds}s
 				</p>
 			{/if}
-
-			
+		</div>
+		<div class="flex gap-2">
+			<Button onclick={() => currentScene--}>
+				<ChevronLeft />
+			</Button>
+			<Button onclick={() => currentScene++}>
+				<ChevronRight />
+			</Button>
 		</div>
 	</div>
 
