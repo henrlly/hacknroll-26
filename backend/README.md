@@ -1,5 +1,8 @@
 ```sh
 brew install manim ffmpeg
+which manim # get location of manim
+less $MANIM_FILE_PATH # get location of manim's python
+/opt/homebrew/Cellar/manim/0.19.1/libexec/bin/python -m pip install opencv-python 
 ```
 
 ```sh
