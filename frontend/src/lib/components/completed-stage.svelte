@@ -134,7 +134,7 @@
 		</Badge>
 	</div>
 	<!-- <Timeline bind:currentScene bind:currentTime bind:paused /> -->
-	<div class="flex w-4/5 items-center justify-between px-2">
+	<div class="flex w-3/5 items-center justify-between px-2">
 		<div class="flex flex-col">
 			<h3 class="text-sm font-medium tracking-wider text-muted-foreground uppercase">
 				Project Workspace
@@ -163,29 +163,29 @@
 	{#if editingMode}
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<div class="w-full backdrop-blur-sm" onclick={() => (paused = true)}>
-			<div class="flex h-full w-full gap-6 p-6">
-				<div class="flex w-[60%] shrink-0 flex-col gap-4">
+		<div class="w-full backdrop-blur-sm flex justify-center w-3/5" onclick={() => (paused = true)}>
+			<div class="flex h-full w-full p-6">
+				<div class="flex w-[60%] items-center flex-col gap-4">
 					<div class="flex flex-col gap-1.5">
-						<Label class="text-xs text-muted-foreground uppercase">Video Script</Label>
+						<Label class="text-xs max-w-4xl pl-4 text-muted-foreground uppercase">Video Script</Label>
 						<div class="rounded-md">
 							<SceneDisplay bind:currentScene scene={videoState.scenes[currentScene]} />
 						</div>
 					</div>
 
-					<div class="flex h-1/2 flex-col gap-1.5">
-						<Label class="text-xs text-muted-foreground uppercase">Adjust Prompt</Label>
-						<form onsubmit={handleSubmitPrompt} class="relative z-10">
+					<div class="flex w-3xl p-4 pt-0 h-1/2 flex-col gap-1.5">
+						<Label class="text-xs text-muted-foreground uppercase">Adjustments?</Label>
+						<form onsubmit={handleSubmitPrompt} class="flex gap-2 items-center  z-10">
 							<Input
 								type="text"
 								placeholder="e.g. Make the tone more exciting..."
 								bind:value={editPrompt}
-							/>
+								/>
+							<Button type="submit" onclick={handleSubmitPrompt}>
+								<Edit2 class="mr-2 size-4" />
+								Fix Up
+							</Button>
 						</form>
-						<Button type="submit" class="mt-2" onclick={handleSubmitPrompt}>
-							<Edit2 class="mr-2 size-4" />
-							Regenerate Plan
-						</Button>
 					</div>
 				</div>
 
