@@ -1,4 +1,5 @@
 <script lang="ts">
+    import InstagramPostCycle from '$lib/components/instagram-post-cycle.svelte';
     import {onMount, onDestroy} from 'svelte';
 
     let canvas: HTMLCanvasElement | undefined = $state();
@@ -8,6 +9,7 @@
     let script: HTMLScriptElement | undefined = $state();
     let profilerScript: HTMLScriptElement | undefined = $state();
     let {isUnityLoaded = $bindable(false)}: { isUnityLoaded: boolean } = $props();
+    let listOfPosts: { desc: string; liked: boolean; url: string }[] = $state([]);
 
     export function changeBackgroundColor(color: string) {
         if (unityInstance) {
@@ -36,6 +38,14 @@
     export function startSfx(sfxDescription: string) {
         if (unityInstance) {
             unityInstance.SendMessage('SceneManager', 'StartSfx', sfxDescription);
+        }
+    }
+
+    export function startScrolling(jsonList: string) {
+        // JSON.parse(jsonList);
+        listOfPosts = JSON.parse(jsonList);
+        if (unityInstance) {
+            unityInstance.SendMessage('SceneManager', 'StartScrolling', jsonList);
         }
     }
 
@@ -118,7 +128,10 @@
     <link rel="stylesheet" href="/animation/TemplateData/style.css">
 </svelte:head>
 
-<div id="unity-container" class="unity-desktop" bind:this={container}>
+<div id="unity-container" class="unity-desktop" bind:this={container} style="position:relative;">
+    {#if listOfPosts && listOfPosts.length > 0}
+        <div style="left: 0; top: 0; position: absolute; width: 35%; height: 45%;"><InstagramPostCycle posts={listOfPosts}/></div>
+    {/if}
     <canvas id="unity-canvas" tabindex="-1" bind:this={canvas}></canvas>
 </div>
 

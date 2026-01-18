@@ -12,6 +12,7 @@ public class SceneManager : MonoBehaviour
     private static readonly int Shrink = Animator.StringToHash("shrink");
     private static readonly int Expand = Animator.StringToHash("expand");
     private static readonly int ZoomedIn = Animator.StringToHash("zoomedIn");
+    private static readonly int Scrolling = Animator.StringToHash("scrolling");
 
     public TextMeshProUGUI typewriterText;
     public TextMeshProUGUI speechBubbleText;
@@ -28,6 +29,9 @@ public class SceneManager : MonoBehaviour
 
     GameObject character;
     Animator characterAnimator;
+
+    public GameObject trumpScrollingCharacter;
+    public GameObject obamaScrollingCharacter;
 
     private Queue<string> typeTextQueue = new();
     private bool _isTyping = false;
@@ -173,6 +177,7 @@ public class SceneManager : MonoBehaviour
             default:
                 return;
         }
+
         if (sfxCharacter == null)
         {
             return;
@@ -228,6 +233,42 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    [System.Serializable]
+    public class MyData
+    {
+        public string url;
+        public string desc;
+        public bool liked;
+    }
+
+    [System.Serializable]
+    public class DataWrapper
+    {
+        public List<MyData> items;
+    }
+
+    public void StartScrolling(string jsonList)
+    {
+        GameObject scrollingCharacter;
+        switch (characterName)
+        {
+            case "trump":
+                scrollingCharacter = trumpScrollingCharacter;
+                break;
+            case "obama":
+                scrollingCharacter = obamaScrollingCharacter;
+                break;
+            default:
+                return;
+        }
+        scrollingCharacter.SetActive(true);
+        scrollingCharacter.GetComponent<Animator>().SetBool(Scrolling, true);
+        string wrappedJson = "{\"items\":" + jsonList + "}";
+        DataWrapper wrapper = JsonUtility.FromJson<DataWrapper>(wrappedJson);
+
+        List<MyData> list = wrapper.items;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -239,6 +280,8 @@ public class SceneManager : MonoBehaviour
         // Character selection
         // StartTyping("Hello, my name is .\n I am the President of the United States.");
         // StartNarration("Hello, my name is .\nI am the President of the United States.");
+        // ChangeCharacter("trump");
+        // StartScrolling("[{\"url\": \"f\", \"desc\": \"afdfsf\", \"liked\": false}]");
     }
 
     // Update is called once per frame

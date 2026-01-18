@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from typing import Awaitable, Callable
 
 from pydantic import BaseModel
@@ -12,6 +13,7 @@ def make_callback(
 ) -> PipelineCallback:
     async def callback(model: BaseModel, delay: float = delay):
         await asyncio.sleep(delay)
+        logging.info(f"Callback sending model data: {model.model_dump_json()}")
         await send_text(model.model_dump_json(indent=None))
 
     return callback

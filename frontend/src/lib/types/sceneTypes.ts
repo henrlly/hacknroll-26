@@ -86,8 +86,7 @@ export const VisualAssetGenObj = z
 		mp4Url: z.string().catch(''),
 		desc: z.string().catch(''),
 		liked: z.boolean().catch(false)
-	})
-	;
+	});
 
 export const SfxAssetGenObj = z
 	.object({
